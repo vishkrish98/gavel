@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gavel": {
+      "command": ".venv/bin/python",
+      "args": ["mcp_server/server.py"]
+    }
+  }
+}

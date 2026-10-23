@@ -1,0 +1,491 @@
+{
+  "how_these_calls_were_made": "Every tool function in mcp_server/server.py was called directly, in-process, in this Python script (tools/make_mcp_smoke.py) -- the same plain Python functions FastMCP registers as tools, not through the stdio MCP transport or an LLM client. This exercises the exact same code path a real MCP call would reach (the @mcp.tool() decorator does not wrap or alter the function), it's just not round-tripped over stdio for this smoke test. tests/test_mcp.py calls the same functions the same way and asserts on their results; this file just records them. The database was reloaded fresh (python -m backend.load) immediately before these calls. The 12 true rules (data/policy_rules_truth.json) were proposed and approved through the real propose_rule/approve_rule tools before the engine calls, and the TRUE line facts (data/requests_truth.json) were written directly into the lines table as a stand-in for the step04 Request Reader agent, which does not exist yet.",
+  "calls": [
+    {
+      "tool": "load_policy",
+      "args": {},
+      "result": {
+        "count": 16,
+        "sample": [
+          {
+            "para_id": "1.1",
+            "text": "The Student Government Funding Committee (the Committee) reviews club budget requests each semester. This policy is synthetic and written for software testing only.",
+            "kind": null
+          },
+          {
+            "para_id": "1.2",
+            "text": "Clubs are encouraged to co-sponsor events with other clubs.",
+            "kind": null
+          }
+        ]
+      }
+    },
+    {
+      "tool": "verify_quote",
+      "args": {
+        "text_id": "3.1",
+        "quote": "Funds may not be used to purchase alcohol."
+      },
+      "result": {
+        "text_id": "3.1",
+        "verified": true
+      }
+    },
+    {
+      "tool": "verify_quote",
+      "args": {
+        "text_id": "3.1",
+        "quote": "Funds may not be used to purchase unicorns."
+      },
+      "result": {
+        "text_id": "3.1",
+        "verified": false
+      }
+    },
+    {
+      "tool": "propose_rule",
+      "args": {
+        "para_id": "3.1",
+        "type": "prohibited_category",
+        "params": {
+          "category": "alcohol"
+        },
+        "quote": "Funds may not be used to purchase alcohol."
+      },
+      "result": {
+        "rule_id": "RULE-cd3cd227",
+        "status": "proposed",
+        "quote_verified": true
+      }
+    },
+    {
+      "tool": "propose_rule",
+      "args": {
+        "para_id": "3.1",
+        "type": "prohibited_category",
+        "params": {
+          "category": "tobacco"
+        },
+        "quote": "Funds may not be used to purchase unicorns."
+      },
+      "result": {
+        "rule_id": "RULE-3198ca15",
+        "status": "rejected",
+        "quote_verified": false
+      }
+    },
+    {
+      "tool": "approve_rule",
+      "args": {
+        "rule_id": "RULE-cd3cd227",
+        "by": "demo-committee-chair"
+      },
+      "result": {
+        "rule_id": "RULE-cd3cd227",
+        "approved": true,
+        "approved_by": "demo-committee-chair"
+      }
+    },
+    {
+      "tool": "list_rules",
+      "args": {
+        "status": "approved"
+      },
+      "result": [
+        {
+          "id": "RULE-cd3cd227",
+          "para_id": "3.1",
+          "type": "prohibited_category",
+          "quote": "Funds may not be used to purchase alcohol.",
+          "quote_verified": 1,
+          "status": "approved",
+          "approved_by": "demo-committee-chair",
+          "params": {
+            "category": "alcohol"
+          }
+        }
+      ]
+    },
+    {
+      "tool": "list_rules",
+      "args": {
+        "status": "rejected"
+      },
+      "result": [
+        {
+          "id": "RULE-3198ca15",
+          "para_id": "3.1",
+          "type": "prohibited_category",
+          "quote": "Funds may not be used to purchase unicorns.",
+          "quote_verified": 0,
+          "status": "rejected",
+          "approved_by": null,
+          "params": {
+            "category": "tobacco"
+          }
+        }
+      ]
+    },
+    {
+      "tool": "get_request",
+      "args": {
+        "request_id": "Q01"
+      },
+      "result": {
+        "id": "Q01",
+        "club": "Robotics Club",
+        "event_date": "2026-12-08",
+        "submitted_date": "2026-11-05",
+        "justification": "This request supports our spring programming and a regional competition.",
+        "source": "requests_input.json",
+        "found": true,
+        "lines": [
+          {
+            "id": "01-L1",
+            "request_id": "Q01",
+            "description": "Venue rental for event",
+            "amount": 250.0,
+            "docs": [],
+            "already_purchased": false,
+            "category": "venue",
+            "headcount": 0,
+            "qty": 1,
+            "nights": 0,
+            "unit_cost": 250.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L2",
+            "request_id": "Q01",
+            "description": "Hotel for regional conference: 3 rooms x 2 nights",
+            "amount": 1140.0,
+            "docs": [
+              "quotes1"
+            ],
+            "already_purchased": false,
+            "category": "lodging",
+            "headcount": 0,
+            "qty": 3,
+            "nights": 2,
+            "unit_cost": 190.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L3",
+            "request_id": "Q01",
+            "description": "Trophies and prizes for tournament, 3 items",
+            "amount": 75.0,
+            "docs": [],
+            "already_purchased": false,
+            "category": "prize",
+            "headcount": 0,
+            "qty": 3,
+            "nights": 0,
+            "unit_cost": 25.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L4",
+            "request_id": "Q01",
+            "description": "Catered sandwiches and drinks for 40 guests",
+            "amount": 360.0,
+            "docs": [],
+            "already_purchased": false,
+            "category": "food",
+            "headcount": 40,
+            "qty": 40,
+            "nights": 0,
+            "unit_cost": 9.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L5",
+            "request_id": "Q01",
+            "description": "Printing of posters and programs",
+            "amount": 120.0,
+            "docs": [],
+            "already_purchased": false,
+            "category": "printing",
+            "headcount": 0,
+            "qty": 1,
+            "nights": 0,
+            "unit_cost": 120.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L6",
+            "request_id": "Q01",
+            "description": "Embroidered hoodies for officers and members (30)",
+            "amount": 840.0,
+            "docs": [
+              "quotes3"
+            ],
+            "already_purchased": false,
+            "category": "apparel",
+            "headcount": 0,
+            "qty": 30,
+            "nights": 0,
+            "unit_cost": 28.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L7",
+            "request_id": "Q01",
+            "description": "Keynote speaker fee for annual symposium",
+            "amount": 1500.0,
+            "docs": [
+              "contract",
+              "quotes3"
+            ],
+            "already_purchased": false,
+            "category": "speaker_fee",
+            "headcount": 0,
+            "qty": 1,
+            "nights": 0,
+            "unit_cost": 1500.0,
+            "quarantined": false
+          },
+          {
+            "id": "01-L8",
+            "request_id": "Q01",
+            "description": "Pre-paid visa cards as attendance incentive, 5 cards of $10",
+            "amount": 50.0,
+            "docs": [],
+            "already_purchased": false,
+            "category": "gift_card",
+            "headcount": 0,
+            "qty": 5,
+            "nights": 0,
+            "unit_cost": 10.0,
+            "quarantined": false
+          }
+        ]
+      }
+    },
+    {
+      "tool": "check_line",
+      "args": {
+        "request_id": "Q01",
+        "line_id": "01-L2"
+      },
+      "result": {
+        "request_id": "Q01",
+        "line_id": "01-L2",
+        "found": true,
+        "verdict": "needs_docs",
+        "allowed_amount": 0,
+        "rules": [
+          "RULE-52ca5d74"
+        ]
+      }
+    },
+    {
+      "tool": "run_engine",
+      "args": {
+        "request_id": "Q01"
+      },
+      "result": {
+        "request_id": "Q01",
+        "lines": {
+          "01-L1": {
+            "verdict": "allowed",
+            "allowed_amount": 250.0,
+            "rules": []
+          },
+          "01-L2": {
+            "verdict": "needs_docs",
+            "allowed_amount": 0,
+            "rules": [
+              "RULE-52ca5d74"
+            ]
+          },
+          "01-L3": {
+            "verdict": "allowed",
+            "allowed_amount": 75.0,
+            "rules": []
+          },
+          "01-L4": {
+            "verdict": "allowed",
+            "allowed_amount": 360.0,
+            "rules": []
+          },
+          "01-L5": {
+            "verdict": "allowed",
+            "allowed_amount": 120.0,
+            "rules": []
+          },
+          "01-L6": {
+            "verdict": "reduced",
+            "allowed_amount": 600,
+            "rules": [
+              "RULE-59e92c54"
+            ]
+          },
+          "01-L7": {
+            "verdict": "allowed",
+            "allowed_amount": 1500.0,
+            "rules": []
+          },
+          "01-L8": {
+            "verdict": "denied",
+            "allowed_amount": 0,
+            "rules": [
+              "RULE-3376c555"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "tool": "explain_line",
+      "args": {
+        "request_id": "Q01",
+        "line_id": "01-L2"
+      },
+      "result": {
+        "request_id": "Q01",
+        "line_id": "01-L2",
+        "found": true,
+        "verdict": "needs_docs",
+        "allowed_amount": 0,
+        "rules": [
+          "RULE-52ca5d74"
+        ],
+        "citations": [
+          {
+            "rule_id": "RULE-52ca5d74",
+            "para_id": "3.5",
+            "quote": "Any single purchase over $500 requires three written quotes."
+          }
+        ]
+      }
+    },
+    {
+      "tool": "consistency_report",
+      "args": {},
+      "result": {
+        "decisions": [
+          {
+            "decision_id": "P01",
+            "club": "Entrepreneurship Club",
+            "description": "Hotel for regional conference: 4 rooms x 3 nights",
+            "requested": 2040.0,
+            "approved": 1800.0,
+            "matched": true,
+            "engine_allowed": 1800,
+            "inconsistent": false
+          },
+          {
+            "decision_id": "P02",
+            "club": "Dance Collective",
+            "description": "Sound system",
+            "requested": 350.0,
+            "approved": 350.0,
+            "matched": true,
+            "engine_allowed": 350.0,
+            "inconsistent": false
+          },
+          {
+            "decision_id": "P03",
+            "club": "Mock Trial",
+            "description": "Venue rental for event",
+            "requested": 250.0,
+            "approved": 250.0,
+            "matched": true,
+            "engine_allowed": 250.0,
+            "inconsistent": false
+          },
+          "...(27 more)"
+        ],
+        "total": 30,
+        "matched": 30,
+        "inconsistent_count": 6,
+        "inconsistency_rate": 0.2
+      }
+    },
+    {
+      "tool": "allocate",
+      "args": {
+        "pot": 40000,
+        "alpha": 0.5
+      },
+      "result": {
+        "pot": 40000,
+        "alpha": 0.5,
+        "allowed_by_club": {
+          "Robotics Club": 2905.0,
+          "Chess Society": 2250.0,
+          "Debate Union": 4250.0,
+          "Film Society": 1520.0,
+          "Outdoor Adventure Club": 0.0,
+          "Entrepreneurship Club": 3570.0,
+          "Dance Collective": 1310.0,
+          "Astronomy Club": 3390.0,
+          "Cultural Fusion Night Committee": 3830.0,
+          "Model UN": 3140.0,
+          "Women in Engineering": 2660.0,
+          "Ski and Snowboard Club": 2000.0,
+          "Photography Guild": 480.0,
+          "Investment Club": 0.0,
+          "Hackathon Committee": 3550.0,
+          "Environmental Action Club": 1504.0,
+          "Mock Trial": 3390.0,
+          "Jazz Ensemble": 3450.0,
+          "Esports Club": 1660.0,
+          "Habitat Volunteers": 1720.0,
+          "Math Society": 0.0,
+          "Theatre Troupe": 2500.0,
+          "Rocketry Club": 5754.0,
+          "Culinary Society": 2440.0
+        },
+        "allocation": {
+          "Robotics Club": 2208.64,
+          "Chess Society": 1800.69,
+          "Debate Union": 2891.1,
+          "Film Society": 1155.64,
+          "Outdoor Adventure Club": 0.0,
+          "Entrepreneurship Club": 2857.09,
+          "Dance Collective": 786.3,
+          "Astronomy Club": 2034.78,
+          "Cultural Fusion Night Committee": 2068.99,
+          "Model UN": 1884.72,
+          "Women in Engineering": 2128.81,
+          "Ski and Snowboard Club": 1600.61,
+          "Photography Guild": 326.52,
+          "Investment Club": 0.0,
+          "Hackathon Committee": 2841.08,
+          "Environmental Action Club": 1023.11,
+          "Mock Trial": 1831.3,
+          "Jazz Ensemble": 2070.79,
+          "Esports Club": 1129.23,
+          "Habitat Volunteers": 1032.39,
+          "Math Society": 0.0,
+          "Theatre Troupe": 2000.76,
+          "Rocketry Club": 4374.71,
+          "Culinary Society": 1952.74
+        }
+      }
+    },
+    {
+      "tool": "log_usage",
+      "args": {
+        "run_id": "smoke-run-1",
+        "agent": "demo-agent",
+        "input_tokens": 1200,
+        "cached_tokens": 300,
+        "cache_write_tokens": 0,
+        "output_tokens": 450,
+        "reasoning_tokens": 80,
+        "seconds": 3.1
+      },
+      "result": {
+        "run_id": "smoke-run-1",
+        "agent": "demo-agent",
+        "model": "gpt-6-luna",
+        "total_tokens": 1650,
+        "cost_usd": 0.000318,
+        "seconds": 3.1
+      }
+    }
+  ]
+}

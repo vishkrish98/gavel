@@ -131,8 +131,17 @@ def init_db(conn: sqlite3.Connection, *, fresh: bool = True) -> None:
     """Create all tables. With fresh=True (the loader's default), drops any existing tables
     first so re-running the loader always produces a clean, reproducible database."""
     if fresh:
-        tables = [row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")]
+        # Drop with FK enforcement off: tables reference each other (lines -> requests,
+        # verdicts -> lines) and sqlite's FK pragma blocks dropping a referenced table out of
+        # dependency order even though the whole schema is about to be recreated anyway.
+        conn.execute("PRAGMA foreign_keys = OFF")
+        tables = [
+            row[0]
+            for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            if not row[0].startswith("sqlite_")
+        ]
         for table in tables:
             conn.execute(f"DROP TABLE IF EXISTS {table}")
+        conn.execute("PRAGMA foreign_keys = ON")
     conn.executescript(SCHEMA)
     conn.commit()
