@@ -6,7 +6,11 @@ from __future__ import annotations
 
 MODEL_NAME = "gpt-6-luna"
 
-# Dollars per 1,000,000 tokens.
+# Dollars per 1,000,000 tokens, gpt-6-luna via Portkey.
+# Source: MGT 409 Lecture 11 pricing table. As of: 2026-10-23 (the date this file was last
+# checked against that table). If the course updates the table, update these four numbers and
+# this date -- nothing else in the codebase hardcodes a price (CONTEXT.md: "Keep prices in ONE
+# config file").
 PRICE_PER_MILLION = {
     "input": 0.10,
     "cached": 0.01,

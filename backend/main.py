@@ -16,10 +16,13 @@ ROOT = BACKEND_DIR.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from typing import Optional
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
+from backend.db import get_connection
 from env_loader import require_env
 
 require_env(["PORTKEY_API_KEY"])
@@ -42,6 +45,53 @@ PLACEHOLDER_HTML = """<!doctype html>
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+def _usage_totals(rows: list) -> dict:
+    keys = ["input_tokens", "cached_tokens", "cache_write_tokens", "output_tokens", "reasoning_tokens", "total_tokens", "seconds", "cost_usd"]
+    totals = {k: 0 for k in keys}
+    for row in rows:
+        for k in keys:
+            totals[k] += row[k]
+    totals["calls"] = len(rows)
+    return totals
+
+
+@app.get("/api/usage")
+def get_usage(run_id: Optional[str] = None) -> dict:
+    """Totals per agent and per run. With run_id: that run's totals broken down by agent, plus
+    the run's grand total. Without run_id: every run's grand total, for comparing runs."""
+    conn = get_connection()
+    if run_id is not None:
+        rows = [dict(r) for r in conn.execute("SELECT * FROM usage WHERE run_id = ? ORDER BY created_at", (run_id,))]
+        conn.close()
+        by_agent: dict[str, list] = {}
+        for row in rows:
+            by_agent.setdefault(row["agent"], []).append(row)
+        return {
+            "run_id": run_id,
+            "by_agent": {agent: _usage_totals(agent_rows) for agent, agent_rows in by_agent.items()},
+            "total": _usage_totals(rows),
+        }
+    run_ids = [r["run_id"] for r in conn.execute("SELECT DISTINCT run_id FROM usage ORDER BY run_id")]
+    result = []
+    for rid in run_ids:
+        rows = [dict(r) for r in conn.execute("SELECT * FROM usage WHERE run_id = ?", (rid,))]
+        result.append({"run_id": rid, **_usage_totals(rows)})
+    conn.close()
+    return {"runs": result}
+
+
+@app.get("/api/runs")
+def get_runs() -> list[dict]:
+    """Every run's status/mode/timestamps, with its usage total attached."""
+    conn = get_connection()
+    runs = [dict(r) for r in conn.execute("SELECT * FROM runs ORDER BY started_at DESC")]
+    for run in runs:
+        rows = [dict(r) for r in conn.execute("SELECT * FROM usage WHERE run_id = ?", (run["id"],))]
+        run["usage_total"] = _usage_totals(rows)
+    conn.close()
+    return runs
 
 
 if FRONTEND_DIST.exists():

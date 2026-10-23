@@ -2,7 +2,7 @@
   "run_id": "run1",
   "status": "completed",
   "reason": null,
-  "total_tokens_used": 103793,
+  "total_tokens_used": 103784,
   "reader_errors": {},
   "rules": {
     "true_rules": 12,
@@ -23,7 +23,7 @@
         "2.1",
         "5.1"
       ],
-      "notes": "All 12 proposed rules had verified quotes. Human approval is required before engine use."
+      "notes": "All 12 proposed rules had verified quotes."
     }
   },
   "categories_and_verdicts": {
@@ -140,6 +140,6 @@
   },
   "drafts_produced": {
     "question_drafts": 14,
-    "memo_draft_id": "DRAFT-6cd6ea6b"
+    "memo_draft_id": "DRAFT-44f6db19"
   }
 }

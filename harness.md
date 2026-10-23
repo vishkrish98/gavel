@@ -11,6 +11,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 02 | `mcp_server/server.py` (FastMCP, stdio): 12 deterministic tools over that data — policy/rule compilation, the rule engine, the consistency check, the water-filling optimizer, and token-usage logging. `tests/test_mcp.py` (18 tests, all passing) and `output/mcp_smoke.json` exercise every tool against real data, including the full 158/158 engine match and 6/30 consistency match using the answer key as a test fixture. |
 | 03 | `evidence/engine_eval.json` (via `tools/make_engine_eval.py`): formal validation of the deterministic layer against the reference answer key, zero model calls. 158/158 lines match verdict+amount+rules exactly; `allocate` matches `data/optimizer_truth.json` to the cent across all 4 scenarios; `consistency_report` finds 6/30 inconsistent. |
 | 04 | The agent team (`backend/agents.py`, `backend/chair.py`, `backend/models.py`, `backend/prompts/`). First step with real model calls. `python -m backend.run_check` runs the full pipeline over the 24 real requests and scores it: 100% rule recall/precision, 0 decoys turned into rules, 100% category accuracy, 100% verdict accuracy, exact dollar match (158/158), 100% consistency-report agreement with the step03 baseline, 10 Skeptic flags (0 of which were actual misclassifications). 61 model calls, 103,793 tokens, $0.016, run saved as `output/trace_run1.json`. |
+| 05 | Token logging and cost: confirmed `log_usage` already logs the provider's real response fields (no change needed, inspected and documented below); `backend/pricing.py` now dated and cites the course Lecture 11 table; `GET /api/usage?run_id=` and `GET /api/runs` added to `backend/main.py`; `backend/projection.py` turns measured usage into unit costs and semester projections, all assumptions in one labeled block, output at `evidence/cost_model.md`. |
 
 ## Data tables
 
@@ -174,7 +175,44 @@ Nothing was tuned to produce these numbers; per the step04 instruction, accuracy
 
 ## Token logging / cost model
 
-(filled in step05)
+**Raw provider fields, inspected directly (not estimated).** Every model call returns a PydanticAI
+`RunUsage`/`RequestUsage` object built straight from the Portkey/OpenAI Responses API response.
+Printed one raw example (`dataclasses.asdict(result.usage)`):
+
+```
+{'input_tokens': 19, 'cache_write_tokens': 0, 'cache_read_tokens': 0, 'output_tokens': 5,
+ 'input_audio_tokens': 0, 'cache_audio_read_tokens': 0, 'output_audio_tokens': 0,
+ 'audio_seconds': 0, 'details': {'reasoning_tokens': 0}, 'cost': None, 'requests': 1, 'tool_calls': 0}
+```
+
+`ChairRun._call_agent` (`backend/chair.py`) maps these straight through to `log_usage` with no
+estimation or renaming games: `cached_tokens` = `cache_read_tokens`, `cache_write_tokens` =
+`cache_write_tokens`, `reasoning_tokens` = `details["reasoning_tokens"]` (nested there because the
+Responses API reports it as a sub-field of output tokens, not top-level). `total_tokens` =
+`input_tokens + output_tokens` (reasoning tokens are already counted inside `output_tokens` by the
+provider, not additional on top of it).
+
+**Pricing** (`backend/pricing.py`, single source of truth per CONTEXT.md): gpt-6-luna via Portkey,
+$0.10 / $0.01 / $0.125 / $0.50 per 1M input/cached/cache-write/output tokens — course Lecture 11
+table, dated 2026-10-23 in the file itself so a price change is a one-line diff with a date to
+check against.
+
+**API routes** (`backend/main.py`): `GET /api/usage?run_id=` (with a run_id: that run's totals
+broken down by agent, plus the run's grand total; without one: every run's grand total, for
+comparing runs) and `GET /api/runs` (every run's status/mode/timestamps with its usage total
+attached).
+
+**Cost model** (`backend/projection.py` → `evidence/cost_model.md`): every assumption lives in one
+`ASSUMPTIONS` dict at the top of the file — nothing else in it hardcodes a number that isn't
+either an assumption or pulled from the measured `usage`/`verdicts` tables for a real run.
+Unit costs (measured, run1): compiling the policy once **$0.000751**, the whole-pot memo once
+**$0.000124**, per request (Reader + Skeptic + drafted questions) **$0.000632**, per line item
+**$0.000096**. Semester projections: 24 clubs (measured) **$0.016**; 150 clubs (**assumption**)
+**$0.096**; a platform of 1,000 institutions, each compiling its own policy and averaging 24 clubs
+(**assumption**) **$16.04**. Human comparison (**assumption**: 20 minutes/request at $20/hour) is
+**$6.67/request** manually vs. **$0.00063/request** for Gavel's first-pass packet — framed
+honestly in the file itself as the cost of producing the packet, not a claim that it replaces the
+committee's actual decision (CONTEXT.md hard rule 10).
 
 ## Benchmark
 
@@ -258,6 +296,15 @@ Nothing was tuned to produce these numbers; per the step04 instruction, accuracy
 - Step04: "large reduction" (one of three reasons the Drafter asks about a line, alongside
   needs_docs and a Skeptic flag) is defined as allowed_amount ≤ 50% of the requested amount.
   CONTEXT.md doesn't specify a threshold; 50% is the simplest clearly-large cut.
+- Step05: the "platform serving 1,000 institutions" projection assumes each institution compiles
+  its own policy once and averages 24 clubs (our sample size), i.e. policies are NOT shared across
+  institutions — each institution's compile cost is paid once, not amortized across the platform.
+  This is the more realistic (and more conservative/expensive) assumption since different
+  institutions would have different real policies, not one shared synthetic one.
+- Step05: "cost per request" (used for the semester/platform projections) includes Reader +
+  Skeptic + drafted-questions costs but NOT the one-time policy-compile or whole-pot-memo costs —
+  those scale with the number of runs/semesters, not the number of requests, so folding them into
+  a per-request figure would make the projection wrong at any scale other than exactly 24 requests.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage
