@@ -1,0 +1,355 @@
+{
+  "note": "Validates the deterministic engine (backend/engine.py, mcp_server/server.py) against the reference answer key computed by tools/make_funding_data.py. Zero model calls: the 12 rules and all line facts are loaded as a labeled test fixture standing in for the Policy Compiler and Request Reader agents (step04), not produced by a model here.",
+  "tokens_used": 0,
+  "tokens_used_note": "Zero. This entire step is the deterministic engine only -- no agent, no model call, anywhere in this evaluation.",
+  "engine_vs_truth": {
+    "total_lines": 158,
+    "verdict_matches": 158,
+    "amount_matches": 158,
+    "rules_matches": 158,
+    "both_verdict_and_amount_match": 158,
+    "mismatches": []
+  },
+  "allocate_vs_optimizer_truth": {
+    "scenarios": {
+      "alpha_0.0": {
+        "pot": 40000,
+        "alpha": 0.0,
+        "exact_match_to_the_cent": true,
+        "diffs_over_a_cent": {}
+      },
+      "alpha_0.5": {
+        "pot": 40000,
+        "alpha": 0.5,
+        "exact_match_to_the_cent": true,
+        "diffs_over_a_cent": {}
+      },
+      "alpha_1.0": {
+        "pot": 40000,
+        "alpha": 1.0,
+        "exact_match_to_the_cent": true,
+        "diffs_over_a_cent": {}
+      },
+      "pot_32000_alpha_0.5": {
+        "pot": 32000.0,
+        "alpha": 0.5,
+        "exact_match_to_the_cent": true,
+        "diffs_over_a_cent": {}
+      }
+    },
+    "all_four_exact_to_the_cent": true
+  },
+  "consistency_report": {
+    "decisions": [
+      {
+        "decision_id": "P01",
+        "club": "Entrepreneurship Club",
+        "description": "Hotel for regional conference: 4 rooms x 3 nights",
+        "requested": 2040.0,
+        "approved": 1800.0,
+        "matched": true,
+        "engine_allowed": 1800,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P02",
+        "club": "Dance Collective",
+        "description": "Sound system",
+        "requested": 350.0,
+        "approved": 350.0,
+        "matched": true,
+        "engine_allowed": 350.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P03",
+        "club": "Mock Trial",
+        "description": "Venue rental for event",
+        "requested": 250.0,
+        "approved": 250.0,
+        "matched": true,
+        "engine_allowed": 250.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P04",
+        "club": "Theatre Troupe",
+        "description": "Honorarium for guest speaker",
+        "requested": 700.0,
+        "approved": 700.0,
+        "matched": true,
+        "engine_allowed": 700.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P05",
+        "club": "Debate Union",
+        "description": "Sound system",
+        "requested": 600.0,
+        "approved": 500.0,
+        "matched": true,
+        "engine_allowed": 600.0,
+        "inconsistent": true
+      },
+      {
+        "decision_id": "P06",
+        "club": "Outdoor Adventure Club",
+        "description": "Pizza and soda for 50 attendees",
+        "requested": 550.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P07",
+        "club": "Ski and Snowboard Club",
+        "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+        "requested": 320.0,
+        "approved": 320.0,
+        "matched": true,
+        "engine_allowed": 300,
+        "inconsistent": true
+      },
+      {
+        "decision_id": "P08",
+        "club": "Hackathon Committee",
+        "description": "Keynote speaker fee for annual symposium",
+        "requested": 700.0,
+        "approved": 700.0,
+        "matched": true,
+        "engine_allowed": 700.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P09",
+        "club": "Esports Club",
+        "description": "Catered sandwiches and drinks for 40 guests",
+        "requested": 360.0,
+        "approved": 360.0,
+        "matched": true,
+        "engine_allowed": 360.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P10",
+        "club": "Culinary Society",
+        "description": "Printing of posters and programs",
+        "requested": 250.0,
+        "approved": 150.0,
+        "matched": true,
+        "engine_allowed": 250.0,
+        "inconsistent": true
+      },
+      {
+        "decision_id": "P11",
+        "club": "Math Society",
+        "description": "Professional camera body",
+        "requested": 900.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P12",
+        "club": "Debate Union",
+        "description": "Embroidered hoodies for officers and members (50)",
+        "requested": 1200.0,
+        "approved": 1000.0,
+        "matched": true,
+        "engine_allowed": 1000,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P13",
+        "club": "Outdoor Adventure Club",
+        "description": "Pizza and soda for 40 attendees",
+        "requested": 600.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P14",
+        "club": "Jazz Ensemble",
+        "description": "Catered sandwiches and drinks for 20 guests",
+        "requested": 300.0,
+        "approved": 300.0,
+        "matched": true,
+        "engine_allowed": 300.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P15",
+        "club": "Film Society",
+        "description": "Event supplies and decorations",
+        "requested": 60.0,
+        "approved": 60.0,
+        "matched": true,
+        "engine_allowed": 60.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P16",
+        "club": "Entrepreneurship Club",
+        "description": "Hotel for regional conference: 4 rooms x 3 nights",
+        "requested": 2040.0,
+        "approved": 1800.0,
+        "matched": true,
+        "engine_allowed": 1800,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P17",
+        "club": "Environmental Action Club",
+        "description": "Printing of posters and programs",
+        "requested": 250.0,
+        "approved": 250.0,
+        "matched": true,
+        "engine_allowed": 250.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P18",
+        "club": "Astronomy Club",
+        "description": "Keynote speaker fee for annual symposium",
+        "requested": 700.0,
+        "approved": 600.0,
+        "matched": true,
+        "engine_allowed": 700.0,
+        "inconsistent": true
+      },
+      {
+        "decision_id": "P19",
+        "club": "Robotics Club",
+        "description": "Catered sandwiches and drinks for 40 guests",
+        "requested": 360.0,
+        "approved": 360.0,
+        "matched": true,
+        "engine_allowed": 360.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P20",
+        "club": "Chess Society",
+        "description": "Conference registration fees",
+        "requested": 400.0,
+        "approved": 400.0,
+        "matched": true,
+        "engine_allowed": 400.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P21",
+        "club": "Habitat Volunteers",
+        "description": "Club t-shirts, 50 shirts",
+        "requested": 600.0,
+        "approved": 500.0,
+        "matched": true,
+        "engine_allowed": 600.0,
+        "inconsistent": true
+      },
+      {
+        "decision_id": "P22",
+        "club": "Model UN",
+        "description": "10 x $10 Amazon gift cards for raffle",
+        "requested": 100.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P23",
+        "club": "Rocketry Club",
+        "description": "Hotel for regional conference: 6 rooms x 3 nights",
+        "requested": 3420.0,
+        "approved": 2700.0,
+        "matched": true,
+        "engine_allowed": 2700,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P24",
+        "club": "Cultural Fusion Night Committee",
+        "description": "Event supplies and decorations",
+        "requested": 400.0,
+        "approved": 400.0,
+        "matched": true,
+        "engine_allowed": 400.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P25",
+        "club": "Photography Guild",
+        "description": "Event supplies and decorations",
+        "requested": 120.0,
+        "approved": 120.0,
+        "matched": true,
+        "engine_allowed": 120.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P26",
+        "club": "Investment Club",
+        "description": "Catered sandwiches and drinks for 20 guests",
+        "requested": 320.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P27",
+        "club": "Chess Society",
+        "description": "Trophies and prizes for tournament, 12 items",
+        "requested": 360.0,
+        "approved": 300.0,
+        "matched": true,
+        "engine_allowed": 300,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P28",
+        "club": "Women in Engineering",
+        "description": "Printing of posters and programs",
+        "requested": 60.0,
+        "approved": 60.0,
+        "matched": true,
+        "engine_allowed": 60.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P29",
+        "club": "Robotics Club",
+        "description": "Trophies and prizes for tournament, 3 items",
+        "requested": 75.0,
+        "approved": 75.0,
+        "matched": true,
+        "engine_allowed": 75.0,
+        "inconsistent": false
+      },
+      {
+        "decision_id": "P30",
+        "club": "Film Society",
+        "description": "Conference registration fees",
+        "requested": 60.0,
+        "approved": 0.0,
+        "matched": true,
+        "engine_allowed": 60.0,
+        "inconsistent": true
+      }
+    ],
+    "total": 30,
+    "matched": 30,
+    "inconsistent_count": 6,
+    "inconsistency_rate": 0.2
+  },
+  "expectations": {
+    "158_of_158_lines_match_verdict_and_amount": true,
+    "allocate_exact_to_the_cent_all_4_scenarios": true,
+    "consistency_6_of_30_inconsistent": true
+  }
+}

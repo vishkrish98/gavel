@@ -9,6 +9,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 00 | Skeleton: backend/, mcp_server/, frontend/, output/, tests/ folders; shared env_loader.py (checks repo folder then one level above); run.py (loads env, picks a free port, starts the backend, serves a placeholder page). |
 | 01 | SQLite data layer at `data/gavel.db` (gitignored, created fresh on every loader run); loader `python -m backend.load` reads the policy, 24 real requests, 2 JSON safety requests, 1 HTML safety request (hidden-text aware), and 30 prior decisions (stripped of answer-key fields) into it. |
 | 02 | `mcp_server/server.py` (FastMCP, stdio): 12 deterministic tools over that data — policy/rule compilation, the rule engine, the consistency check, the water-filling optimizer, and token-usage logging. `tests/test_mcp.py` (18 tests, all passing) and `output/mcp_smoke.json` exercise every tool against real data, including the full 158/158 engine match and 6/30 consistency match using the answer key as a test fixture. |
+| 03 | `evidence/engine_eval.json` (via `tools/make_engine_eval.py`): formal validation of the deterministic layer against the reference answer key, zero model calls. 158/158 lines match verdict+amount+rules exactly; `allocate` matches `data/optimizer_truth.json` to the cent across all 4 scenarios; `consistency_report` finds 6/30 inconsistent. |
 
 ## Data tables
 
@@ -80,7 +81,18 @@ Verified against the real answer key (test fixture, not yet the real agents — 
 
 ## Engine
 
-(filled in step03 — rule types, eval_line order, optimizer)
+Rule types, eval_line order, and the optimizer are documented under "MCP tools" above
+(`backend/engine.py` is shared by both the MCP server and this validation).
+
+**Step03 formal validation** (`evidence/engine_eval.json`, `python -m tools.make_engine_eval`,
+zero model calls — the 12 rules and all line facts are a labeled test fixture, not agent output):
+
+| Check | Result |
+| --- | --- |
+| 158 real lines, verdict + allowed_amount + rule ids all match `data/requests_truth.json` | 158/158 |
+| `backend.engine.allocate` vs `data/optimizer_truth.json`, all 4 scenarios | exact to the cent |
+| `consistency_report` vs `data/prior_decisions.json` | 6/30 inconsistent (all 30 matched) |
+| Tokens used | 0 (deterministic engine only) |
 
 ## Agents
 
