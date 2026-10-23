@@ -12,6 +12,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 03 | `evidence/engine_eval.json` (via `tools/make_engine_eval.py`): formal validation of the deterministic layer against the reference answer key, zero model calls. 158/158 lines match verdict+amount+rules exactly; `allocate` matches `data/optimizer_truth.json` to the cent across all 4 scenarios; `consistency_report` finds 6/30 inconsistent. |
 | 04 | The agent team (`backend/agents.py`, `backend/chair.py`, `backend/models.py`, `backend/prompts/`). First step with real model calls. `python -m backend.run_check` runs the full pipeline over the 24 real requests and scores it: 100% rule recall/precision, 0 decoys turned into rules, 100% category accuracy, 100% verdict accuracy, exact dollar match (158/158), 100% consistency-report agreement with the step03 baseline, 10 Skeptic flags (0 of which were actual misclassifications). 61 model calls, 103,793 tokens, $0.016, run saved as `output/trace_run1.json`. |
 | 05 | Token logging and cost: confirmed `log_usage` already logs the provider's real response fields (no change needed, inspected and documented below); `backend/pricing.py` now dated and cites the course Lecture 11 table; `GET /api/usage?run_id=` and `GET /api/runs` added to `backend/main.py`; `backend/projection.py` turns measured usage into unit costs and semester projections, all assumptions in one labeled block, output at `evidence/cost_model.md`. |
+| 06 | `backend/benchmark.py`: Mode A (generic single-prompt assistant) vs. Mode B (Gavel: Compiler+Reader+Skeptic+code Engine), each run 3x, plus 5 experiments on Mode B. Mode B wins decisively on dollar accuracy (exact, $0 error, all 3 reps) and citation discipline (158/158 correct vs. 80/158 for Mode A); overall verdict accuracy is closer (0.883 vs. 0.860) — reported honestly, not oversold. `evidence/benchmark.json` / `evidence/benchmark.md`. Mode C (human baseline) reported as not-yet-available: it depends on the user's own timed exercise (`evidence/manual_first5.csv`, not yet filled in). |
 
 ## Data tables
 
@@ -216,7 +217,63 @@ committee's actual decision (CONTEXT.md hard rule 10).
 
 ## Benchmark
 
-(filled in step06 — Mode A vs Mode B)
+`backend/benchmark.py` (`python -m backend.benchmark` → `evidence/benchmark.json`/`.md`). 24 real
+requests, 179 lines, both Mode A and Mode B run 3 times (fresh DB each rep).
+
+- **Mode A** ("generic AI assistant"): the full policy text and one whole request in ONE
+  gpt-6-luna prompt (same model/reasoning-effort as Gavel, for a fair comparison), no tools, no
+  engine — asked directly for verdict/allowed_amount/citation per line as structured JSON.
+- **Mode B** (Gavel, as scoped for this benchmark by PROMPTS/step06_benchmark.md): Policy Compiler
+  (once) + Request Reader + Skeptic + the code Engine only — no Drafter, no consistency report, no
+  optimizer; those aren't part of what's being compared here.
+- **Mode C** (human baseline): depends on the user's own timed review of Q01-Q05
+  (`evidence/manual_first5.csv`, from `START_HERE.md` task #1) and step10's `score_manual.py`.
+  Reported honestly as not-yet-available rather than fabricated — see `evidence/benchmark.md`.
+
+**Headline, real, not tuned to look good** (average across 3 reps; Mode A and Mode B were
+byte-for-byte identical or near-identical across their own 3 reps — reported as-is, a genuine
+low-variance result at `reasoning_effort="low"`, not a bug):
+
+| Metric | Mode A | Mode B |
+| --- | --- | --- |
+| Overall verdict accuracy | 0.860 | **0.883** |
+| Sum \|allowed-dollar error\| | $9,000.00 | **$0.00** |
+| Total $ wrongly allowed (overpayment risk) | $9,000.00 | **$0.00** |
+| Citations correct / wrong-real-quote / invented | 80 / 78 / 0 | **158 / 0 / 0** |
+| Cross-club inconsistency (identical facts, different clubs) | 7/30 (0.233) | 7/30 (0.233) |
+| Cost per 24-request run | **$0.0090** | $0.0143 |
+| Tokens per run | **43,422** | 95,912 |
+
+Mode B's advantage is concentrated exactly where it matters for a funding committee: **dollar
+accuracy and citation discipline are perfect**, because the deterministic code Engine (not the
+model) computes every amount and only ever cites a rule that actually fired. Mode A is cheaper and
+its overall verdict accuracy isn't far behind (0.860 vs. 0.883) — reported honestly rather than
+inflated, per the step instruction to report anywhere Mode A does as well or better. Mode A's 78
+"wrong_real_quote" citations are a real but real quote attached to a line that didn't actually hit
+that rule (e.g. citing the $15/person food cap on an allowed line under that cap) — more
+"talkative" than dishonest, and noted as such rather than counted as equivalent to an invented
+quote (there were zero invented quotes from either mode). The identical 7/30 cross-club
+inconsistency rate between the two modes is a coincidence worth a second look, not a claim —
+some of it is legitimately explained by each request's own semester-cap remaining budget, which
+affects both modes' math the same way; this wasn't separated out (see the caveat in
+`evidence/benchmark.md`).
+
+**Experiments on Mode B** (same run, no re-benchmarking from scratch for each):
+1. **Skeptic on vs. off**: verdict/category accuracy is identical by construction (the Skeptic
+   never changes either); cost differs — 46 calls/$0.0143 with it, 25 calls/$0.0095 without. 10
+   lines flagged, 0 were real Reader misclassifications (reasonable caution, not error-catching,
+   in this run).
+2. **Stable vs. broken prompt prefix (caching)**: 0 cached tokens either way, on a 6-request
+   sample — Portkey/this model doesn't appear to cache the Reader's prompt at this length;
+   reported as the real (zero) number, not papered over.
+3. **Reasoning effort low vs. medium**: identical category accuracy (1.0 on a 6-request sample),
+   medium uses more tokens (14,195 vs. 13,962) and costs more ($0.002322 vs. $0.002205) for no
+   measured accuracy gain on this sample.
+4. **Parallel vs. sequential** (8-request sample, Reader only): 0.77s parallel vs. 3.09s
+   sequential — 4.0x speedup.
+5. **Compile once vs. per request** (projected from the real measured single-compile cost, not 24
+   additional real calls): $0.00075 once vs. $0.018 if compiled fresh for every one of the 24
+   requests — 24x more expensive to not reuse the compiled rules.
 
 ## Safety rules
 
@@ -305,6 +362,32 @@ committee's actual decision (CONTEXT.md hard rule 10).
   Skeptic + drafted-questions costs but NOT the one-time policy-compile or whole-pot-memo costs —
   those scale with the number of runs/semesters, not the number of requests, so folding them into
   a per-request figure would make the projection wrong at any scale other than exactly 24 requests.
+- Step06: Mode B for this benchmark is exactly Compiler+Reader+Skeptic+Engine, matching
+  PROMPTS/step06_benchmark.md's definition literally — not the full CHAIR pipeline (no Drafter, no
+  consistency report, no optimizer). `backend/benchmark.py` reimplements a lean Mode B runner
+  reusing `ChairRun`'s individual methods directly rather than calling `chair.run_full_pipeline`.
+- Step06: citation correctness is scored as exact-quote match (normalized) against the specific
+  rule(s) the answer key says fired for that line. A mode that cites a real, relevant policy
+  sentence for a line that didn't actually trigger a rule is scored `wrong_real_quote`, distinct
+  from `invented_not_in_policy` (a quote that isn't real policy text at all) — the two are very
+  different failure modes and conflating them would understate how good Mode A's citations
+  actually are (zero invented quotes, all failures were real-but-irrelevant).
+- Step06: cross-club inconsistency is checked on (description, amount, docs, already_purchased)
+  groups across different clubs — the same key used to fix the consistency_report matching bug in
+  step02, now repurposed to check each mode's own self-consistency rather than matching against
+  prior_decisions. Legitimate per-request semester-cap differences are NOT separated out from true
+  inconsistency in the headline number; this is flagged as a caveat in the output rather than
+  silently resolved, since doing it properly would need per-group manual judgment.
+- Step06: experiment 5 (compile once vs. per request) is a projection (real single-compile cost ×
+  24) rather than 24 additional real compiler calls — the per-call cost of an identical prompt is
+  effectively constant (the 3 main Mode B reps already show how little it varies), so spending 24
+  more real calls to confirm multiplication works would be pure cost with no new information.
+- Step06 bug found and fixed while building this: the original script called `reload_fresh_db()`
+  (which drops every table, including `usage`) before each of the 3 Mode B repetitions, which is
+  correct for getting a clean re-classification each time -- but experiments 1 and 5 were
+  originally written to read usage rows from "bench-modeB-1", which no longer existed by the time
+  they ran (reps 2 and 3's reloads had already wiped it). Fixed by having those experiments
+  reference the LAST completed rep's run_id instead of the first.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage

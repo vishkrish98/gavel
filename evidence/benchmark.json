@@ -1,0 +1,1655 @@
+{
+  "generated_at": "2026-10-23T23:57:19.420239+00:00",
+  "dataset": {
+    "requests": 24,
+    "lines": 179
+  },
+  "mode_a": {
+    "repetitions": [
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.8603351955307262,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.6428571428571429,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 9000.0,
+          "total_dollars_wrongly_allowed": 9000.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "citations": {
+            "correct": 80,
+            "missing": 0,
+            "wrong_real_quote": 78,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": [
+                    "3.8  Club apparel is funded up to $20 per item."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700.0,
+                  "citation_quotes": [
+                    "3.7  Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.6428571428571429
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 33641,
+          "cached_tokens": 0,
+          "cache_write_tokens": 30617,
+          "output_tokens": 9781,
+          "reasoning_tokens": 3715,
+          "total_tokens": 43422,
+          "seconds": 88.01137666599607,
+          "cost_usd": 0.00902009,
+          "calls": 24
+        }
+      },
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.8603351955307262,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.6428571428571429,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 9000.0,
+          "total_dollars_wrongly_allowed": 9000.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "citations": {
+            "correct": 80,
+            "missing": 0,
+            "wrong_real_quote": 78,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": [
+                    "3.8  Club apparel is funded up to $20 per item."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700.0,
+                  "citation_quotes": [
+                    "3.7  Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.6428571428571429
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 33641,
+          "cached_tokens": 0,
+          "cache_write_tokens": 30617,
+          "output_tokens": 9781,
+          "reasoning_tokens": 3715,
+          "total_tokens": 43422,
+          "seconds": 6.338078667997252,
+          "cost_usd": 0.00902009,
+          "calls": 24
+        }
+      },
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.8603351955307262,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.6428571428571429,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 9000.0,
+          "total_dollars_wrongly_allowed": 9000.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "citations": {
+            "correct": 80,
+            "missing": 0,
+            "wrong_real_quote": 78,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": [
+                    "3.8  Club apparel is funded up to $20 per item."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700.0,
+                  "citation_quotes": [
+                    "3.7  Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0.0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.6428571428571429
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 33641,
+          "cached_tokens": 0,
+          "cache_write_tokens": 30617,
+          "output_tokens": 9781,
+          "reasoning_tokens": 3715,
+          "total_tokens": 43422,
+          "seconds": 5.418933456998275,
+          "cost_usd": 0.00902009,
+          "calls": 24
+        }
+      }
+    ],
+    "summary": {
+      "overall_verdict_accuracy": {
+        "avg": 0.860335,
+        "min": 0.860335,
+        "max": 0.860335,
+        "values": [
+          0.860335,
+          0.860335,
+          0.860335
+        ]
+      },
+      "sum_abs_dollar_diff": {
+        "avg": 9000.0,
+        "min": 9000.0,
+        "max": 9000.0,
+        "values": [
+          9000.0,
+          9000.0,
+          9000.0
+        ]
+      },
+      "total_dollars_wrongly_allowed": {
+        "avg": 9000.0,
+        "min": 9000.0,
+        "max": 9000.0,
+        "values": [
+          9000.0,
+          9000.0,
+          9000.0
+        ]
+      },
+      "input_tokens": {
+        "avg": 33641,
+        "min": 33641,
+        "max": 33641,
+        "values": [
+          33641,
+          33641,
+          33641
+        ]
+      },
+      "cached_tokens": {
+        "avg": 0,
+        "min": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0
+        ]
+      },
+      "output_tokens": {
+        "avg": 9781,
+        "min": 9781,
+        "max": 9781,
+        "values": [
+          9781,
+          9781,
+          9781
+        ]
+      },
+      "reasoning_tokens": {
+        "avg": 3715,
+        "min": 3715,
+        "max": 3715,
+        "values": [
+          3715,
+          3715,
+          3715
+        ]
+      },
+      "cost_usd": {
+        "avg": 0.00902,
+        "min": 0.00902,
+        "max": 0.00902,
+        "values": [
+          0.00902,
+          0.00902,
+          0.00902
+        ]
+      },
+      "seconds": {
+        "avg": 33.25613,
+        "min": 5.418933,
+        "max": 88.011377,
+        "values": [
+          88.011377,
+          6.338079,
+          5.418933
+        ]
+      }
+    }
+  },
+  "mode_b": {
+    "repetitions": [
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.88268156424581,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.9285714285714286,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 0.0,
+          "total_dollars_wrongly_allowed": 0.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 0,
+          "citations": {
+            "correct": 158,
+            "missing": 0,
+            "wrong_real_quote": 0,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": []
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700,
+                  "citation_quotes": [
+                    "Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.9285714285714286
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 84299,
+          "cached_tokens": 1236,
+          "cache_write_tokens": 30196,
+          "output_tokens": 10380,
+          "reasoning_tokens": 1535,
+          "total_tokens": 94679,
+          "seconds": 46.35874029400293,
+          "cost_usd": 0.01426357,
+          "calls": 46
+        }
+      },
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.88268156424581,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.9285714285714286,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 0.0,
+          "total_dollars_wrongly_allowed": 0.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 0,
+          "citations": {
+            "correct": 158,
+            "missing": 0,
+            "wrong_real_quote": 0,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": []
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700,
+                  "citation_quotes": [
+                    "Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.9285714285714286
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 84301,
+          "cached_tokens": 1236,
+          "cache_write_tokens": 30198,
+          "output_tokens": 10380,
+          "reasoning_tokens": 1535,
+          "total_tokens": 94681,
+          "seconds": 21.527452582007754,
+          "cost_usd": 0.01426382,
+          "calls": 46
+        }
+      },
+      {
+        "score": {
+          "total_lines": 179,
+          "missing_lines": [
+            "25-L1",
+            "25-L2",
+            "25-L3",
+            "25-L4",
+            "25-L5",
+            "25-L6",
+            "25-L7",
+            "25-L8",
+            "26-L1",
+            "26-L2",
+            "26-L3",
+            "26-L4",
+            "26-L5",
+            "26-L6",
+            "26-L7",
+            "26-L8",
+            "27-L1",
+            "27-L2",
+            "27-L3",
+            "27-L4",
+            "27-L5"
+          ],
+          "overall_verdict_accuracy": 0.88268156424581,
+          "verdict_accuracy_per_type": {
+            "allowed": 0.8736842105263158,
+            "needs_docs": 0.9285714285714286,
+            "reduced": 0.7777777777777778,
+            "denied": 0.9534883720930233
+          },
+          "sum_abs_dollar_diff": 0.0,
+          "total_dollars_wrongly_allowed": 0.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 0,
+          "citations": {
+            "correct": 158,
+            "missing": 0,
+            "wrong_real_quote": 0,
+            "invented_not_in_policy": 0
+          }
+        },
+        "cross_club_inconsistency": {
+          "groups_checked": 30,
+          "inconsistent_groups": 7,
+          "inconsistency_rate": 0.23333333333333334,
+          "examples": [
+            {
+              "description": "Venue rental for event",
+              "amount": 250,
+              "line_ids": [
+                "01-L1",
+                "15-L3",
+                "17-L1",
+                "21-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q01",
+                  "club": "Robotics Club",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q15",
+                  "club": "Hackathon Committee",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q17",
+                  "club": "Mock Trial",
+                  "verdict": "allowed",
+                  "allowed_amount": 250.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q21",
+                  "club": "Math Society",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Conference registration fees",
+              "amount": 60,
+              "line_ids": [
+                "04-L2",
+                "05-L1"
+              ],
+              "results": [
+                {
+                  "request_id": "Q04",
+                  "club": "Film Society",
+                  "verdict": "allowed",
+                  "allowed_amount": 60.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Club t-shirts, 20 shirts",
+              "amount": 240,
+              "line_ids": [
+                "05-L3",
+                "10-L4"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q10",
+                  "club": "Model UN",
+                  "verdict": "allowed",
+                  "allowed_amount": 240.0,
+                  "citation_quotes": []
+                }
+              ]
+            },
+            {
+              "description": "Hotel for regional conference: 6 rooms x 3 nights",
+              "amount": 3420,
+              "line_ids": [
+                "05-L5",
+                "23-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q05",
+                  "club": "Outdoor Adventure Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                },
+                {
+                  "request_id": "Q23",
+                  "club": "Rocketry Club",
+                  "verdict": "reduced",
+                  "allowed_amount": 2700,
+                  "citation_quotes": [
+                    "Lodging is funded up to $150 per room per night."
+                  ]
+                }
+              ]
+            },
+            {
+              "description": "Sound system",
+              "amount": 350,
+              "line_ids": [
+                "07-L4",
+                "14-L5"
+              ],
+              "results": [
+                {
+                  "request_id": "Q07",
+                  "club": "Dance Collective",
+                  "verdict": "allowed",
+                  "allowed_amount": 350.0,
+                  "citation_quotes": []
+                },
+                {
+                  "request_id": "Q14",
+                  "club": "Investment Club",
+                  "verdict": "denied",
+                  "allowed_amount": 0,
+                  "citation_quotes": [
+                    "Requests must be submitted at least 14 days before the event."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "hard_cases": {
+          "ambiguous_wording_alcohol_or_gift_card": {
+            "n": 9,
+            "verdict_accuracy": 0.8888888888888888
+          },
+          "semester_cap_interactions": {
+            "n": 0,
+            "verdict_accuracy": null
+          },
+          "needs_docs_threshold": {
+            "n": 14,
+            "verdict_accuracy": 0.9285714285714286
+          },
+          "late_requests_deadline": {
+            "n": 19,
+            "verdict_accuracy": 1.0
+          }
+        },
+        "usage": {
+          "input_tokens": 84297,
+          "cached_tokens": 1236,
+          "cache_write_tokens": 30194,
+          "output_tokens": 10370,
+          "reasoning_tokens": 1535,
+          "total_tokens": 94667,
+          "seconds": 21.523945705008373,
+          "cost_usd": 0.01425832,
+          "calls": 46
+        }
+      }
+    ],
+    "summary": {
+      "overall_verdict_accuracy": {
+        "avg": 0.882682,
+        "min": 0.882682,
+        "max": 0.882682,
+        "values": [
+          0.882682,
+          0.882682,
+          0.882682
+        ]
+      },
+      "sum_abs_dollar_diff": {
+        "avg": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "values": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "total_dollars_wrongly_allowed": {
+        "avg": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "values": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "input_tokens": {
+        "avg": 84299,
+        "min": 84297,
+        "max": 84301,
+        "values": [
+          84299,
+          84301,
+          84297
+        ]
+      },
+      "cached_tokens": {
+        "avg": 1236,
+        "min": 1236,
+        "max": 1236,
+        "values": [
+          1236,
+          1236,
+          1236
+        ]
+      },
+      "output_tokens": {
+        "avg": 10376.666667,
+        "min": 10370,
+        "max": 10380,
+        "values": [
+          10380,
+          10380,
+          10370
+        ]
+      },
+      "reasoning_tokens": {
+        "avg": 1535,
+        "min": 1535,
+        "max": 1535,
+        "values": [
+          1535,
+          1535,
+          1535
+        ]
+      },
+      "cost_usd": {
+        "avg": 0.014262,
+        "min": 0.014258,
+        "max": 0.014264,
+        "values": [
+          0.014264,
+          0.014264,
+          0.014258
+        ]
+      },
+      "seconds": {
+        "avg": 29.80338,
+        "min": 21.523946,
+        "max": 46.35874,
+        "values": [
+          46.35874,
+          21.527453,
+          21.523946
+        ]
+      }
+    }
+  },
+  "mode_c_human_baseline": {
+    "available": false,
+    "note": "evidence/manual_first5.csv does not exist yet -- this is the user's own timed, by-hand review of Q01-Q05 (START_HERE.md task #1), not something this script can produce. Fill evidence/manual_first5_TEMPLATE.csv and save it as evidence/manual_first5.csv, then step10's score_manual.py will score it against the same answer key used here."
+  },
+  "experiments": {
+    "1_skeptic_on_vs_off": {
+      "with_skeptic_usage": {
+        "input_tokens": 84297,
+        "cached_tokens": 1236,
+        "cache_write_tokens": 30194,
+        "output_tokens": 10370,
+        "reasoning_tokens": 1535,
+        "total_tokens": 94667,
+        "seconds": 21.523945705008373,
+        "cost_usd": 0.01425832,
+        "calls": 46
+      },
+      "without_skeptic_usage": {
+        "input_tokens": 53589,
+        "cached_tokens": 1236,
+        "cache_write_tokens": 30194,
+        "output_tokens": 7045,
+        "reasoning_tokens": 437,
+        "total_tokens": 60634,
+        "seconds": 11.763345040004424,
+        "cost_usd": 0.00952502,
+        "calls": 25
+      },
+      "lines_flagged": 10,
+      "flagged_that_were_actual_misclassifications": 0,
+      "flagged_that_were_not_actual_errors": 10,
+      "note": "Verdict/category accuracy is identical with or without the Skeptic by construction -- it never changes a category or verdict, only flags lines for human review. The only real difference is cost/tokens (its own calls) and how many of its flags were real Reader errors vs. reasonable-but-unnecessary caution."
+    },
+    "2_cache_breakpoint": {
+      "sample_size": 6,
+      "stable_prefix_cached_tokens_per_call": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stable_prefix_mean_cached_tokens": 0,
+      "broken_prefix_cached_tokens_per_call": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "broken_prefix_mean_cached_tokens": 0,
+      "note": "cached_tokens is the real value PydanticAI's usage.cache_read_tokens returns from the provider -- not estimated. If Portkey doesn't honor caching for this model, both conditions may show 0; that's reported as-is, not papered over."
+    },
+    "3_reasoning_effort_low_vs_medium": {
+      "sample_size": 6,
+      "low_effort": {
+        "category_accuracy": 1.0,
+        "total_tokens": 13962,
+        "cost_usd": 0.002205
+      },
+      "medium_effort": {
+        "category_accuracy": 1.0,
+        "total_tokens": 14195,
+        "cost_usd": 0.002322
+      }
+    },
+    "4_parallel_vs_sequential": {
+      "sample_size": 8,
+      "parallel_seconds": 0.77,
+      "sequential_seconds": 3.09,
+      "speedup_factor": 4.02
+    },
+    "5_compile_once_vs_per_request": {
+      "compile_once_cost_usd": 0.00075,
+      "num_requests": 24,
+      "projected_cost_if_compiled_once_per_request_usd": 0.018006,
+      "savings_usd": 0.017256,
+      "savings_factor": 24.0
+    }
+  }
+}

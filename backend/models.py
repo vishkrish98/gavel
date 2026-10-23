@@ -74,3 +74,19 @@ class DrafterQuestionsOutput(BaseModel):
 
 class DrafterMemoOutput(BaseModel):
     memo: str
+
+
+# --- Mode A benchmark baseline (step06): a generic AI assistant, one prompt, no tools, no engine.
+VerdictType = Literal["allowed", "reduced", "denied", "needs_docs"]
+
+
+class ModeALineVerdict(BaseModel):
+    line_id: str
+    verdict: VerdictType
+    allowed_amount: float = Field(ge=0)
+    citation_quote: Optional[str] = Field(default=None, description="exact policy text justifying this verdict, or null if none applies")
+
+
+class ModeAOutput(BaseModel):
+    request_id: str
+    lines: list[ModeALineVerdict]
