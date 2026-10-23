@@ -1,0 +1,7 @@
+Read CONTEXT.md first. Do Step 9 only: make the project runnable by a stranger in under 10 minutes.
+
+1. Write README.md: what the app is in two sentences; prerequisites (Python 3.11 or newer; Node is NOT needed because frontend/dist is committed); install and run steps with commands for both macOS/Linux and Windows; where to put the key (the repo folder or one folder above), with the exact line PORTKEY_API_KEY=your-key; how to use the app (click "Try the sample", approve the rules, run); how to run the tests, the benchmark and the safety test; how to use your own policy and requests; the expected time for each step; a Troubleshooting section for the three most likely problems (missing key, busy port, wrong Python version).
+2. Check requirements.txt installs cleanly in a brand new virtual environment.
+3. Do a real dry run: git clone the repo into a brand new empty folder in a different location, create a new venv, install, put .env one folder above, run python run.py, open the printed URL, and complete a sample run end to end. Time each stage with a stopwatch and save the log to evidence/fresh_clone_log.md.
+4. Security check: run git ls-files and confirm no .env, no keys, no database files, nothing from data/private/; search the whole repo for strings that look like API keys; confirm .env.example has names only. Save the result to evidence/secrets_check.md.
+5. Fix anything that took longer than expected. Stop and report the total time from clone to first result.

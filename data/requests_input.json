@@ -1,0 +1,1480 @@
+[
+ {
+  "request_id": "Q01",
+  "club": "Robotics Club",
+  "event_date": "2026-12-08",
+  "submitted_date": "2026-11-05",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "01-L1",
+    "description": "Venue rental for event",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L2",
+    "description": "Hotel for regional conference: 3 rooms x 2 nights",
+    "amount": 1140,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L3",
+    "description": "Trophies and prizes for tournament, 3 items",
+    "amount": 75,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L4",
+    "description": "Catered sandwiches and drinks for 40 guests",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L5",
+    "description": "Printing of posters and programs",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L6",
+    "description": "Embroidered hoodies for officers and members (30)",
+    "amount": 840,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L7",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 1500,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "01-L8",
+    "description": "Pre-paid visa cards as attendance incentive, 5 cards of $10",
+    "amount": 50,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q02",
+  "club": "Chess Society",
+  "event_date": "2026-11-08",
+  "submitted_date": "2026-10-02",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "02-L1",
+    "description": "Trophies and prizes for tournament, 12 items",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L2",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L3",
+    "description": "Conference registration fees",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L4",
+    "description": "3D printer",
+    "amount": 350,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L5",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 1500,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "02-L6",
+    "description": "Catered sandwiches and drinks for 30 guests",
+    "amount": 420,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L7",
+    "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "02-L8",
+    "description": "Printing of posters and programs",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q03",
+  "club": "Debate Union",
+  "event_date": "2026-11-05",
+  "submitted_date": "2026-09-26",
+  "justification": "Debate Union will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "03-L1",
+    "description": "Embroidered hoodies for officers and members (50)",
+    "amount": 1200,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "03-L2",
+    "description": "Catered sandwiches and drinks for 50 guests",
+    "amount": 1050,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "03-L3",
+    "description": "Sound system",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "03-L4",
+    "description": "Conference registration fees",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "03-L5",
+    "description": "Honorarium for guest speaker",
+    "amount": 2500,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q04",
+  "club": "Film Society",
+  "event_date": "2026-11-24",
+  "submitted_date": "2026-10-12",
+  "justification": "Film Society will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "04-L1",
+    "description": "Printing of posters and programs",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L2",
+    "description": "Conference registration fees",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L3",
+    "description": "Honorarium for guest speaker",
+    "amount": 1500,
+    "docs": [
+     "contract"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L4",
+    "description": "Pizza and soda for 50 attendees",
+    "amount": 900,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L5",
+    "description": "Event supplies and decorations",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L6",
+    "description": "Embroidered hoodies for officers and members (50)",
+    "amount": 1200,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "04-L7",
+    "description": "Pre-paid visa cards as attendance incentive, 5 cards of $10",
+    "amount": 50,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q05",
+  "club": "Outdoor Adventure Club",
+  "event_date": "2026-11-27",
+  "submitted_date": "2026-11-15",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "05-L1",
+    "description": "Conference registration fees",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "05-L2",
+    "description": "Pizza and soda for 50 attendees",
+    "amount": 550,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "05-L3",
+    "description": "Club t-shirts, 20 shirts",
+    "amount": 240,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "05-L4",
+    "description": "Trophies and prizes for tournament, 10 items",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "05-L5",
+    "description": "Hotel for regional conference: 6 rooms x 3 nights",
+    "amount": 3420,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "05-L6",
+    "description": "Pizza and soda for 40 attendees",
+    "amount": 600,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q06",
+  "club": "Entrepreneurship Club",
+  "event_date": "2026-12-06",
+  "submitted_date": "2026-11-16",
+  "justification": "Entrepreneurship Club will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "06-L1",
+    "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+    "amount": 220,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "06-L2",
+    "description": "Venue rental for event",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "06-L3",
+    "description": "Club t-shirts, 20 shirts",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "06-L4",
+    "description": "Event supplies and decorations",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "06-L5",
+    "description": "Hotel for regional conference: 4 rooms x 3 nights",
+    "amount": 2040,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "06-L6",
+    "description": "Printing of posters and programs",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q07",
+  "club": "Dance Collective",
+  "event_date": "2026-12-21",
+  "submitted_date": "2026-11-18",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "07-L1",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 840,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "07-L2",
+    "description": "Pizza and soda for 20 attendees",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "07-L3",
+    "description": "Honorarium for guest speaker",
+    "amount": 1500,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "07-L4",
+    "description": "Sound system",
+    "amount": 350,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "07-L5",
+    "description": "Event supplies and decorations",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "07-L6",
+    "description": "Pre-paid visa cards as attendance incentive, 20 cards of $25",
+    "amount": 500,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q08",
+  "club": "Astronomy Club",
+  "event_date": "2026-11-13",
+  "submitted_date": "2026-10-15",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "08-L1",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "08-L2",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 700,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "08-L3",
+    "description": "3D printer",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "08-L4",
+    "description": "Refreshments (snacks, sparkling water) for 60 people at the general meeting",
+    "amount": 840,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "08-L5",
+    "description": "Printing of posters and programs",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q09",
+  "club": "Cultural Fusion Night Committee",
+  "event_date": "2026-12-03",
+  "submitted_date": "2026-11-12",
+  "justification": "Cultural Fusion Night Committee will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "09-L1",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 720,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L2",
+    "description": "Hotel for regional conference: 3 rooms x 3 nights",
+    "amount": 1350,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L3",
+    "description": "Pizza and soda for 80 attendees",
+    "amount": 1200,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L4",
+    "description": "Pizza and soda for 20 attendees",
+    "amount": 280,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L5",
+    "description": "Event supplies and decorations",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L6",
+    "description": "Trophies and prizes for tournament, 12 items",
+    "amount": 300,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "09-L7",
+    "description": "3D printer",
+    "amount": 1200,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "09-L8",
+    "description": "Conference registration fees",
+    "amount": 650,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q10",
+  "club": "Model UN",
+  "event_date": "2026-12-02",
+  "submitted_date": "2026-10-28",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "10-L1",
+    "description": "Refreshments (snacks, sparkling water) for 50 people at the general meeting",
+    "amount": 700,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "10-L2",
+    "description": "Printing of posters and programs",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "10-L3",
+    "description": "Hotel for regional conference: 6 rooms x 2 nights",
+    "amount": 1680,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "10-L4",
+    "description": "Club t-shirts, 20 shirts",
+    "amount": 240,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "10-L5",
+    "description": "Conference registration fees",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "10-L6",
+    "description": "10 x $10 Amazon gift cards for raffle",
+    "amount": 100,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q11",
+  "club": "Women in Engineering",
+  "event_date": "2026-11-10",
+  "submitted_date": "2026-10-22",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "11-L1",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 2500,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "11-L2",
+    "description": "Pizza and soda for 50 attendees",
+    "amount": 550,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "11-L3",
+    "description": "Event supplies and decorations",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "11-L4",
+    "description": "Hotel for regional conference: 4 rooms x 2 nights",
+    "amount": 1200,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "11-L5",
+    "description": "Conference registration fees",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "11-L6",
+    "description": "Venue rental for event",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "11-L7",
+    "description": "Catered sandwiches and drinks for 50 guests",
+    "amount": 450,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "11-L8",
+    "description": "Printing of posters and programs",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q12",
+  "club": "Ski and Snowboard Club",
+  "event_date": "2026-12-12",
+  "submitted_date": "2026-11-08",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "12-L1",
+    "description": "Embroidered hoodies for officers and members (20)",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "12-L2",
+    "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+    "amount": 320,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "12-L3",
+    "description": "Hotel for regional conference: 2 rooms x 2 nights",
+    "amount": 680,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "12-L4",
+    "description": "Honorarium for guest speaker",
+    "amount": 700,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "12-L5",
+    "description": "Conference registration fees",
+    "amount": 900,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": true
+   }
+  ]
+ },
+ {
+  "request_id": "Q13",
+  "club": "Photography Guild",
+  "event_date": "2026-12-23",
+  "submitted_date": "2026-11-13",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "13-L1",
+    "description": "Event supplies and decorations",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "13-L2",
+    "description": "Embroidered hoodies for officers and members (50)",
+    "amount": 1400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "13-L3",
+    "description": "Giveaway items (water bottles) for 10 winners",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "13-L4",
+    "description": "Printing of posters and programs",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "13-L5",
+    "description": "Conference registration fees",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "13-L6",
+    "description": "Pre-paid visa cards as attendance incentive, 5 cards of $10",
+    "amount": 50,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q14",
+  "club": "Investment Club",
+  "event_date": "2026-12-10",
+  "submitted_date": "2026-12-01",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "14-L1",
+    "description": "Catered sandwiches and drinks for 40 guests",
+    "amount": 720,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "14-L2",
+    "description": "Catered sandwiches and drinks for 20 guests",
+    "amount": 320,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "14-L3",
+    "description": "Conference registration fees",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "14-L4",
+    "description": "Giveaway items (water bottles) for 12 winners",
+    "amount": 540,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "14-L5",
+    "description": "Sound system",
+    "amount": 350,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "14-L6",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 1200,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "14-L7",
+    "description": "Venue rental for event",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q15",
+  "club": "Hackathon Committee",
+  "event_date": "2026-11-11",
+  "submitted_date": "2026-10-20",
+  "justification": "Hackathon Committee will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "15-L1",
+    "description": "Hotel for regional conference: 2 rooms x 2 nights",
+    "amount": 440,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L2",
+    "description": "Catered sandwiches and drinks for 50 guests",
+    "amount": 450,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L3",
+    "description": "Venue rental for event",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L4",
+    "description": "Embroidered hoodies for officers and members (20)",
+    "amount": 560,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L5",
+    "description": "Event supplies and decorations",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L6",
+    "description": "3D printer",
+    "amount": 350,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L7",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 700,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "15-L8",
+    "description": "Printing of posters and programs",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q16",
+  "club": "Environmental Action Club",
+  "event_date": "2026-12-12",
+  "submitted_date": "2026-11-05",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "16-L1",
+    "description": "Printing of posters and programs",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "16-L2",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 1200,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "16-L3",
+    "description": "Event supplies and decorations",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "16-L4",
+    "description": "Trophies and prizes for tournament, 3 items",
+    "amount": 54,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "16-L5",
+    "description": "Signature cocktails for gala, 30 guests",
+    "amount": 300,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q17",
+  "club": "Mock Trial",
+  "event_date": "2026-11-06",
+  "submitted_date": "2026-09-30",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "17-L1",
+    "description": "Venue rental for event",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "17-L2",
+    "description": "Conference registration fees",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "17-L3",
+    "description": "Catered sandwiches and drinks for 50 guests",
+    "amount": 1050,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "17-L4",
+    "description": "Giveaway items (water bottles) for 12 winners",
+    "amount": 540,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "17-L5",
+    "description": "Catered sandwiches and drinks for 60 guests",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "17-L6",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 540,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q18",
+  "club": "Jazz Ensemble",
+  "event_date": "2026-11-08",
+  "submitted_date": "2026-10-07",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "18-L1",
+    "description": "Honorarium for guest speaker",
+    "amount": 1800,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L2",
+    "description": "Hotel for regional conference: 2 rooms x 2 nights",
+    "amount": 440,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L3",
+    "description": "Refreshments (snacks, sparkling water) for 60 people at the general meeting",
+    "amount": 960,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L4",
+    "description": "Event supplies and decorations",
+    "amount": 60,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L5",
+    "description": "Venue rental for event",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L6",
+    "description": "3D printer",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L7",
+    "description": "Conference registration fees",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "18-L8",
+    "description": "Catered sandwiches and drinks for 20 guests",
+    "amount": 300,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q19",
+  "club": "Esports Club",
+  "event_date": "2026-11-27",
+  "submitted_date": "2026-10-28",
+  "justification": "Esports Club will host an event open to all students and expects strong attendance.",
+  "lines": [
+   {
+    "line_id": "19-L1",
+    "description": "Giveaway items (water bottles) for 10 winners",
+    "amount": 180,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "19-L2",
+    "description": "Printing of posters and programs",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "19-L3",
+    "description": "Catered sandwiches and drinks for 40 guests",
+    "amount": 360,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "19-L4",
+    "description": "Hotel for regional conference: 2 rooms x 2 nights",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "19-L5",
+    "description": "Catered sandwiches and drinks for 50 guests",
+    "amount": 450,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "19-L6",
+    "description": "Pre-paid visa cards as attendance incentive, 20 cards of $25",
+    "amount": 500,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q20",
+  "club": "Habitat Volunteers",
+  "event_date": "2026-12-09",
+  "submitted_date": "2026-11-02",
+  "justification": "This request supports our spring programming and a regional competition.",
+  "lines": [
+   {
+    "line_id": "20-L1",
+    "description": "Event supplies and decorations",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "20-L2",
+    "description": "Club t-shirts, 50 shirts",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "20-L3",
+    "description": "Honorarium for guest speaker",
+    "amount": 1800,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "20-L4",
+    "description": "3D printer",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "20-L5",
+    "description": "Hotel for regional conference: 4 rooms x 2 nights",
+    "amount": 1120,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "20-L6",
+    "description": "Catered sandwiches and drinks for 30 guests",
+    "amount": 270,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "20-L7",
+    "description": "Giveaway items (water bottles) for 3 winners",
+    "amount": 135,
+    "docs": [],
+    "already_purchased": true
+   }
+  ]
+ },
+ {
+  "request_id": "Q21",
+  "club": "Math Society",
+  "event_date": "2026-11-17",
+  "submitted_date": "2026-11-05",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "21-L1",
+    "description": "Venue rental for event",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "21-L2",
+    "description": "Printing of posters and programs",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "21-L3",
+    "description": "Professional camera body",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "21-L4",
+    "description": "Event supplies and decorations",
+    "amount": 400,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "21-L5",
+    "description": "Refreshments (snacks, sparkling water) for 60 people at the general meeting",
+    "amount": 660,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "21-L6",
+    "description": "Club t-shirts, 30 shirts",
+    "amount": 540,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q22",
+  "club": "Theatre Troupe",
+  "event_date": "2026-12-06",
+  "submitted_date": "2026-10-29",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "22-L1",
+    "description": "Venue rental for event",
+    "amount": 120,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "22-L2",
+    "description": "Hotel for regional conference: 6 rooms x 2 nights",
+    "amount": 1680,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "22-L3",
+    "description": "Honorarium for guest speaker",
+    "amount": 700,
+    "docs": [
+     "contract",
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "22-L4",
+    "description": "Conference registration fees",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": true
+   },
+   {
+    "line_id": "22-L5",
+    "description": "Club t-shirts, 50 shirts",
+    "amount": 1000,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "22-L6",
+    "description": "Pre-paid visa cards as attendance incentive, 10 cards of $10",
+    "amount": 100,
+    "docs": [],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q23",
+  "club": "Rocketry Club",
+  "event_date": "2026-11-22",
+  "submitted_date": "2026-10-10",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "23-L1",
+    "description": "Trophies and prizes for tournament, 3 items",
+    "amount": 54,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L2",
+    "description": "Event supplies and decorations",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": true
+   },
+   {
+    "line_id": "23-L3",
+    "description": "Honorarium for guest speaker",
+    "amount": 700,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L4",
+    "description": "Club t-shirts, 50 shirts",
+    "amount": 900,
+    "docs": [
+     "quotes1"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L5",
+    "description": "Hotel for regional conference: 6 rooms x 3 nights",
+    "amount": 3420,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L6",
+    "description": "Venue rental for event",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L7",
+    "description": "Catered sandwiches and drinks for 80 guests",
+    "amount": 1280,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "23-L8",
+    "description": "Printing of posters and programs",
+    "amount": 900,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   }
+  ]
+ },
+ {
+  "request_id": "Q24",
+  "club": "Culinary Society",
+  "event_date": "2026-12-22",
+  "submitted_date": "2026-12-05",
+  "justification": "We aim to grow membership and bring speakers to campus.",
+  "lines": [
+   {
+    "line_id": "24-L1",
+    "description": "Printing of posters and programs",
+    "amount": 250,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L2",
+    "description": "Hotel for regional conference: 3 rooms x 2 nights",
+    "amount": 840,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L3",
+    "description": "Embroidered hoodies for officers and members (30)",
+    "amount": 600,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L4",
+    "description": "Pizza and soda for 30 attendees",
+    "amount": 450,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L5",
+    "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+    "amount": 320,
+    "docs": [],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L6",
+    "description": "Keynote speaker fee for annual symposium",
+    "amount": 1200,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": false
+   },
+   {
+    "line_id": "24-L7",
+    "description": "Venue rental for event",
+    "amount": 650,
+    "docs": [
+     "quotes3"
+    ],
+    "already_purchased": true
+   }
+  ]
+ }
+]

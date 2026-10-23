@@ -1,0 +1,149 @@
+{
+ "pot": 40000,
+ "clubs": [
+  {
+   "club": "Robotics Club",
+   "last_year_allocated": 6000,
+   "last_year_spent": 5400,
+   "utilization": 0.9
+  },
+  {
+   "club": "Chess Society",
+   "last_year_allocated": 6000,
+   "last_year_spent": 6000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Debate Union",
+   "last_year_allocated": 8000,
+   "last_year_spent": 5600,
+   "utilization": 0.7
+  },
+  {
+   "club": "Film Society",
+   "last_year_allocated": 6000,
+   "last_year_spent": 5400,
+   "utilization": 0.9
+  },
+  {
+   "club": "Outdoor Adventure Club",
+   "last_year_allocated": 7000,
+   "last_year_spent": 7000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Entrepreneurship Club",
+   "last_year_allocated": 8000,
+   "last_year_spent": 8000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Dance Collective",
+   "last_year_allocated": 6000,
+   "last_year_spent": 3000,
+   "utilization": 0.5
+  },
+  {
+   "club": "Astronomy Club",
+   "last_year_allocated": 7000,
+   "last_year_spent": 3500,
+   "utilization": 0.5
+  },
+  {
+   "club": "Cultural Fusion Night Committee",
+   "last_year_allocated": 6000,
+   "last_year_spent": 2100,
+   "utilization": 0.35
+  },
+  {
+   "club": "Model UN",
+   "last_year_allocated": 5000,
+   "last_year_spent": 2500,
+   "utilization": 0.5
+  },
+  {
+   "club": "Women in Engineering",
+   "last_year_allocated": 4000,
+   "last_year_spent": 4000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Ski and Snowboard Club",
+   "last_year_allocated": 5000,
+   "last_year_spent": 5000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Photography Guild",
+   "last_year_allocated": 7000,
+   "last_year_spent": 4900,
+   "utilization": 0.7
+  },
+  {
+   "club": "Investment Club",
+   "last_year_allocated": 6000,
+   "last_year_spent": 4200,
+   "utilization": 0.7
+  },
+  {
+   "club": "Hackathon Committee",
+   "last_year_allocated": 4000,
+   "last_year_spent": 4000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Environmental Action Club",
+   "last_year_allocated": 4000,
+   "last_year_spent": 2800,
+   "utilization": 0.7
+  },
+  {
+   "club": "Mock Trial",
+   "last_year_allocated": 8000,
+   "last_year_spent": 2800,
+   "utilization": 0.35
+  },
+  {
+   "club": "Jazz Ensemble",
+   "last_year_allocated": 6000,
+   "last_year_spent": 3000,
+   "utilization": 0.5
+  },
+  {
+   "club": "Esports Club",
+   "last_year_allocated": 6000,
+   "last_year_spent": 4200,
+   "utilization": 0.7
+  },
+  {
+   "club": "Habitat Volunteers",
+   "last_year_allocated": 7000,
+   "last_year_spent": 3500,
+   "utilization": 0.5
+  },
+  {
+   "club": "Math Society",
+   "last_year_allocated": 8000,
+   "last_year_spent": 5600,
+   "utilization": 0.7
+  },
+  {
+   "club": "Theatre Troupe",
+   "last_year_allocated": 5000,
+   "last_year_spent": 5000,
+   "utilization": 1.0
+  },
+  {
+   "club": "Rocketry Club",
+   "last_year_allocated": 7000,
+   "last_year_spent": 6300,
+   "utilization": 0.9
+  },
+  {
+   "club": "Culinary Society",
+   "last_year_allocated": 8000,
+   "last_year_spent": 8000,
+   "utilization": 1.0
+  }
+ ]
+}

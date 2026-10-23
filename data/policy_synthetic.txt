@@ -1,0 +1,18 @@
+STUDENT GOVERNMENT FUNDING POLICY (SYNTHETIC, FOR SOFTWARE TESTING ONLY)
+
+1.1  The Student Government Funding Committee (the Committee) reviews club budget requests each semester. This policy is synthetic and written for software testing only.
+1.2  Clubs are encouraged to co-sponsor events with other clubs.
+2.1  The Committee may consider a club's prior-year utilization when allocating funds.
+3.1  Funds may not be used to purchase alcohol.
+3.2  Funds may not be used to purchase gift cards.
+3.3  Prizes and giveaways may not exceed $25 per item.
+3.4  Food and beverages are funded up to $15 per person per event.
+3.5  Any single purchase over $500 requires three written quotes.
+3.6  Speaker fees are funded up to $1,500 per event and require a signed contract.
+3.7  Lodging is funded up to $150 per room per night.
+3.8  Club apparel is funded up to $20 per item.
+3.9  Equipment with a unit cost over $1,000 is not funded.
+4.1  Requests must be submitted at least 14 days before the event.
+4.2  Purchases made before the Committee approves a request are not reimbursed.
+4.3  No club may receive more than $8,000 in a semester.
+5.1  Questions about this policy may be directed to the Committee Treasurer.

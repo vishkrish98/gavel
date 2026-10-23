@@ -1,0 +1,360 @@
+{
+ "note": "Prior committee decisions on the same kinds of lines. inconsistent=true marks where the human decision differs from what the policy engine allows. 6 planted.",
+ "decisions": [
+  {
+   "decision_id": "P01",
+   "term": "last year",
+   "club": "Entrepreneurship Club",
+   "description": "Hotel for regional conference: 4 rooms x 3 nights",
+   "requested": 2040,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 1800,
+   "policy_allowed": 1800,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P02",
+   "term": "last year",
+   "club": "Dance Collective",
+   "description": "Sound system",
+   "requested": 350,
+   "docs": [],
+   "approved": 350,
+   "policy_allowed": 350,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P03",
+   "term": "last year",
+   "club": "Mock Trial",
+   "description": "Venue rental for event",
+   "requested": 250,
+   "docs": [],
+   "approved": 250,
+   "policy_allowed": 250,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P04",
+   "term": "last year",
+   "club": "Theatre Troupe",
+   "description": "Honorarium for guest speaker",
+   "requested": 700,
+   "docs": [
+    "contract",
+    "quotes3"
+   ],
+   "approved": 700,
+   "policy_allowed": 700,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P05",
+   "term": "last year",
+   "club": "Debate Union",
+   "description": "Sound system",
+   "requested": 600,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 500,
+   "policy_allowed": 600,
+   "inconsistent": true
+  },
+  {
+   "decision_id": "P06",
+   "term": "last year",
+   "club": "Outdoor Adventure Club",
+   "description": "Pizza and soda for 50 attendees",
+   "requested": 550,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 0,
+   "policy_allowed": 0,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P07",
+   "term": "last year",
+   "club": "Ski and Snowboard Club",
+   "description": "Refreshments (snacks, sparkling water) for 20 people at the general meeting",
+   "requested": 320,
+   "docs": [],
+   "approved": 320,
+   "policy_allowed": 300,
+   "inconsistent": true
+  },
+  {
+   "decision_id": "P08",
+   "term": "last year",
+   "club": "Hackathon Committee",
+   "description": "Keynote speaker fee for annual symposium",
+   "requested": 700,
+   "docs": [
+    "contract",
+    "quotes3"
+   ],
+   "approved": 700,
+   "policy_allowed": 700,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P09",
+   "term": "last year",
+   "club": "Esports Club",
+   "description": "Catered sandwiches and drinks for 40 guests",
+   "requested": 360,
+   "docs": [],
+   "approved": 360,
+   "policy_allowed": 360,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P10",
+   "term": "last year",
+   "club": "Culinary Society",
+   "description": "Printing of posters and programs",
+   "requested": 250,
+   "docs": [],
+   "approved": 150,
+   "policy_allowed": 250,
+   "inconsistent": true
+  },
+  {
+   "decision_id": "P11",
+   "term": "last year",
+   "club": "Math Society",
+   "description": "Professional camera body",
+   "requested": 900,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 0,
+   "policy_allowed": 0,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P12",
+   "term": "last year",
+   "club": "Debate Union",
+   "description": "Embroidered hoodies for officers and members (50)",
+   "requested": 1200,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 1000,
+   "policy_allowed": 1000,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P13",
+   "term": "last year",
+   "club": "Outdoor Adventure Club",
+   "description": "Pizza and soda for 40 attendees",
+   "requested": 600,
+   "docs": [],
+   "approved": 0,
+   "policy_allowed": 0,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P14",
+   "term": "last year",
+   "club": "Jazz Ensemble",
+   "description": "Catered sandwiches and drinks for 20 guests",
+   "requested": 300,
+   "docs": [],
+   "approved": 300,
+   "policy_allowed": 300,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P15",
+   "term": "last year",
+   "club": "Film Society",
+   "description": "Event supplies and decorations",
+   "requested": 60,
+   "docs": [],
+   "approved": 60,
+   "policy_allowed": 60,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P16",
+   "term": "last year",
+   "club": "Entrepreneurship Club",
+   "description": "Hotel for regional conference: 4 rooms x 3 nights",
+   "requested": 2040,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 1800,
+   "policy_allowed": 1800,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P17",
+   "term": "last year",
+   "club": "Environmental Action Club",
+   "description": "Printing of posters and programs",
+   "requested": 250,
+   "docs": [],
+   "approved": 250,
+   "policy_allowed": 250,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P18",
+   "term": "last year",
+   "club": "Astronomy Club",
+   "description": "Keynote speaker fee for annual symposium",
+   "requested": 700,
+   "docs": [
+    "contract",
+    "quotes3"
+   ],
+   "approved": 600,
+   "policy_allowed": 700,
+   "inconsistent": true
+  },
+  {
+   "decision_id": "P19",
+   "term": "last year",
+   "club": "Robotics Club",
+   "description": "Catered sandwiches and drinks for 40 guests",
+   "requested": 360,
+   "docs": [],
+   "approved": 360,
+   "policy_allowed": 360,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P20",
+   "term": "last year",
+   "club": "Chess Society",
+   "description": "Conference registration fees",
+   "requested": 400,
+   "docs": [],
+   "approved": 400,
+   "policy_allowed": 400,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P21",
+   "term": "last year",
+   "club": "Habitat Volunteers",
+   "description": "Club t-shirts, 50 shirts",
+   "requested": 600,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 500,
+   "policy_allowed": 600,
+   "inconsistent": true
+  },
+  {
+   "decision_id": "P22",
+   "term": "last year",
+   "club": "Model UN",
+   "description": "10 x $10 Amazon gift cards for raffle",
+   "requested": 100,
+   "docs": [],
+   "approved": 0,
+   "policy_allowed": 0,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P23",
+   "term": "last year",
+   "club": "Rocketry Club",
+   "description": "Hotel for regional conference: 6 rooms x 3 nights",
+   "requested": 3420,
+   "docs": [
+    "quotes3"
+   ],
+   "approved": 2700,
+   "policy_allowed": 2700,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P24",
+   "term": "last year",
+   "club": "Cultural Fusion Night Committee",
+   "description": "Event supplies and decorations",
+   "requested": 400,
+   "docs": [],
+   "approved": 400,
+   "policy_allowed": 400,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P25",
+   "term": "last year",
+   "club": "Photography Guild",
+   "description": "Event supplies and decorations",
+   "requested": 120,
+   "docs": [],
+   "approved": 120,
+   "policy_allowed": 120,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P26",
+   "term": "last year",
+   "club": "Investment Club",
+   "description": "Catered sandwiches and drinks for 20 guests",
+   "requested": 320,
+   "docs": [],
+   "approved": 0,
+   "policy_allowed": 0,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P27",
+   "term": "last year",
+   "club": "Chess Society",
+   "description": "Trophies and prizes for tournament, 12 items",
+   "requested": 360,
+   "docs": [],
+   "approved": 300,
+   "policy_allowed": 300,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P28",
+   "term": "last year",
+   "club": "Women in Engineering",
+   "description": "Printing of posters and programs",
+   "requested": 60,
+   "docs": [],
+   "approved": 60,
+   "policy_allowed": 60,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P29",
+   "term": "last year",
+   "club": "Robotics Club",
+   "description": "Trophies and prizes for tournament, 3 items",
+   "requested": 75,
+   "docs": [],
+   "approved": 75,
+   "policy_allowed": 75,
+   "inconsistent": false
+  },
+  {
+   "decision_id": "P30",
+   "term": "last year",
+   "club": "Film Society",
+   "description": "Conference registration fees",
+   "requested": 60,
+   "docs": [],
+   "approved": 0,
+   "policy_allowed": 60,
+   "inconsistent": true
+  }
+ ]
+}

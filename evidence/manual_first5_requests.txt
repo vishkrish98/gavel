@@ -1,0 +1,51 @@
+MANUAL BASELINE: requests Q01 to Q05. Open data/policy_synthetic.txt. For EVERY line item decide: allowed, reduced (capped; give the allowed dollar amount), denied, or needs_docs (held until documents are provided), and cite the rule paragraph. Use Excel and nothing else. Do NOT open the answer key or any app output. Start a stopwatch for all five requests.
+
+=== Q01 Robotics Club  event 2026-12-08  submitted 2026-11-05 ===
+This request supports our spring programming and a regional competition.
+  01-L1: Venue rental for event  $250  docs=none  already_purchased=False
+  01-L2: Hotel for regional conference: 3 rooms x 2 nights  $1140  docs=['quotes1']  already_purchased=False
+  01-L3: Trophies and prizes for tournament, 3 items  $75  docs=none  already_purchased=False
+  01-L4: Catered sandwiches and drinks for 40 guests  $360  docs=none  already_purchased=False
+  01-L5: Printing of posters and programs  $120  docs=none  already_purchased=False
+  01-L6: Embroidered hoodies for officers and members (30)  $840  docs=['quotes3']  already_purchased=False
+  01-L7: Keynote speaker fee for annual symposium  $1500  docs=['contract', 'quotes3']  already_purchased=False
+  01-L8: Pre-paid visa cards as attendance incentive, 5 cards of $10  $50  docs=none  already_purchased=False
+
+=== Q02 Chess Society  event 2026-11-08  submitted 2026-10-02 ===
+This request supports our spring programming and a regional competition.
+  02-L1: Trophies and prizes for tournament, 12 items  $360  docs=none  already_purchased=False
+  02-L2: Club t-shirts, 30 shirts  $360  docs=none  already_purchased=False
+  02-L3: Conference registration fees  $400  docs=none  already_purchased=False
+  02-L4: 3D printer  $350  docs=none  already_purchased=False
+  02-L5: Keynote speaker fee for annual symposium  $1500  docs=['contract', 'quotes3']  already_purchased=True
+  02-L6: Catered sandwiches and drinks for 30 guests  $420  docs=none  already_purchased=False
+  02-L7: Refreshments (snacks, sparkling water) for 20 people at the general meeting  $360  docs=none  already_purchased=False
+  02-L8: Printing of posters and programs  $120  docs=none  already_purchased=False
+
+=== Q03 Debate Union  event 2026-11-05  submitted 2026-09-26 ===
+Debate Union will host an event open to all students and expects strong attendance.
+  03-L1: Embroidered hoodies for officers and members (50)  $1200  docs=['quotes3']  already_purchased=False
+  03-L2: Catered sandwiches and drinks for 50 guests  $1050  docs=['quotes3']  already_purchased=False
+  03-L3: Sound system  $600  docs=['quotes3']  already_purchased=False
+  03-L4: Conference registration fees  $400  docs=none  already_purchased=False
+  03-L5: Honorarium for guest speaker  $2500  docs=['contract', 'quotes3']  already_purchased=False
+
+=== Q04 Film Society  event 2026-11-24  submitted 2026-10-12 ===
+Film Society will host an event open to all students and expects strong attendance.
+  04-L1: Printing of posters and programs  $400  docs=none  already_purchased=False
+  04-L2: Conference registration fees  $60  docs=none  already_purchased=False
+  04-L3: Honorarium for guest speaker  $1500  docs=['contract']  already_purchased=False
+  04-L4: Pizza and soda for 50 attendees  $900  docs=none  already_purchased=False
+  04-L5: Event supplies and decorations  $60  docs=none  already_purchased=False
+  04-L6: Embroidered hoodies for officers and members (50)  $1200  docs=['quotes3']  already_purchased=False
+  04-L7: Pre-paid visa cards as attendance incentive, 5 cards of $10  $50  docs=none  already_purchased=False
+
+=== Q05 Outdoor Adventure Club  event 2026-11-27  submitted 2026-11-15 ===
+This request supports our spring programming and a regional competition.
+  05-L1: Conference registration fees  $60  docs=none  already_purchased=False
+  05-L2: Pizza and soda for 50 attendees  $550  docs=['quotes3']  already_purchased=True
+  05-L3: Club t-shirts, 20 shirts  $240  docs=none  already_purchased=False
+  05-L4: Trophies and prizes for tournament, 10 items  $250  docs=none  already_purchased=True
+  05-L5: Hotel for regional conference: 6 rooms x 3 nights  $3420  docs=['quotes3']  already_purchased=False
+  05-L6: Pizza and soda for 40 attendees  $600  docs=none  already_purchased=False
+

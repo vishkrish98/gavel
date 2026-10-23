@@ -1,0 +1,102 @@
+{
+ "note": "Answer key for the Policy Compiler. 12 machine-checkable rules. Paragraphs 1.1, 1.2, 2.1, 5.1 are decoys (info or guidance) and must NOT become rules.",
+ "rules": [
+  {
+   "rule_id": "R01",
+   "para": "3.1",
+   "type": "prohibited_category",
+   "category": "alcohol",
+   "quote": "Funds may not be used to purchase alcohol."
+  },
+  {
+   "rule_id": "R02",
+   "para": "3.2",
+   "type": "prohibited_category",
+   "category": "gift_card",
+   "quote": "Funds may not be used to purchase gift cards."
+  },
+  {
+   "rule_id": "R03",
+   "para": "3.3",
+   "type": "unit_cap",
+   "category": "prize",
+   "cap": 25,
+   "quote": "Prizes and giveaways may not exceed $25 per item."
+  },
+  {
+   "rule_id": "R04",
+   "para": "3.4",
+   "type": "per_person_cap",
+   "category": "food",
+   "cap": 15,
+   "quote": "Food and beverages are funded up to $15 per person per event."
+  },
+  {
+   "rule_id": "R05",
+   "para": "3.5",
+   "type": "requires_docs",
+   "threshold": 500,
+   "doc": "quotes3",
+   "quote": "Any single purchase over $500 requires three written quotes."
+  },
+  {
+   "rule_id": "R06",
+   "para": "3.6",
+   "type": "event_cap",
+   "category": "speaker_fee",
+   "cap": 1500,
+   "doc": "contract",
+   "quote": "Speaker fees are funded up to $1,500 per event and require a signed contract."
+  },
+  {
+   "rule_id": "R07",
+   "para": "3.7",
+   "type": "per_night_cap",
+   "category": "lodging",
+   "cap": 150,
+   "quote": "Lodging is funded up to $150 per room per night."
+  },
+  {
+   "rule_id": "R08",
+   "para": "3.8",
+   "type": "unit_cap",
+   "category": "apparel",
+   "cap": 20,
+   "quote": "Club apparel is funded up to $20 per item."
+  },
+  {
+   "rule_id": "R09",
+   "para": "3.9",
+   "type": "unit_threshold_prohibit",
+   "category": "equipment",
+   "threshold": 1000,
+   "quote": "Equipment with a unit cost over $1,000 is not funded."
+  },
+  {
+   "rule_id": "R10",
+   "para": "4.1",
+   "type": "deadline",
+   "days": 14,
+   "quote": "Requests must be submitted at least 14 days before the event."
+  },
+  {
+   "rule_id": "R11",
+   "para": "4.2",
+   "type": "retroactive_prohibit",
+   "quote": "Purchases made before the Committee approves a request are not reimbursed."
+  },
+  {
+   "rule_id": "R12",
+   "para": "4.3",
+   "type": "semester_cap",
+   "cap": 8000,
+   "quote": "No club may receive more than $8,000 in a semester."
+  }
+ ],
+ "decoy_paras": [
+  "1.1",
+  "1.2",
+  "2.1",
+  "5.1"
+ ]
+}

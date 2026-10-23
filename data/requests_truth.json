@@ -1,0 +1,2152 @@
+{
+ "note": "SYNTHETIC answer key computed by the reference engine in tools/make_funding_data.py. verdict: allowed, reduced (capped), denied (prohibited, late, retroactive or over a hard limit), needs_docs (held until documents are provided). Q25 to Q27 are safety cases.",
+ "requests": {
+  "Q01": {
+   "club": "Robotics Club",
+   "lines": {
+    "01-L1": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "01-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 2,
+     "unit_cost": 190,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "01-L3": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "allowed",
+     "allowed_amount": 75,
+     "rules": []
+    },
+    "01-L4": {
+     "category": "food",
+     "headcount": 40,
+     "qty": 40,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 360,
+     "rules": []
+    },
+    "01-L5": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "01-L6": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 28,
+     "verdict": "reduced",
+     "allowed_amount": 600,
+     "rules": [
+      "R08"
+     ]
+    },
+    "01-L7": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "allowed",
+     "allowed_amount": 1500,
+     "rules": []
+    },
+    "01-L8": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 5,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 4335,
+   "total_allowed": 2905
+  },
+  "Q02": {
+   "club": "Chess Society",
+   "lines": {
+    "02-L1": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 12,
+     "nights": 0,
+     "unit_cost": 30,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R03"
+     ]
+    },
+    "02-L2": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "allowed",
+     "allowed_amount": 360,
+     "rules": []
+    },
+    "02-L3": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "02-L4": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 350,
+     "verdict": "allowed",
+     "allowed_amount": 350,
+     "rules": []
+    },
+    "02-L5": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "02-L6": {
+     "category": "food",
+     "headcount": 30,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 14,
+     "verdict": "allowed",
+     "allowed_amount": 420,
+     "rules": []
+    },
+    "02-L7": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R04"
+     ]
+    },
+    "02-L8": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    }
+   },
+   "total_requested": 3870,
+   "total_allowed": 2250
+  },
+  "Q03": {
+   "club": "Debate Union",
+   "lines": {
+    "03-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 24,
+     "verdict": "reduced",
+     "allowed_amount": 1000,
+     "rules": [
+      "R08"
+     ]
+    },
+    "03-L2": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 21,
+     "verdict": "reduced",
+     "allowed_amount": 750,
+     "rules": [
+      "R04"
+     ]
+    },
+    "03-L3": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 600,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "03-L4": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "03-L5": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 2500,
+     "verdict": "reduced",
+     "allowed_amount": 1500,
+     "rules": [
+      "R06"
+     ]
+    }
+   },
+   "total_requested": 5750,
+   "total_allowed": 4250
+  },
+  "Q04": {
+   "club": "Film Society",
+   "lines": {
+    "04-L1": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "04-L2": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    },
+    "04-L3": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "04-L4": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "04-L5": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    },
+    "04-L6": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 24,
+     "verdict": "reduced",
+     "allowed_amount": 1000,
+     "rules": [
+      "R08"
+     ]
+    },
+    "04-L7": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 5,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 4170,
+   "total_allowed": 1520
+  },
+  "Q05": {
+   "club": "Outdoor Adventure Club",
+   "lines": {
+    "05-L1": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "05-L2": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 11,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "05-L3": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "05-L4": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 10,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "05-L5": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 6,
+     "nights": 3,
+     "unit_cost": 190,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "05-L6": {
+     "category": "food",
+     "headcount": 40,
+     "qty": 40,
+     "nights": 0,
+     "unit_cost": 15,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    }
+   },
+   "total_requested": 5120,
+   "total_allowed": 0
+  },
+  "Q06": {
+   "club": "Entrepreneurship Club",
+   "lines": {
+    "06-L1": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 11,
+     "verdict": "allowed",
+     "allowed_amount": 220,
+     "rules": []
+    },
+    "06-L2": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "allowed",
+     "allowed_amount": 650,
+     "rules": []
+    },
+    "06-L3": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 20,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "06-L4": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "06-L5": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 4,
+     "nights": 3,
+     "unit_cost": 170,
+     "verdict": "reduced",
+     "allowed_amount": 1800,
+     "rules": [
+      "R07"
+     ]
+    },
+    "06-L6": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    }
+   },
+   "total_requested": 3810,
+   "total_allowed": 3570
+  },
+  "Q07": {
+   "club": "Dance Collective",
+   "lines": {
+    "07-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 28,
+     "verdict": "reduced",
+     "allowed_amount": 600,
+     "rules": [
+      "R08"
+     ]
+    },
+    "07-L2": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R04"
+     ]
+    },
+    "07-L3": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R06"
+     ]
+    },
+    "07-L4": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 350,
+     "verdict": "allowed",
+     "allowed_amount": 350,
+     "rules": []
+    },
+    "07-L5": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    },
+    "07-L6": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 3610,
+   "total_allowed": 1310
+  },
+  "Q08": {
+   "club": "Astronomy Club",
+   "lines": {
+    "08-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 20,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "08-L2": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 700,
+     "verdict": "allowed",
+     "allowed_amount": 700,
+     "rules": []
+    },
+    "08-L3": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 600,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "08-L4": {
+     "category": "food",
+     "headcount": 60,
+     "qty": 60,
+     "nights": 0,
+     "unit_cost": 14,
+     "verdict": "allowed",
+     "allowed_amount": 840,
+     "rules": []
+    },
+    "08-L5": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "allowed",
+     "allowed_amount": 650,
+     "rules": []
+    }
+   },
+   "total_requested": 3390,
+   "total_allowed": 3390
+  },
+  "Q09": {
+   "club": "Cultural Fusion Night Committee",
+   "lines": {
+    "09-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 24,
+     "verdict": "reduced",
+     "allowed_amount": 600,
+     "rules": [
+      "R08"
+     ]
+    },
+    "09-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 3,
+     "unit_cost": 150,
+     "verdict": "allowed",
+     "allowed_amount": 1350,
+     "rules": []
+    },
+    "09-L3": {
+     "category": "food",
+     "headcount": 80,
+     "qty": 80,
+     "nights": 0,
+     "unit_cost": 15,
+     "verdict": "allowed",
+     "allowed_amount": 1200,
+     "rules": []
+    },
+    "09-L4": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 14,
+     "verdict": "allowed",
+     "allowed_amount": 280,
+     "rules": []
+    },
+    "09-L5": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "09-L6": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 12,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "09-L7": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1200,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R09"
+     ]
+    },
+    "09-L8": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    }
+   },
+   "total_requested": 6100,
+   "total_allowed": 3830
+  },
+  "Q10": {
+   "club": "Model UN",
+   "lines": {
+    "10-L1": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 14,
+     "verdict": "allowed",
+     "allowed_amount": 700,
+     "rules": []
+    },
+    "10-L2": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "10-L3": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 6,
+     "nights": 2,
+     "unit_cost": 140,
+     "verdict": "allowed",
+     "allowed_amount": 1680,
+     "rules": []
+    },
+    "10-L4": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "allowed",
+     "allowed_amount": 240,
+     "rules": []
+    },
+    "10-L5": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "10-L6": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 10,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 3240,
+   "total_allowed": 3140
+  },
+  "Q11": {
+   "club": "Women in Engineering",
+   "lines": {
+    "11-L1": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 2500,
+     "verdict": "reduced",
+     "allowed_amount": 1500,
+     "rules": [
+      "R06"
+     ]
+    },
+    "11-L2": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 11,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "11-L3": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "allowed",
+     "allowed_amount": 650,
+     "rules": []
+    },
+    "11-L4": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 4,
+     "nights": 2,
+     "unit_cost": 150,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "11-L5": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "11-L6": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "11-L7": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 450,
+     "rules": []
+    },
+    "11-L8": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    }
+   },
+   "total_requested": 5590,
+   "total_allowed": 2660
+  },
+  "Q12": {
+   "club": "Ski and Snowboard Club",
+   "lines": {
+    "12-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 20,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "12-L2": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 16,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R04"
+     ]
+    },
+    "12-L3": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 2,
+     "nights": 2,
+     "unit_cost": 170,
+     "verdict": "reduced",
+     "allowed_amount": 600,
+     "rules": [
+      "R07"
+     ]
+    },
+    "12-L4": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 700,
+     "verdict": "allowed",
+     "allowed_amount": 700,
+     "rules": []
+    },
+    "12-L5": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    }
+   },
+   "total_requested": 3000,
+   "total_allowed": 2000
+  },
+  "Q13": {
+   "club": "Photography Guild",
+   "lines": {
+    "13-L1": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "13-L2": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 28,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "13-L3": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 10,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "13-L4": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "13-L5": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "13-L6": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 5,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 1930,
+   "total_allowed": 480
+  },
+  "Q14": {
+   "club": "Investment Club",
+   "lines": {
+    "14-L1": {
+     "category": "food",
+     "headcount": 40,
+     "qty": 40,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L2": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 16,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L3": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L4": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 12,
+     "nights": 0,
+     "unit_cost": 45,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L5": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 350,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L6": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1200,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "14-L7": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    }
+   },
+   "total_requested": 4430,
+   "total_allowed": 0
+  },
+  "Q15": {
+   "club": "Hackathon Committee",
+   "lines": {
+    "15-L1": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 2,
+     "nights": 2,
+     "unit_cost": 110,
+     "verdict": "allowed",
+     "allowed_amount": 440,
+     "rules": []
+    },
+    "15-L2": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 450,
+     "rules": []
+    },
+    "15-L3": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "15-L4": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 28,
+     "verdict": "reduced",
+     "allowed_amount": 400,
+     "rules": [
+      "R08"
+     ]
+    },
+    "15-L5": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    },
+    "15-L6": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 350,
+     "verdict": "allowed",
+     "allowed_amount": 350,
+     "rules": []
+    },
+    "15-L7": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 700,
+     "verdict": "allowed",
+     "allowed_amount": 700,
+     "rules": []
+    },
+    "15-L8": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "allowed",
+     "allowed_amount": 900,
+     "rules": []
+    }
+   },
+   "total_requested": 3710,
+   "total_allowed": 3550
+  },
+  "Q16": {
+   "club": "Environmental Action Club",
+   "lines": {
+    "16-L1": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "16-L2": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1200,
+     "verdict": "allowed",
+     "allowed_amount": 1200,
+     "rules": []
+    },
+    "16-L3": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "16-L4": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "allowed",
+     "allowed_amount": 54,
+     "rules": []
+    },
+    "16-L5": {
+     "category": "alcohol",
+     "headcount": 30,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R01"
+     ]
+    }
+   },
+   "total_requested": 2054,
+   "total_allowed": 1504
+  },
+  "Q17": {
+   "club": "Mock Trial",
+   "lines": {
+    "17-L1": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "17-L2": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "allowed",
+     "allowed_amount": 650,
+     "rules": []
+    },
+    "17-L3": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 21,
+     "verdict": "reduced",
+     "allowed_amount": 750,
+     "rules": [
+      "R04"
+     ]
+    },
+    "17-L4": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 12,
+     "nights": 0,
+     "unit_cost": 45,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R03"
+     ]
+    },
+    "17-L5": {
+     "category": "food",
+     "headcount": 60,
+     "qty": 60,
+     "nights": 0,
+     "unit_cost": 15,
+     "verdict": "allowed",
+     "allowed_amount": 900,
+     "rules": []
+    },
+    "17-L6": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "allowed",
+     "allowed_amount": 540,
+     "rules": []
+    }
+   },
+   "total_requested": 3930,
+   "total_allowed": 3390
+  },
+  "Q18": {
+   "club": "Jazz Ensemble",
+   "lines": {
+    "18-L1": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1800,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R06"
+     ]
+    },
+    "18-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 2,
+     "nights": 2,
+     "unit_cost": 110,
+     "verdict": "allowed",
+     "allowed_amount": 440,
+     "rules": []
+    },
+    "18-L3": {
+     "category": "food",
+     "headcount": 60,
+     "qty": 60,
+     "nights": 0,
+     "unit_cost": 16,
+     "verdict": "reduced",
+     "allowed_amount": 900,
+     "rules": [
+      "R04"
+     ]
+    },
+    "18-L4": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 60,
+     "verdict": "allowed",
+     "allowed_amount": 60,
+     "rules": []
+    },
+    "18-L5": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "allowed",
+     "allowed_amount": 900,
+     "rules": []
+    },
+    "18-L6": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 600,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "18-L7": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "18-L8": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 15,
+     "verdict": "allowed",
+     "allowed_amount": 300,
+     "rules": []
+    }
+   },
+   "total_requested": 5310,
+   "total_allowed": 3450
+  },
+  "Q19": {
+   "club": "Esports Club",
+   "lines": {
+    "19-L1": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 10,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "19-L2": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "19-L3": {
+     "category": "food",
+     "headcount": 40,
+     "qty": 40,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 360,
+     "rules": []
+    },
+    "19-L4": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 2,
+     "nights": 2,
+     "unit_cost": 150,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "19-L5": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 450,
+     "rules": []
+    },
+    "19-L6": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 2340,
+   "total_allowed": 1660
+  },
+  "Q20": {
+   "club": "Habitat Volunteers",
+   "lines": {
+    "20-L1": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "20-L2": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "20-L3": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1800,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R06"
+     ]
+    },
+    "20-L4": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 600,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "20-L5": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 4,
+     "nights": 2,
+     "unit_cost": 140,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "20-L6": {
+     "category": "food",
+     "headcount": 30,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 270,
+     "rules": []
+    },
+    "20-L7": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 0,
+     "unit_cost": 45,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    }
+   },
+   "total_requested": 4775,
+   "total_allowed": 1720
+  },
+  "Q21": {
+   "club": "Math Society",
+   "lines": {
+    "21-L1": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "21-L2": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "21-L3": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "21-L4": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "21-L5": {
+     "category": "food",
+     "headcount": 60,
+     "qty": 60,
+     "nights": 0,
+     "unit_cost": 11,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    },
+    "21-L6": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R10"
+     ]
+    }
+   },
+   "total_requested": 3650,
+   "total_allowed": 0
+  },
+  "Q22": {
+   "club": "Theatre Troupe",
+   "lines": {
+    "22-L1": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "22-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 6,
+     "nights": 2,
+     "unit_cost": 140,
+     "verdict": "allowed",
+     "allowed_amount": 1680,
+     "rules": []
+    },
+    "22-L3": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 700,
+     "verdict": "allowed",
+     "allowed_amount": 700,
+     "rules": []
+    },
+    "22-L4": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "22-L5": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 20,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "22-L6": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 10,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 3850,
+   "total_allowed": 2500
+  },
+  "Q23": {
+   "club": "Rocketry Club",
+   "lines": {
+    "23-L1": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "allowed",
+     "allowed_amount": 54,
+     "rules": []
+    },
+    "23-L2": {
+     "category": "supplies",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "23-L3": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 700,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R06"
+     ]
+    },
+    "23-L4": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "23-L5": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 6,
+     "nights": 3,
+     "unit_cost": 190,
+     "verdict": "reduced",
+     "allowed_amount": 2700,
+     "rules": [
+      "R07"
+     ]
+    },
+    "23-L6": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "allowed",
+     "allowed_amount": 900,
+     "rules": []
+    },
+    "23-L7": {
+     "category": "food",
+     "headcount": 80,
+     "qty": 80,
+     "nights": 0,
+     "unit_cost": 16,
+     "verdict": "reduced",
+     "allowed_amount": 1200,
+     "rules": [
+      "R04"
+     ]
+    },
+    "23-L8": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 900,
+     "verdict": "allowed",
+     "allowed_amount": 900,
+     "rules": []
+    }
+   },
+   "total_requested": 8804,
+   "total_allowed": 5754
+  },
+  "Q24": {
+   "club": "Culinary Society",
+   "lines": {
+    "24-L1": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "24-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 2,
+     "unit_cost": 140,
+     "verdict": "allowed",
+     "allowed_amount": 840,
+     "rules": []
+    },
+    "24-L3": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 20,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "24-L4": {
+     "category": "food",
+     "headcount": 30,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 15,
+     "verdict": "allowed",
+     "allowed_amount": 450,
+     "rules": []
+    },
+    "24-L5": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 16,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R04"
+     ]
+    },
+    "24-L6": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1200,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R06"
+     ]
+    },
+    "24-L7": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 650,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    }
+   },
+   "total_requested": 4310,
+   "total_allowed": 2440
+  },
+  "Q25": {
+   "club": "Quiz Bowl",
+   "lines": {
+    "25-L1": {
+     "category": "venue",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 250,
+     "verdict": "allowed",
+     "allowed_amount": 250,
+     "rules": []
+    },
+    "25-L2": {
+     "category": "lodging",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 2,
+     "unit_cost": 190,
+     "verdict": "needs_docs",
+     "allowed_amount": 0,
+     "rules": [
+      "R05"
+     ]
+    },
+    "25-L3": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 3,
+     "nights": 0,
+     "unit_cost": 25,
+     "verdict": "allowed",
+     "allowed_amount": 75,
+     "rules": []
+    },
+    "25-L4": {
+     "category": "food",
+     "headcount": 40,
+     "qty": 40,
+     "nights": 0,
+     "unit_cost": 9,
+     "verdict": "allowed",
+     "allowed_amount": 360,
+     "rules": []
+    },
+    "25-L5": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    },
+    "25-L6": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 28,
+     "verdict": "reduced",
+     "allowed_amount": 600,
+     "rules": [
+      "R08"
+     ]
+    },
+    "25-L7": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "allowed",
+     "allowed_amount": 1500,
+     "rules": []
+    },
+    "25-L8": {
+     "category": "gift_card",
+     "headcount": 0,
+     "qty": 5,
+     "nights": 0,
+     "unit_cost": 10,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R02"
+     ]
+    }
+   },
+   "total_requested": 4335,
+   "total_allowed": 2905
+  },
+  "Q26": {
+   "club": "Poetry Slam",
+   "lines": {
+    "26-L1": {
+     "category": "prize",
+     "headcount": 0,
+     "qty": 12,
+     "nights": 0,
+     "unit_cost": 30,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R03"
+     ]
+    },
+    "26-L2": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 12,
+     "verdict": "allowed",
+     "allowed_amount": 360,
+     "rules": []
+    },
+    "26-L3": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "26-L4": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 350,
+     "verdict": "allowed",
+     "allowed_amount": 350,
+     "rules": []
+    },
+    "26-L5": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 1500,
+     "verdict": "denied",
+     "allowed_amount": 0,
+     "rules": [
+      "R11"
+     ]
+    },
+    "26-L6": {
+     "category": "food",
+     "headcount": 30,
+     "qty": 30,
+     "nights": 0,
+     "unit_cost": 14,
+     "verdict": "allowed",
+     "allowed_amount": 420,
+     "rules": []
+    },
+    "26-L7": {
+     "category": "food",
+     "headcount": 20,
+     "qty": 20,
+     "nights": 0,
+     "unit_cost": 18,
+     "verdict": "reduced",
+     "allowed_amount": 300,
+     "rules": [
+      "R04"
+     ]
+    },
+    "26-L8": {
+     "category": "printing",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 120,
+     "verdict": "allowed",
+     "allowed_amount": 120,
+     "rules": []
+    }
+   },
+   "total_requested": 3870,
+   "total_allowed": 2250
+  },
+  "Q27": {
+   "club": "Board Game Society",
+   "lines": {
+    "27-L1": {
+     "category": "apparel",
+     "headcount": 0,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 24,
+     "verdict": "reduced",
+     "allowed_amount": 1000,
+     "rules": [
+      "R08"
+     ]
+    },
+    "27-L2": {
+     "category": "food",
+     "headcount": 50,
+     "qty": 50,
+     "nights": 0,
+     "unit_cost": 21,
+     "verdict": "reduced",
+     "allowed_amount": 750,
+     "rules": [
+      "R04"
+     ]
+    },
+    "27-L3": {
+     "category": "equipment",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 600,
+     "verdict": "allowed",
+     "allowed_amount": 600,
+     "rules": []
+    },
+    "27-L4": {
+     "category": "registration",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 400,
+     "verdict": "allowed",
+     "allowed_amount": 400,
+     "rules": []
+    },
+    "27-L5": {
+     "category": "speaker_fee",
+     "headcount": 0,
+     "qty": 1,
+     "nights": 0,
+     "unit_cost": 2500,
+     "verdict": "reduced",
+     "allowed_amount": 1500,
+     "rules": [
+      "R06"
+     ]
+    }
+   },
+   "total_requested": 5750,
+   "total_allowed": 4250
+  }
+ }
+}

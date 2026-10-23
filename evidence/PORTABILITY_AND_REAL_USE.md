@@ -1,0 +1,6 @@
+# Real-use and portability evidence (what moves Gavel toward Tier 3, with no outreach)
+
+1. You are the real reviewer. You ran a $6.5M budget oversight function. Do the manual baseline (evidence/manual_first5_requests.txt) with a stopwatch, honestly, in Excel, as you would do the job. Record minutes and your own errors against the answer key afterward.
+2. Real policy portability (optional, 45 minutes, only after the core works): paste the text of ONE real, public university student-government funding policy (for example the funding guidelines a university publishes on its website) into data/private/real_policy.txt (gitignored). Run ONLY the Policy Compiler on it. Report how many rules it compiled, how many quotes verified, and how many you had to correct by hand. Do not publish the policy text in the repo. This shows the idea is not tied to the synthetic policy.
+3. Your real-world reflection (6 to 8 sentences, your own words): what happens when reviewers apply a policy inconsistently, and how Gavel's consistency report would have changed a decision you remember. No real names.
+4. Label everything honestly: synthetic requests, one expert reviewer, one real policy as a portability check. Do not claim Tier 3 beyond that.
