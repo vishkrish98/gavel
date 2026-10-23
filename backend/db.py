@@ -116,6 +116,19 @@ CREATE TABLE audit (
     event TEXT NOT NULL,
     detail_json TEXT NOT NULL DEFAULT '{}'
 );
+
+-- Added in step04 (not in the step01 schema list): the Drafter's output has nowhere else to
+-- live. 'status' starts at 'awaiting_approval' and only a human approval click (wired up in a
+-- later step's backend route) can move it to 'approved' -- nothing here is exported on its own.
+CREATE TABLE drafts (
+    id TEXT PRIMARY KEY,
+    run_id TEXT NOT NULL,
+    request_id TEXT,
+    kind TEXT NOT NULL CHECK (kind IN ('questions', 'memo')),
+    content_json TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'awaiting_approval' CHECK (status IN ('awaiting_approval', 'approved')),
+    created_at TEXT NOT NULL
+);
 """
 
 

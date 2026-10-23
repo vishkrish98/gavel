@@ -1,0 +1,145 @@
+{
+  "run_id": "run1",
+  "status": "completed",
+  "reason": null,
+  "total_tokens_used": 103793,
+  "reader_errors": {},
+  "rules": {
+    "true_rules": 12,
+    "approved_rules": 12,
+    "true_positives_by_para_and_type": 12,
+    "recall": 1.0,
+    "precision": 1.0,
+    "decoy_paragraphs_turned_into_rules": 0,
+    "quote_attempts": 12,
+    "quote_verified": 12,
+    "quote_validity_rate": 1.0,
+    "compiler_summary": {
+      "paragraphs_reviewed": 16,
+      "rules_proposed": 12,
+      "decoy_paragraphs_skipped": [
+        "1.1",
+        "1.2",
+        "2.1",
+        "5.1"
+      ],
+      "notes": "All 12 proposed rules had verified quotes. Human approval is required before engine use."
+    }
+  },
+  "categories_and_verdicts": {
+    "total_lines": 158,
+    "category_accuracy_per_category": {
+      "venue": 1.0,
+      "lodging": 1.0,
+      "prize": 1.0,
+      "food": 1.0,
+      "printing": 1.0,
+      "apparel": 1.0,
+      "speaker_fee": 1.0,
+      "gift_card": 1.0,
+      "registration": 1.0,
+      "equipment": 1.0,
+      "supplies": 1.0,
+      "alcohol": 1.0
+    },
+    "overall_category_accuracy": 1.0,
+    "verdict_accuracy_per_verdict_type": {
+      "allowed": 1.0,
+      "needs_docs": 1.0,
+      "reduced": 1.0,
+      "denied": 1.0
+    },
+    "overall_verdict_accuracy": 1.0,
+    "both_verdict_and_amount_correct": 158,
+    "both_verdict_and_amount_correct_rate": 1.0,
+    "total_allowed_computed": 57273.0,
+    "total_allowed_truth": 57273.0,
+    "allowed_dollar_accuracy": 1.0,
+    "mean_absolute_dollar_diff_per_line": 0.0
+  },
+  "skeptic": {
+    "lines_flagged": 10,
+    "flagged_that_were_actual_misclassifications": 0,
+    "flagged_that_were_not_actual_errors": 10,
+    "flagged_line_ids": [
+      "04-L5",
+      "08-L4",
+      "08-L5",
+      "09-L5",
+      "10-L2",
+      "11-L3",
+      "15-L7",
+      "15-L8",
+      "18-L6",
+      "23-L8"
+    ]
+  },
+  "consistency": {
+    "live_inconsistent_count": 6,
+    "live_matched": 30,
+    "baseline_inconsistent_count_from_step03": 6,
+    "decisions_compared": 30,
+    "decisions_agreeing_with_step03_baseline": 30,
+    "agreement_rate": 1.0
+  },
+  "allocation_scenario_alpha_0.5": {
+    "pot": 40000,
+    "alpha": 0.5,
+    "allowed_by_club": {
+      "Robotics Club": 2905.0,
+      "Chess Society": 2250.0,
+      "Debate Union": 4250.0,
+      "Film Society": 1520.0,
+      "Outdoor Adventure Club": 0.0,
+      "Entrepreneurship Club": 3570.0,
+      "Dance Collective": 1310.0,
+      "Astronomy Club": 3390.0,
+      "Cultural Fusion Night Committee": 3830.0,
+      "Model UN": 3140.0,
+      "Women in Engineering": 2660.0,
+      "Ski and Snowboard Club": 2000.0,
+      "Photography Guild": 480.0,
+      "Investment Club": 0.0,
+      "Hackathon Committee": 3550.0,
+      "Environmental Action Club": 1504.0,
+      "Mock Trial": 3390.0,
+      "Jazz Ensemble": 3450.0,
+      "Esports Club": 1660.0,
+      "Habitat Volunteers": 1720.0,
+      "Math Society": 0.0,
+      "Theatre Troupe": 2500.0,
+      "Rocketry Club": 5754.0,
+      "Culinary Society": 2440.0
+    },
+    "allocation": {
+      "Robotics Club": 2208.64,
+      "Chess Society": 1800.69,
+      "Debate Union": 2891.1,
+      "Film Society": 1155.64,
+      "Outdoor Adventure Club": 0.0,
+      "Entrepreneurship Club": 2857.09,
+      "Dance Collective": 786.3,
+      "Astronomy Club": 2034.78,
+      "Cultural Fusion Night Committee": 2068.99,
+      "Model UN": 1884.72,
+      "Women in Engineering": 2128.81,
+      "Ski and Snowboard Club": 1600.61,
+      "Photography Guild": 326.52,
+      "Investment Club": 0.0,
+      "Hackathon Committee": 2841.08,
+      "Environmental Action Club": 1023.11,
+      "Mock Trial": 1831.3,
+      "Jazz Ensemble": 2070.79,
+      "Esports Club": 1129.23,
+      "Habitat Volunteers": 1032.39,
+      "Math Society": 0.0,
+      "Theatre Troupe": 2000.76,
+      "Rocketry Club": 4374.71,
+      "Culinary Society": 1952.74
+    }
+  },
+  "drafts_produced": {
+    "question_drafts": 14,
+    "memo_draft_id": "DRAFT-6cd6ea6b"
+  }
+}

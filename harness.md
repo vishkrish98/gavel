@@ -10,6 +10,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 01 | SQLite data layer at `data/gavel.db` (gitignored, created fresh on every loader run); loader `python -m backend.load` reads the policy, 24 real requests, 2 JSON safety requests, 1 HTML safety request (hidden-text aware), and 30 prior decisions (stripped of answer-key fields) into it. |
 | 02 | `mcp_server/server.py` (FastMCP, stdio): 12 deterministic tools over that data — policy/rule compilation, the rule engine, the consistency check, the water-filling optimizer, and token-usage logging. `tests/test_mcp.py` (18 tests, all passing) and `output/mcp_smoke.json` exercise every tool against real data, including the full 158/158 engine match and 6/30 consistency match using the answer key as a test fixture. |
 | 03 | `evidence/engine_eval.json` (via `tools/make_engine_eval.py`): formal validation of the deterministic layer against the reference answer key, zero model calls. 158/158 lines match verdict+amount+rules exactly; `allocate` matches `data/optimizer_truth.json` to the cent across all 4 scenarios; `consistency_report` finds 6/30 inconsistent. |
+| 04 | The agent team (`backend/agents.py`, `backend/chair.py`, `backend/models.py`, `backend/prompts/`). First step with real model calls. `python -m backend.run_check` runs the full pipeline over the 24 real requests and scores it: 100% rule recall/precision, 0 decoys turned into rules, 100% category accuracy, 100% verdict accuracy, exact dollar match (158/158), 100% consistency-report agreement with the step03 baseline, 10 Skeptic flags (0 of which were actual misclassifications). 61 model calls, 103,793 tokens, $0.016, run saved as `output/trace_run1.json`. |
 
 ## Data tables
 
@@ -96,7 +97,80 @@ zero model calls — the 12 rules and all line facts are a labeled test fixture,
 
 ## Agents
 
-(filled in step04 — CHAIR, POLICY COMPILER, REQUEST READER, SKEPTIC, ENGINE, OPTIMIZER, DRAFTER)
+All model-backed agents share one model config (`backend/agents.py`): `gpt-6-luna` through
+Portkey, `OpenAIResponsesModel` (the `/v1/responses` endpoint — chat completions rejects tool
+calls when reasoning effort is set), `openai_reasoning_effort="low"`, 60s per-call timeout. Every
+agent's toolset is filtered MCP tools from `mcp_server/server.py` — no agent has a private data
+path. Prompts live as markdown in `backend/prompts/`.
+
+| Agent | Model? | Tools | What it does |
+| --- | --- | --- | --- |
+| **CHAIR** | No — plain Python (`backend/chair.py`, `ChairRun` / `run_full_pipeline`) | calls the others | Orchestrates one run in a fixed order: compile rules once, read every request in parallel, run the Skeptic on lines the engine would currently allow in full, persist verdicts, run the consistency report and optimizer (code), draft questions and a memo, record run status. |
+| **Policy Compiler** | Yes | `load_policy`, `propose_rule` | Reads all 16 paragraphs, proposes a rule (type + params + exact quote) for each one that's binding and machine-checkable; skips guidance/info paragraphs. `propose_rule` verifies the quote in the same call. |
+| **Request Reader** | Yes | `get_request` | Per request (24 run in parallel, semaphore 8): classifies every line into one of 12 categories and extracts headcount/qty/nights/unit_cost from description + amount alone. |
+| **Skeptic** | Yes | `get_request` | Reviewed only on lines whose *preliminary* engine verdict (using the Reader's facts) is `allowed` — CONTEXT.md's "for each line the Reader marked allowed." Batched per request, not per line. May flag a line with a reason; never changes a category or fact itself. |
+| **Engine** | No — code | n/a | `backend/engine.py` via `run_engine`/`check_line` (step02/03). |
+| **Optimizer** | No — code | n/a | `backend/engine.allocate` via the `allocate` tool (step02/03). |
+| **Drafter** | Yes (two agents: questions, memo) | none (CHAIR resolves everything into the prompt first) | Per request with a needs_docs line, a Skeptic-flagged line, or a reduction to ≤50% of the requested amount: drafts one question per such line, citing the rule and quote (via `explain_line`). One more call drafts a whole-pot memo from aggregate totals. Both saved to the new `drafts` table with `status='awaiting_approval'` — nothing is exported without a human approval click (not wired up until a later step's UI). |
+
+**Run flow** (`run_full_pipeline`, `backend/chair.py`):
+1. `compile_rules()` — one Policy Compiler call; in `benchmark_mode` (used by `run_check`), a
+   paragraph's proposed rule auto-approves (`approve_rule`, `by="benchmark-auto-approve"`) only if
+   it's the *only* rule proposed for that paragraph and its quote verified — "verified AND match
+   nothing else." Logged as `auto_approved_for_benchmark`. Multiple proposals for one paragraph are
+   left for a human (`rule_needs_human_review`) instead of guessing which one is right.
+2. `read_all_requests()` — Request Reader per request, `asyncio.gather` under a semaphore of 8;
+   writes category/headcount/qty/nights/unit_cost straight into `lines` (the Reader itself never
+   writes — it only calls the read-only `get_request` tool, per CONTEXT.md hard rule 4; CHAIR does
+   the persistence after getting the agent's structured output back).
+3. `_preliminary_allowed_lines()` — one `run_engine` call per request (code) to find which lines
+   are currently `allowed` with nothing stopping them; those are what the Skeptic reviews.
+4. `run_skeptic()` — Skeptic per request (batched, not per line — much cheaper and CONTEXT.md
+   doesn't require per-line calls), semaphore of 8.
+5. `persist_verdicts()` — final `run_engine` pass per request (identical to the preliminary pass,
+   since the Skeptic never changes a fact), inserted into `verdicts` with `flagged_for_review` from
+   the Skeptic. This is the first point a real `run_id` exists, so it's also the first point
+   verdicts get persisted (step02 left `check_line`/`run_engine` as pure, non-persisting reads).
+6. `consistency_report()` and `allocate()` — code, unchanged from step02/03.
+7. `run_drafter()` — one Drafter-questions call per request that needs one, then one Drafter-memo
+   call for the whole run. Drafts saved to the `drafts` table.
+8. `finalize_run()` — updates `runs.status`/`finished_at`.
+
+**Limits, enforced on every single agent call** (`ChairRun._call_agent`): a wall-clock timeout
+(`asyncio.wait_for`, 60s), a request limit and a per-call token cap (both via PydanticAI's
+`UsageLimits` on that one call — this doubles as the "per-agent token cap"), and a whole-run token
+cap of 400,000 tracked in Python across every call this run makes (checked before each call;
+real run1 used 103,793 — nowhere near the cap). Hitting any of these raises `RunLimitHit`, which
+`run_full_pipeline` catches, sets `runs.status='limit_hit'` with the reason recorded, and returns
+cleanly instead of crashing.
+
+**`python -m backend.run_check`** (`backend/run_check.py`) runs the full pipeline over the 24 real
+requests and scores it against the answer key — rule recall/precision, quote validity, decoy
+paragraphs wrongly turned into rules, category accuracy per category, verdict accuracy (overall
+and per type), allowed-dollar accuracy, Skeptic flags vs. actual errors, and consistency-report
+agreement against the step03 true-fixture baseline. Full real numbers from `run1`
+(`evidence/run_check.json`, trace in `output/trace_run1.json`, **not fixed, reported as-is**):
+
+| Metric | Result |
+| --- | --- |
+| Rule recall / precision | 12/12 (1.0 / 1.0) |
+| Decoy paragraphs turned into rules | 0 |
+| Quote validity rate | 12/12 proposed, 0 rejected (1.0) |
+| Category accuracy, overall and every one of the 12 categories | 1.0 |
+| Verdict accuracy, overall and every verdict type | 1.0 |
+| Lines with both verdict AND allowed-dollar amount exactly correct | 158/158 |
+| Total allowed: computed vs. truth | $57,273.00 vs. $57,273.00 (exact) |
+| Skeptic: lines flagged / actual misclassifications caught | 10 flagged, 0 were real category errors |
+| Consistency-report agreement with step03 baseline | 30/30 decisions agree (6/30 inconsistent both ways) |
+| Model calls / tokens / cost / wall-clock (sum) | 61 calls, 103,793 tokens, $0.016, ~248s |
+
+These numbers are real and better than expected going in — plausible because the synthetic line
+descriptions are template-generated and mostly unambiguous once you catch the euphemisms the
+prompt calls out by name (confirmed by spot-checking: "Pre-paid visa cards..." → `gift_card`,
+"Signature cocktails for gala..." → `alcohol`, both correct). The Skeptic's 10 flags were all
+reasonable caution (vague descriptions, high per-person costs) rather than real errors — worth
+noting honestly as a 0%-precision-on-the-metric-as-defined result rather than claiming it "works."
+Nothing was tuned to produce these numbers; per the step04 instruction, accuracy was not adjusted.
 
 ## Token logging / cost model
 
@@ -159,3 +233,34 @@ zero model calls — the 12 rules and all line facts are a labeled test fixture,
   though it now exists — per the reference chassis pattern (CONTEXT.md step00 note), agents will
   spawn their own stdio connection to it in step04, the same way `backend/agents.py` does in the
   reference chassis.
+- Step04: CHAIR is plain Python orchestration, not a PydanticAI `Agent` with delegation tools
+  (unlike the reference chassis's Boss). The pipeline order is entirely fixed (compile once, read
+  in parallel, Skeptic, engine, consistency, optimizer, draft) — nothing about it needs a model to
+  decide, so spending a model call on an "orchestrator" that would just always do the same thing in
+  the same order would be pure token cost with no judgment behind it.
+- Step04: Skeptic runs on lines whose *preliminary engine verdict* (using the Reader's facts) is
+  `allowed` — CONTEXT.md's AGENTS section says "for each line the Reader marked allowed," which
+  this matches more literally than the step04 prompt's looser "permissive category" phrasing
+  (under that reading, alcohol/gift_card lines are already maximally restricted — denied — so
+  there's nothing more restrictive left to find for them).
+- Step04: Skeptic and Drafter-questions are batched per request (one call reviewing/drafting
+  several lines at once), not per line — matches how the Request Reader is explicitly specified
+  ("runs requests in parallel"), and keeps call count to ~61 for the whole run instead of one call
+  per line (158+) for no accuracy benefit CONTEXT.md asks for.
+- Step04: "verified AND match nothing else" (the benchmark auto-approve condition) is implemented
+  as "exactly one rule was proposed for this paragraph, and its quote verified." Multiple
+  candidate rules proposed for the same paragraph are left for a human instead of auto-approving
+  one arbitrarily.
+- Step04: added a `drafts` table (id, run_id, request_id, kind, content_json, status,
+  created_at) — not in the step01 schema list, but the Drafter's output (committee questions, the
+  memo) has nowhere else to live. `status` starts `awaiting_approval`; nothing moves to `approved`
+  until a human approval route exists (a later step).
+- Step04: "large reduction" (one of three reasons the Drafter asks about a line, alongside
+  needs_docs and a Skeptic flag) is defined as allowed_amount ≤ 50% of the requested amount.
+  CONTEXT.md doesn't specify a threshold; 50% is the simplest clearly-large cut.
+- Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
+  not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
+  `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage
+  object is what makes the *per-agent* token cap (via `usage_limits.total_tokens_limit` on that
+  one call) meaningful; sharing one cumulative object across every call would only ever enforce
+  the whole-run cap, not a per-call one. Doing both needed two separate mechanisms.
