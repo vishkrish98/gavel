@@ -25,7 +25,7 @@ from pydantic_ai.messages import ModelMessagesTypeAdapter
 from pydantic_ai.usage import UsageLimits
 
 import mcp_server.server as srv
-from backend import agents, audit
+from backend import agents, audit, safety
 from backend.db import get_connection
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -151,6 +151,9 @@ class ChairRun:
 
     async def _read_one_request(self, request_id: str, semaphore: asyncio.Semaphore):
         async with semaphore:
+            blocked = safety.sanitize_request_in_db(self.conn, request_id, self.run_id)
+            if blocked:
+                self._trace("blocked_injection", {"request_id": request_id, "events": blocked})
             result = await self._call_agent(
                 agents.request_reader_agent, f"Read and classify every line of request {request_id}.",
                 f"request_reader:{request_id}", request_limit=10, token_limit=12_000,

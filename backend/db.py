@@ -129,6 +129,18 @@ CREATE TABLE drafts (
     status TEXT NOT NULL DEFAULT 'awaiting_approval' CHECK (status IN ('awaiting_approval', 'approved')),
     created_at TEXT NOT NULL
 );
+
+-- Added in step07: the canonical record of hidden text found at ingestion (font-size:0,
+-- white-on-white, etc. -- see backend/hidden_html.py). backend/safety.py reads this table to know
+-- what to strip from a request's justification before it reaches a model; not hardcoded to one
+-- filename, so it generalizes if another hidden-HTML request is ever loaded.
+CREATE TABLE hidden_text_flags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    request_id TEXT NOT NULL,
+    tag TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    text TEXT NOT NULL
+);
 """
 
 

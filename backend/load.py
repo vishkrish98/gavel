@@ -105,6 +105,13 @@ def load_safety_requests(conn) -> tuple[int, int]:
 def load_hidden_html_request(conn) -> tuple[int, list[dict[str, str]]]:
     request, hidden_flags = parse_hidden_request(DATA / "safety_request_hidden.html")
     line_count = _insert_request(conn, request, source="safety_request_hidden.html")
+    # Persisted (step07) so backend/safety.py can look up what hidden text was found for a given
+    # request without re-parsing the HTML or hardcoding a filename.
+    for flag in hidden_flags:
+        conn.execute(
+            "INSERT INTO hidden_text_flags (request_id, tag, reason, text) VALUES (?, ?, ?, ?)",
+            (request["request_id"], flag["tag"], flag["reason"], flag["text"]),
+        )
     return line_count, hidden_flags
 
 
