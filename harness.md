@@ -18,6 +18,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 08b | The React + Vite + TypeScript frontend (`frontend/`), dark/scholarly/brass theme, all 9 screens from a real run against the real backend — including the injection-blocked banner firing for real on Q25/Q27. Built and committed `frontend/dist`; `run.py` only rebuilds it if Node is present and it's missing. Screenshots in `report_assets/`. Added 4 small read-only GET routes (`/api/policy/paragraphs`, `/api/rules`, `/api/requests`, `/api/requests/{id}`) the frontend needed that step08a's list didn't include. |
 | 09 | Full `README.md` (install, run, use, test/benchmark/safety commands, troubleshooting) and a real timed fresh-clone dry run: clone → venv → `pip install` → `.env` placement → `python run.py` → a complete sample run, **53.0s of active stage time, 112.6s wall-clock total** — far under the 10-minute budget. `evidence/fresh_clone_log.md`. Security check (`evidence/secrets_check.md`): no `.env`, no DB files, nothing from `data/private/`, no key-shaped strings, anywhere in the tracked files or the full git history; `.env.example` fixed to be strictly names-only (dropped a placeholder value it had). |
 | 10 | The evidence pack: one final clean run (`output/trace_run1.json`, `evidence/usage_final.json`, `evidence/verdicts_final.csv`, `evidence/run_check.json` — 158/158, 0 decoys, 6/30 consistency, same as every prior run). `evidence/numbers.md` indexes every number the report/slides can cite, each with its source file, including the 3 rows still pending the user's own stopwatch/portability tasks. `evidence/limits.md` is an honest account of where the system is unproven or untested (the Skeptic's 0% observed precision, the injection detector's narrow phrase-list coverage, no concurrency/auth/scale testing, synthetic-only data). `score_manual.py` scores the user's eventual `evidence/manual_first5.csv` against the same answer key as Mode A/B. `evidence/SCREENSHOTS.md` rewritten as an exact per-screen checklist with what must be visible in each shot. |
+| 11a | `report.html` (repo root), built by `tools/make_report.py` from `evidence/`/`output/` files only — self-contained (inline CSS, base64 screenshots, an inline SVG agent diagram, an inline SVG token-by-agent bar chart), **11 printed pages** (verified with headless Chrome `--print-to-pdf` + PyMuPDF page count). 9 placeholders (`[[USER: ...]]`/`[[MISSING: ...]]`) for the 3 things only the user can supply (motivation, competitors, real-world reflection/portability) plus the 2 still-pending manual-baseline numbers and 1 terminal screenshot. |
 
 ## Data tables
 
@@ -664,6 +665,20 @@ API-only with a clear message, rather than failing.
   against this identical backend code, so the fresh-clone test's job is to verify the *clone*
   (dependencies, paths, `.env` resolution, the database being created fresh), not re-prove the UI
   renders correctly, which doesn't change based on which folder the repo lives in.
+- Step11a: page count was verified with Chrome's headless `--print-to-pdf` (no `wkhtmltopdf`/
+  `weasyprint` installed) and PyMuPDF's page count (`import fitz`, in the system Python, not the
+  venv, which doesn't have it) — not a browser's on-screen print preview, since nothing in this
+  session can drive an interactive print dialog. 11 pages, inside the 10-15 range.
+- Step11a: `tools/make_report.py`'s `COST_MODEL` dict is transcribed from `evidence/cost_model.md`
+  rather than recomputed live from the database, because the step10 test runs since then have
+  reloaded the database and wiped `run1`'s usage rows — `cost_model.md` itself (not a fresh query)
+  is the real source of those numbers now, consistent with the step instruction that every number
+  comes from a file in `evidence/`.
+- Step11a: only 6 of the 14 screenshots in `report_assets/` are embedded in the report (the ones
+  each section explicitly calls for); the rest stay available for slides.html (step11b) without
+  bloating this file. Images are displayed at a reduced size (max 3.6in) to fit comfortably within
+  the 10-15 page budget — the first draft came in at 18 pages before this and other trims (smaller
+  body font, no forced page breaks between sections) brought it to 11.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage
