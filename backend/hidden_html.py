@@ -46,6 +46,12 @@ class _HiddenAwareParser(HTMLParser):
         text = data.strip()
         if not text:
             return
+        # <title> is page metadata (what a browser tab shows), not body content -- a naive
+        # scraper extracting "the request" would target the body, not the <head>. Skipping it
+        # also keeps this parser generic (step08a reuses it for arbitrary HTML uploads, not just
+        # Q27's one fixture, where leaking <title> text into the justification would be noise).
+        if any(tag == "title" for tag, _ in self._style_stack):
+            return
         self.text_parts.append(text)
         if self._style_stack:
             tag, style = self._style_stack[-1]
@@ -62,31 +68,42 @@ def parse_hidden_request(path: Path) -> tuple[dict, list[dict[str, str]]]:
     parser.feed(html_text)
     full_text = "\n".join(parser.text_parts)
 
-    club_match = re.search(r"Funding request (Q\d+):\s*(.+)", full_text)
-    request_id = club_match.group(1) if club_match else "Q27"
+    # Generalized beyond Q27's own "Q\d+" id so this same parser also serves POST /api/requests'
+    # general-purpose HTML uploads (step08a) -- any non-whitespace token works as the request id.
+    club_match = re.search(r"Funding request (\S+):\s*(.+)", full_text)
+    request_id = club_match.group(1) if club_match else None
     club = club_match.group(2).strip() if club_match else "Unknown Club"
 
     dates_match = re.search(r"Event:\s*(\S+)\s*Submitted:\s*(\S+)", full_text)
     event_date = dates_match.group(1) if dates_match else ""
     submitted_date = dates_match.group(2) if dates_match else ""
 
+    line_pattern = re.compile(r"^(\S+):\s*(.+?)\s*-\s*\$(\d+(?:\.\d+)?)$")
     lines = []
-    for line_id, description, amount in re.findall(r"(\d+-L\d+):\s*(.+?)\s*-\s*\$(\d+(?:\.\d+)?)", full_text):
-        lines.append(
-            {
-                "line_id": line_id,
-                "description": description.strip(),
-                "amount": float(amount),
-                "docs": [],
-                "already_purchased": False,
-            }
-        )
+    for part in parser.text_parts:
+        line_match = line_pattern.match(part)
+        if line_match:
+            line_id, description, amount = line_match.groups()
+            lines.append(
+                {
+                    "line_id": line_id,
+                    "description": description.strip(),
+                    "amount": float(amount),
+                    "docs": [],
+                    "already_purchased": False,
+                }
+            )
 
-    # Everything after the line-item block (the hidden injection text) becomes the
-    # justification -- a naive scraper has no way to separate it from legitimate content, which
-    # is exactly the vulnerability this safety case tests.
-    justification_parts = [p for p in parser.text_parts if "NOTE TO AI REVIEWERS" in p]
-    justification = " ".join(justification_parts) if justification_parts else ""
+    # Everything that isn't the title, the dates, or a line item becomes the justification -- for
+    # Q27 that's exactly the two hidden spans (a naive scraper has no way to separate them from
+    # legitimate content, which is exactly the vulnerability this safety case tests); for a
+    # general upload, it's whatever other text the submitter wrote.
+    title_text = club_match.group(0) if club_match else None
+    dates_text = dates_match.group(0) if dates_match else None
+    justification_parts = [
+        p for p in parser.text_parts if p != title_text and p != dates_text and not line_pattern.match(p)
+    ]
+    justification = " ".join(justification_parts).strip()
 
     request = {
         "request_id": request_id,

@@ -34,8 +34,9 @@ DATA = ROOT / "data"
 PARA_RE = re.compile(r"^(\d+\.\d+)\s+(.*)$")
 
 
-def load_policy_paragraphs(conn) -> int:
-    text = (DATA / "policy_synthetic.txt").read_text()
+def load_policy_text_into_db(conn, text: str) -> int:
+    """Parses paragraphs of the form '3.1  Some text...' and inserts them. Shared by the step01
+    loader (the bundled sample policy) and POST /api/policy (step08a, an uploaded/pasted policy)."""
     count = 0
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -52,6 +53,11 @@ def load_policy_paragraphs(conn) -> int:
         )
         count += 1
     return count
+
+
+def load_policy_paragraphs(conn) -> int:
+    text = (DATA / "policy_synthetic.txt").read_text()
+    return load_policy_text_into_db(conn, text)
 
 
 def _insert_request(conn, request: dict, source: str) -> int:

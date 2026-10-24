@@ -14,6 +14,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 05 | Token logging and cost: confirmed `log_usage` already logs the provider's real response fields (no change needed, inspected and documented below); `backend/pricing.py` now dated and cites the course Lecture 11 table; `GET /api/usage?run_id=` and `GET /api/runs` added to `backend/main.py`; `backend/projection.py` turns measured usage into unit costs and semester projections, all assumptions in one labeled block, output at `evidence/cost_model.md`. |
 | 06 | `backend/benchmark.py`: Mode A (generic single-prompt assistant) vs. Mode B (Gavel: Compiler+Reader+Skeptic+code Engine), each run 3x, plus 5 experiments on Mode B. Mode B wins decisively on dollar accuracy (exact, $0 error, all 3 reps) and citation discipline (158/158 correct vs. 80/158 for Mode A); overall verdict accuracy is closer (0.883 vs. 0.860) — reported honestly, not oversold. `evidence/benchmark.json` / `evidence/benchmark.md`. Mode C (human baseline) reported as not-yet-available: it depends on the user's own timed exercise (`evidence/manual_first5.csv`, not yet filled in). |
 | 07 | Safety: `backend/safety.py` (hidden-text stripping + instruction-pattern quarantine + delimiter wrapping, one `DEFENSES_ENABLED` toggle), wired into `backend/chair.py`'s Reader step. `safety_test.py`: 13/13 PASS, including the Q26 false-positive control (0 wrong quarantines) and a tiny-token-cap run ending cleanly. Found that the model resisted the injection even with defenses off in this run (reported honestly, not claimed as the defense "catching" it) — pre-model layers still catch it when it's on. Also found and documented a real, pre-existing data-format limitation: `data/requests_truth.json`'s Q27 entries assume document attachments the HTML format never carries, unrelated to injection defenses. |
+| 08a | The FastAPI route surface (`backend/main.py`): policy upload/compile/approve/reject, request upload (txt/html/json/paste), the zero-upload demo, background-run lifecycle (start/status/events/verdicts/drafts/approve/export), consistency, the optimizer, line explanations. `tests/test_api.py`: 27/27 passing against the real app and a real database, including real model calls (compile, demo load) and a real small background pipeline run. Generalized `backend/hidden_html.py` beyond its one Q27 fixture so it also serves general HTML request uploads; found and fixed a `<title>`-tag text leak and a sync-route/event-loop bug along the way. |
 
 ## Data tables
 
@@ -370,7 +371,51 @@ accuracy.
 
 ## API routes
 
-(filled in step08a)
+`backend/main.py`, FastAPI. Every error returns a plain-English `detail` message (a catch-all
+`Exception` handler also turns any truly unexpected error into a 500 with a message instead of a
+raw stack trace). No frontend yet (step08b) — tested with `tests/test_api.py` (27/27 passing,
+real app, real database, real model calls where noted).
+
+| Method & path | What it does |
+| --- | --- |
+| `POST /api/policy` | Paste (`text` form field) or upload (`file`, .txt) a policy. Replaces the current policy and clears any rules proposed against the old one. |
+| `POST /api/policy/compile` | Runs the real Policy Compiler agent. Returns every proposed rule (verified or not); nothing is approved yet. |
+| `POST /api/rules/{id}/approve` | Human approval (`{"by": "..."}`). Refuses an unverified-quote rule. |
+| `POST /api/rules/{id}/reject` | Human rejection (`{"by": "...", "reason": "..."}` optional reason). |
+| `POST /api/rules/approve-all-verified` | The demo's one-click bulk action — approves every currently-proposed, quote-verified rule. Still an explicit human call. |
+| `POST /api/requests` | multipart `file` (.txt/.html/.json) or `application/json` body (the request object directly) — paste or upload. |
+| `POST /api/demo/load` | Loads the bundled sample policy/24 requests/history/prior decisions and runs the real Compiler, zero uploads needed. Nothing auto-approves. |
+| `POST /api/runs` | Starts a run in the background (`asyncio.create_task`, must be an `async def` route — see ambiguous-call note). Body: optional `request_ids` (default: every loaded request) and `benchmark_mode` (default `False`). Returns `run_id` immediately. |
+| `GET /api/runs/{id}` | Status, mode, timestamps, usage totals, and a per-agent-family call count (progress). |
+| `GET /api/runs/{id}/events` | The ordered audit trail for that run (every tool call, agent step, `blocked_injection`, etc.) — polling is fine. |
+| `GET /api/runs/{id}/verdicts` | Every verdict for that run, joined with club/description/amount for readability. |
+| `GET /api/runs/{id}/drafts` | That run's drafted questions/memo, with `status`. |
+| `POST /api/drafts/{id}/approve` | The committee-approval gate — the only way a draft's status ever changes. |
+| `GET /api/consistency` | Wraps `consistency_report` (step02). |
+| `POST /api/allocate` | `{"pot": ..., "alpha": ...}` — instant, code only (step02/03's optimizer). |
+| `GET /api/lines/{id}/explain` | Wraps `explain_line` — looks up the line's request_id first so the route only needs the line id. |
+| `GET /api/export.csv` | `?run_id=...` — the run's verdicts as a CSV (working data, not the draft memo — see ambiguous-call note). |
+| `GET /api/usage`, `GET /api/runs` | Already built in step05; unchanged. |
+
+**Request upload formats:** JSON matches `data/requests_input.json`'s per-request shape directly.
+HTML reuses `backend/hidden_html.py`'s parser (now generalized beyond its one Q27 fixture — see
+ambiguous-call note). Plain text is a format invented for this step since none exists anywhere in
+the kit (`backend/text_request.py`):
+
+```
+Club: <name>
+Event: YYYY-MM-DD
+Submitted: YYYY-MM-DD
+Justification: <free text>
+Lines:
+- <description> - $<amount>
+- <description> - $<amount> [docs: quotes3,contract]
+- <description> - $<amount> [already_purchased]
+```
+
+Uploaded/pasted requests get auto-generated ids (`UP-xxxxxxxx`, lines `UP-xxxxxxxx-L1`...) when
+not supplied, via `backend/requests_intake.py`, which never touches the rest of the database --
+unlike `backend/load.py`'s loader, it adds one request without wiping anything.
 
 ## Frontend
 
@@ -500,6 +545,36 @@ accuracy.
   requests_truth.json` produces false "mismatches" unrelated to injection defenses — see the
   harness.md write-up above. This only affects safety_test.py's Q27 check; no other step's
   results relied on Q27 matching that truth file.
+- Step08a: `GET /api/export.csv` exports the run's verdicts (a well-defined tabular artifact), not
+  the Drafter's memo (prose, already available as JSON via `GET /api/runs/{id}/drafts`). Verdicts
+  are the engine's factual working output, not "the decision" in CONTEXT.md's sense, so no
+  approval gate applies to this route — the gate (`POST /api/drafts/{id}/approve`) is specifically
+  about the Drafter's memo/questions, matching defense 7 from step07.
+- Step08a: `POST /api/runs` must be `async def`, not a plain `def`. FastAPI runs a sync route in a
+  worker thread via `anyio.to_thread.run_sync`, which has no running asyncio event loop of its
+  own — `asyncio.create_task`/`ensure_future` there raised `RuntimeError: There is no current
+  event loop in thread`. An `async def` route runs directly on the app's main loop, which is also
+  the loop the background task needs to keep running on after the response returns. Found via a
+  real test failure, not by inspection.
+- Step08a: `backend/hidden_html.py` (built in step01 for Q27 only) is now reused for ANY html
+  request upload. Generalized its `Q\d+` id pattern and `\d+-L\d+` line pattern to match any
+  token, and fixed a real bug this generalization surfaced: `<title>` tag text (page metadata, not
+  body content) was leaking into the justification once the parser could no longer assume Q27's
+  exact structure — the `<title>Request Q27</title>` text happened to never collide with Q27's own
+  "NOTE TO AI REVIEWERS"-only justification filter, masking the bug until a different request's
+  title text had nothing in common with its real content. Fixed by skipping text inside `<title>`
+  entirely, which also better matches what a naive scraper of a request's *content* would do.
+  Re-verified both `tests/test_mcp.py` and `safety_test.py` still pass unchanged after this change
+  (Q27's own parsed output is byte-for-byte identical to before).
+- Step08a: no standard plain-text request format exists anywhere in the kit for POST /api/requests'
+  `.txt` upload path, so `backend/text_request.py` defines the simplest one that covers the same
+  fields as the JSON/HTML paths (see the format block in the route table above), documented in the
+  route's own parse-error message so a newcomer gets a clear reminder on a mistake, not just a
+  rejection.
+- Step08a: `POST /api/demo/load` runs the REAL Policy Compiler agent (not a fixture) every time
+  it's called, rather than faking a "sample proposal" from the known-correct rule set — the point
+  of a demo button is to show the real app working, and a few seconds / ~$0.0008 per click is cheap
+  enough not to matter.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage

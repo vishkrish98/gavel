@@ -166,6 +166,42 @@ def approve_rule(rule_id: str, by: str) -> dict:
     return {"rule_id": rule_id, "approved": True, "approved_by": by}
 
 
+# reject_rule and approve_all_verified_rules are deliberately NOT @mcp.tool() -- they're human-only
+# actions exposed via backend/main.py's API routes (POST /api/rules/{id}/reject and
+# /api/rules/approve-all-verified), not capabilities any agent should have. An agent proposes;
+# only a human approves or rejects.
+
+
+def reject_rule(rule_id: str, by: str, reason: str | None = None) -> dict:
+    """Human rejection. A rejected rule is never used by the engine, same as one that failed
+    quote verification -- the only difference recorded is who rejected it and why."""
+    conn = _connect()
+    row = conn.execute("SELECT * FROM rules WHERE id = ?", (rule_id,)).fetchone()
+    if row is None:
+        conn.close()
+        return {"rule_id": rule_id, "rejected": False, "reason": "no such rule"}
+    conn.execute("UPDATE rules SET status = 'rejected' WHERE id = ?", (rule_id,))
+    conn.commit()
+    audit.log_event(conn, None, "rule_rejected_by_human", {"rule_id": rule_id, "rejected_by": by, "reason": reason})
+    conn.close()
+    return {"rule_id": rule_id, "rejected": True, "rejected_by": by}
+
+
+def approve_all_verified_rules(by: str) -> dict:
+    """Bulk human action for the demo flow: approves every currently-proposed rule whose quote
+    verified. Still an explicit human action (a route call), not an automatic approval -- same
+    human-approval gate as approve_rule, just applied to all of them in one call."""
+    conn = _connect()
+    rows = conn.execute("SELECT id FROM rules WHERE status = 'proposed' AND quote_verified = 1").fetchall()
+    approved_ids = [r["id"] for r in rows]
+    for rule_id in approved_ids:
+        conn.execute("UPDATE rules SET status = 'approved', approved_by = ? WHERE id = ?", (by, rule_id))
+        audit.log_event(conn, None, "rule_approved", {"rule_id": rule_id, "approved_by": by, "bulk": True})
+    conn.commit()
+    conn.close()
+    return {"approved_rule_ids": approved_ids, "count": len(approved_ids), "approved_by": by}
+
+
 # ---------------------------------------------------------------------------
 # Requests and the engine
 # ---------------------------------------------------------------------------
