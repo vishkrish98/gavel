@@ -19,6 +19,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 09 | Full `README.md` (install, run, use, test/benchmark/safety commands, troubleshooting) and a real timed fresh-clone dry run: clone → venv → `pip install` → `.env` placement → `python run.py` → a complete sample run, **53.0s of active stage time, 112.6s wall-clock total** — far under the 10-minute budget. `evidence/fresh_clone_log.md`. Security check (`evidence/secrets_check.md`): no `.env`, no DB files, nothing from `data/private/`, no key-shaped strings, anywhere in the tracked files or the full git history; `.env.example` fixed to be strictly names-only (dropped a placeholder value it had). |
 | 10 | The evidence pack: one final clean run (`output/trace_run1.json`, `evidence/usage_final.json`, `evidence/verdicts_final.csv`, `evidence/run_check.json` — 158/158, 0 decoys, 6/30 consistency, same as every prior run). `evidence/numbers.md` indexes every number the report/slides can cite, each with its source file, including the 3 rows still pending the user's own stopwatch/portability tasks. `evidence/limits.md` is an honest account of where the system is unproven or untested (the Skeptic's 0% observed precision, the injection detector's narrow phrase-list coverage, no concurrency/auth/scale testing, synthetic-only data). `score_manual.py` scores the user's eventual `evidence/manual_first5.csv` against the same answer key as Mode A/B. `evidence/SCREENSHOTS.md` rewritten as an exact per-screen checklist with what must be visible in each shot. |
 | 11a | `report.html` (repo root), built by `tools/make_report.py` from `evidence/`/`output/` files only — self-contained (inline CSS, base64 screenshots, an inline SVG agent diagram, an inline SVG token-by-agent bar chart), **11 printed pages** (verified with headless Chrome `--print-to-pdf` + PyMuPDF page count). 9 placeholders (`[[USER: ...]]`/`[[MISSING: ...]]`) for the 3 things only the user can supply (motivation, competitors, real-world reflection/portability) plus the 2 still-pending manual-baseline numbers and 1 terminal screenshot. |
+| 11b | `slides.html` (repo root), built by `tools/make_slides.py` from the same `evidence/` files and `report.html`'s own numbers — a reveal.js 5.1.0 deck, exactly 10 slides, reveal.js itself loaded from the pinned cdnjs CDN (the step's own instruction) while 4 screenshots and the agent-team SVG are embedded as base64. Verified in a headless browser, slide by slide: no overflow, body text 42px at the deck's native 1280px width, 10/10 speaker-note asides present. 3 `[[USER: ...]]` placeholders carried over from `report.html`'s own unresolved items. |
 
 ## Data tables
 
@@ -685,3 +686,19 @@ API-only with a clear message, rather than failing.
   object is what makes the *per-agent* token cap (via `usage_limits.total_tokens_limit` on that
   one call) meaningful; sharing one cumulative object across every call would only ever enforce
   the whole-run cap, not a per-call one. Doing both needed two separate mechanisms.
+- Step11b: `slides.html` loads reveal.js 5.1.0 from the pinned cdnjs CDN rather than vendoring it
+  inline, even though `report.html` is fully self-contained with no external requests. The step's
+  own instruction is explicit ("loaded from the cdnjs CDN with an exact pinned version"), and
+  `START_HERE.md`'s final checklist only requires "slides.html opens by double-click" — unlike its
+  report.html line, which separately requires "opens by double-click **with wifi off**". So the
+  double-click requirement for slides.html is about the file's own content (hence every image is
+  still embedded as base64, same as the report), not about working fully offline; a live CDN
+  script tag is in bounds for the framework itself. Verified this resolves cleanly rather than
+  silently picking one reading: the deck renders correctly from `tools/make_slides.py`'s output
+  with the CDN reachable, which is the normal case for a committee member opening the file.
+- Step11b: `IMG` in `tools/make_slides.py` loads 4 screenshots independently of `make_report.py`'s
+  `IMG` dict (one new one, `07_review_table`, not used in the report; 3 reused) rather than
+  importing the report script's dict — the two scripts build different documents with different
+  image needs, and importing one module's module-level dict (which runs its own file-loading code
+  on import) for 3 of 4 values would couple two otherwise-independent build scripts for no real
+  benefit.

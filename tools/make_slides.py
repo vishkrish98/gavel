@@ -1,0 +1,424 @@
+"""Builds slides.html at the repo root: a reveal.js 5.1.0 deck of exactly 10 slides, per
+PROMPTS/step11b_slides.md. reveal.js itself is loaded from the pinned cdnjs CDN (the step's own
+instruction); every image is embedded as base64 so the file's own content opens by double-click
+with no separate asset files, matching START_HERE.md's checklist ("slides.html opens by
+double-click" -- unlike report.html, slides.html carries no "with wifi off" requirement, so a
+CDN-loaded framework is in bounds). Every number is read from evidence/numbers.md's underlying
+files or transcribed from report.html, per the step's own rule -- nothing here is invented.
+
+Run with: python -m tools.make_slides
+"""
+
+from __future__ import annotations
+
+import base64
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+EVIDENCE = ROOT / "evidence"
+ASSETS = ROOT / "report_assets"
+
+PLACEHOLDERS: list[str] = []
+
+
+def user(what: str) -> str:
+    PLACEHOLDERS.append(f"[[USER]] {what}")
+    return f'<span class="flag flag-user">[[USER: {what}]]</span>'
+
+
+def b64_image(path: Path) -> str:
+    data = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:image/jpeg;base64,{data}"
+
+
+def load_json(name: str) -> dict:
+    return json.loads((EVIDENCE / name).read_text())
+
+
+# ---------------------------------------------------------------------------
+# Load every real number up front -- same source files as tools/make_report.py
+# ---------------------------------------------------------------------------
+
+run_check = load_json("run_check.json")
+usage_final = load_json("usage_final.json")
+benchmark = load_json("benchmark.json")
+safety = load_json("safety_results.json")
+
+IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
+    "07_review_table", "08_review_side_panel_citation",
+    "05_run_completed_injection_banner", "09_scenarios_two_settings",
+]}
+
+
+def fmt_money(x: float, decimals: int = 2) -> str:
+    return f"${x:,.{decimals}f}"
+
+
+# Transcribed from evidence/numbers.md / evidence/cost_model.md (same frozen artifact
+# tools/make_report.py uses -- the live usage table has since been reloaded by later test runs).
+COST_MODEL = {
+    "semester_24_clubs": 0.0160,
+    "semester_150_clubs": 0.0956,
+    "semester_1000_institutions": 16.0400,
+    "reviewer_cost_per_request": 6.67,
+    "per_request": 0.000632,
+}
+
+
+# ---------------------------------------------------------------------------
+# CSS: same palette and type as report.html, scaled up for a slide deck
+# ---------------------------------------------------------------------------
+
+CSS = """
+:root {
+  --accent: #9a6b1f;
+  --accent-wash: #f7ecd9;
+  --text: #1c1c1a;
+  --muted: #5c5a52;
+  --hairline: #d8d2c2;
+  --allowed: #2f7d4f;
+  --denied: #a13d3d;
+}
+.reveal { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--text); }
+.reveal .slides section { text-align: left; }
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  color: var(--text);
+  text-transform: none;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 0.15em;
+  margin-bottom: 0.5em;
+}
+.reveal section.center { text-align: center; }
+.reveal section.center h1 { border-bottom: none; font-size: 2.6em; }
+.reveal .subtitle { color: var(--muted); font-size: 0.6em; font-family: -apple-system, sans-serif; }
+.reveal p, .reveal li { font-size: 1em; line-height: 1.35; }
+.reveal ul { margin-left: 0.3em; }
+.reveal li { margin-bottom: 0.3em; }
+.reveal li::marker { color: var(--accent); }
+.reveal strong { color: var(--accent); }
+.reveal table { border-collapse: collapse; width: 100%; font-size: 0.68em; margin-top: 0.3em; }
+.reveal th, .reveal td { border: 1px solid var(--hairline); padding: 0.25em 0.5em; text-align: left; }
+.reveal th { background: var(--accent-wash); }
+.reveal td.num, .reveal th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.reveal figure { margin: 0.3em 0 0; text-align: center; }
+.reveal figure img { max-height: 46vh; max-width: 100%; border: 1px solid var(--hairline); border-radius: 6px; }
+.reveal figcaption { font-size: 0.5em; color: var(--muted); }
+.reveal .quote { font-style: italic; background: var(--accent-wash); border-left: 4px solid var(--accent); padding: 0.3em 0.6em; font-size: 0.75em; }
+.reveal .flag-user { background: #eaf2fb; color: #2a5885; border: 1px solid #2a5885; padding: 0 0.3em; border-radius: 3px; font-size: 0.6em; font-weight: 700; }
+.reveal .two-col { display: flex; gap: 1.2em; align-items: flex-start; }
+.reveal .two-col > div { flex: 1; }
+.reveal .small { font-size: 0.6em; color: var(--muted); }
+.reveal .svg-wrap svg { width: 100%; height: auto; max-height: 48vh; }
+.reveal .footer-src { position: absolute; bottom: 0.3em; right: 0.6em; font-size: 0.35em; color: var(--muted); }
+"""
+
+
+# ---------------------------------------------------------------------------
+# Inline SVG: agent org chart -- identical to report.html's, per the step's own instruction
+# ---------------------------------------------------------------------------
+
+def agent_box(x: int, y: int, w: int, h: int, label: str, sub: str, code_only: bool = False) -> str:
+    fill = "#ece4d2" if code_only else "#fdf8ee"
+    stroke = "#9a978c" if code_only else "#9a6b1f"
+    return f"""
+    <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="7" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>
+    <text x="{x + w/2}" y="{y + h/2 - 3}" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">{label}</text>
+    <text x="{x + w/2}" y="{y + h/2 + 13}" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">{sub}</text>
+    """
+
+
+AGENT_DIAGRAM_SVG = f"""
+<svg viewBox="0 0 780 440" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <rect x="0" y="0" width="780" height="440" fill="#ffffff"/>
+
+  {agent_box(300, 10, 180, 50, "CHAIR", "orchestrator")}
+
+  <line x1="390" y1="60" x2="390" y2="85" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="720" y2="85" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="60" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="190" y1="85" x2="190" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="320" y1="85" x2="320" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="450" y1="85" x2="450" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="580" y1="85" x2="580" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="700" y1="85" x2="700" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+
+  {agent_box(0, 105, 120, 56, "Policy", "Compiler")}
+  {agent_box(130, 105, 120, 56, "Request", "Reader (parallel)")}
+  {agent_box(260, 105, 120, 56, "Skeptic", "2nd-guesses allowed")}
+  {agent_box(390, 105, 120, 56, "Engine", "code only", code_only=True)}
+  {agent_box(520, 105, 120, 56, "Optimizer", "code only", code_only=True)}
+  {agent_box(650, 105, 130, 56, "Drafter", "questions + memo")}
+
+  <line x1="60" y1="161" x2="60" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="55,195 65,195 60,203" fill="#a13d3d"/>
+  <rect x="5" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
+  <text x="60" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
+  <text x="60" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">each rule</text>
+
+  <line x1="715" y1="161" x2="715" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="710,195 720,195 715,203" fill="#a13d3d"/>
+  <rect x="660" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
+  <text x="715" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
+  <text x="715" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">the memo/questions</text>
+
+  <line x1="390" y1="161" x2="390" y2="275" stroke="#9a978c" stroke-width="1.2" stroke-dasharray="2,3"/>
+  <rect x="20" y="280" width="740" height="70" rx="7" fill="#f4f1ea" stroke="#9a978c" stroke-width="1.3"/>
+  <text x="390" y="296" text-anchor="middle" font-size="10" font-weight="700" fill="#1c1c1a">MCP SERVER (mcp_server/server.py) -- the only way any agent touches data</text>
+  <text x="390" y="316" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">load_policy &#183; list_rules &#183; propose_rule &#183; approve_rule &#183; verify_quote &#183; get_request</text>
+  <text x="390" y="332" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">check_line &#183; run_engine &#183; explain_line &#183; consistency_report &#183; allocate &#183; log_usage</text>
+
+  <rect x="20" y="370" width="740" height="60" rx="7" fill="#ffffff" stroke="#d8d2c2" stroke-width="1"/>
+  <text x="390" y="388" text-anchor="middle" font-size="9.5" fill="#5c5a52">Every agent's toolset is a filtered MCPToolset over this one server -- no agent has a private data path.</text>
+  <text x="390" y="404" text-anchor="middle" font-size="9.5" fill="#5c5a52">Engine and Optimizer are plain code (backend/engine.py), not model calls -- a verdict or an</text>
+  <text x="390" y="420" text-anchor="middle" font-size="9.5" fill="#5c5a52">allocation can never come from an agent's own words, only from a deterministic function.</text>
+</svg>
+"""
+
+
+# ---------------------------------------------------------------------------
+# Slides
+# ---------------------------------------------------------------------------
+
+def notes(text: str) -> str:
+    return f'<aside class="notes">{text}</aside>'
+
+
+def slide_01_title() -> str:
+    return f"""
+    <section class="center">
+      <h1>Gavel</h1>
+      <p class="subtitle">Decision support for a student-government funding committee</p>
+      <p class="small">Built for MGT 409, AI Foundations for Managers &mdash; Yale SOM</p>
+      {notes("Introduce Gavel: it reads a club-funding policy and every request against it, and drafts a decision a human still has to approve.")}
+    </section>
+    """
+
+
+def slide_02_problem() -> str:
+    return f"""
+    <section>
+      <h2>The problem</h2>
+      <ul>
+        <li>Funding decisions are <strong>inconsistent</strong> &mdash; same facts, different clubs, different outcomes</li>
+        <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, against a long policy</li>
+        <li>Violations can be <strong>hidden</strong> in a request's own text and missed by a tired reader</li>
+      </ul>
+      {notes("Three concrete pains: committees disagree with themselves across clubs, review is slow and manual, and a request can bury text meant to mislead the reviewer.")}
+    </section>
+    """
+
+
+def slide_03_whats_new() -> str:
+    competitors = user(
+        "name two real competitor tools (e.g. CampusGroups, Campus Labs) and one line each on what "
+        "they do NOT do -- paste after reading their sites"
+    )
+    return f"""
+    <section>
+      <h2>What is new</h2>
+      <table>
+        <tr><th></th><th>Existing tools</th><th>Gavel</th></tr>
+        <tr><td>Verdicts</td><td>Manual judgment call</td><td>Deterministic engine, cites the exact policy sentence</td></tr>
+        <tr><td>Consistency across clubs</td><td>Not checked</td><td>Checked against every prior decision, every run</td></tr>
+        <tr><td>Hidden-text injection</td><td>Not addressed</td><td>Stripped, quarantined, and logged</td></tr>
+      </table>
+      <p>{competitors}</p>
+      {notes("Position Gavel against named competitors -- this slide needs real research the user still has to paste in; it's flagged, not invented.")}
+    </section>
+    """
+
+
+def slide_04_agent_team() -> str:
+    return f"""
+    <section>
+      <h2>The agent team</h2>
+      <div class="svg-wrap">{AGENT_DIAGRAM_SVG}</div>
+      {notes("CHAIR is plain code, not an LLM agent, orchestrating five agents plus two deterministic, code-only steps -- Engine and Optimizer never touch a model, so a verdict or a dollar amount can't come from an agent's own words. Two human approval gates: one per rule, one per memo.")}
+    </section>
+    """
+
+
+def slide_05_the_app() -> str:
+    return f"""
+    <section>
+      <h2>The app</h2>
+      <figure>
+        <img src="{IMG['07_review_table']}" alt="Review table listing every line with its verdict, amount, and citation">
+        <figcaption>Every line, its verdict, allowed amount, and the exact policy citation behind it.</figcaption>
+      </figure>
+      {notes("This is the committee's actual screen: one row per line item, sortable, with the verdict and citation right there -- nothing to dig for in a separate document.")}
+    </section>
+    """
+
+
+def slide_06_one_line_traced() -> str:
+    return f"""
+    <section>
+      <h2>One real line, traced</h2>
+      <div class="two-col">
+        <div>
+          <p>Line 07-L3, guest speaker honorarium, $1,500.</p>
+          <p class="quote">&ldquo;Speaker fees require a signed contract on file.&rdquo;</p>
+          <p>The Reader read this exact sentence; the Drafter asked the club for the signed contract.</p>
+        </div>
+        <figure>
+          <img src="{IMG['08_review_side_panel_citation']}" alt="Review side panel showing the line's exact policy citation highlighted">
+        </figure>
+      </div>
+      {notes("Click into one line and the side panel shows the highlighted sentence the verdict actually rests on -- not a paraphrase, the real quote, checked by verify_quote before it's shown.")}
+    </section>
+    """
+
+
+def slide_07_cost() -> str:
+    t = usage_final["total"]
+    cm = COST_MODEL
+    return f"""
+    <section>
+      <h2>What it costs</h2>
+      <p>One full run, 24 real requests: <strong>{t['total_tokens']:,} tokens</strong>, <strong>{fmt_money(t['cost_usd'], 5)}</strong>.</p>
+      <table>
+        <tr><th>Scale</th><th>Semester cost</th><th>Assumption</th></tr>
+        <tr><td>24 clubs (measured)</td><td class="num">{fmt_money(cm['semester_24_clubs'], 4)}</td><td class="small">this dataset</td></tr>
+        <tr><td>150 clubs</td><td class="num">{fmt_money(cm['semester_150_clubs'], 4)}</td><td class="small">same request/line pattern as the 24-club sample</td></tr>
+        <tr><td>1,000 institutions</td><td class="num">{fmt_money(cm['semester_1000_institutions'], 2)}</td><td class="small">each compiles its own policy, averages 24 clubs</td></tr>
+      </table>
+      <p class="small">Human comparison: {fmt_money(cm['reviewer_cost_per_request'])}/request manually (20 min at $20/hr) vs. {fmt_money(cm['per_request'], 6)} for Gavel's pass on the same request.</p>
+      {notes("Every token here is a real provider-reported number, not an estimate. The 150-club and 1,000-institution rows are explicit assumptions, stated on the slide, not measured.")}
+    </section>
+    """
+
+
+def slide_08_safety() -> str:
+    cases = safety["cases"]
+    pass_count = sum(1 for p in safety["pass_fail_table"] if p["passed"])
+    total = len(safety["pass_fail_table"])
+    return f"""
+    <section>
+      <h2>Safety</h2>
+      <div class="two-col">
+        <div>
+          <table>
+            <tr><th>Case</th><th>Defenses</th><th>Quarantined?</th></tr>
+            <tr><td>Q27, hidden text</td><td>off</td><td>no</td></tr>
+            <tr><td>Q27, hidden text</td><td>on</td><td>{'yes' if cases['case2']['injection_was_quarantined'] else 'no'} (2 events)</td></tr>
+            <tr><td>Q25, plain text</td><td>on</td><td>{'yes' if cases['case3']['injection_was_quarantined'] else 'no'} (2 events)</td></tr>
+            <tr><td>Q26, benign look-alike</td><td>on</td><td>{len(cases['case4']['blocked_injection_events'])} false positives</td></tr>
+          </table>
+          <p class="small">{pass_count}/{total} safety tests PASS. Verdicts always matched the answer key, defenses on or off.</p>
+        </div>
+        <figure>
+          <img src="{IMG['05_run_completed_injection_banner']}" alt="The app's injection-blocked banner naming the exact blocked text">
+        </figure>
+      </div>
+      {notes("The model resisted these injections even with defenses off in this run -- reported honestly, not claimed as a catch. The real guarantee is structural: Engine and verify_quote decide verdicts and citations, never the model, and every rule or memo needs a human click regardless of this toggle.")}
+    </section>
+    """
+
+
+def slide_09_impact() -> str:
+    mode_a = benchmark["mode_a"]["summary"]
+    mode_b = benchmark["mode_b"]["summary"]
+    excel_accuracy = user("verdict accuracy from evidence/manual_first5_scored.json, after filling in the Excel baseline")
+    return f"""
+    <section>
+      <h2>Impact</h2>
+      <table>
+        <tr><th>Metric</th><th>Excel (1 reviewer, 5 req.)</th><th>Generic AI (Mode A)</th><th>Gavel (Mode B)</th></tr>
+        <tr><td>Verdict accuracy</td><td>{excel_accuracy}</td><td class="num">{mode_a['overall_verdict_accuracy']['avg']:.3f}</td><td class="num">{mode_b['overall_verdict_accuracy']['avg']:.3f}</td></tr>
+        <tr><td>Dollars wrongly allowed</td><td class="small">not measured at this scale</td><td class="num">{fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])}</td><td class="num">{fmt_money(mode_b['total_dollars_wrongly_allowed']['avg'])}</td></tr>
+      </table>
+      <figure>
+        <img src="{IMG['09_scenarios_two_settings']}" alt="Scenario sliders showing two alpha settings with different allocation bar charts">
+        <figcaption>Moving the scenario slider visibly shifts funding across clubs.</figcaption>
+      </figure>
+      {notes("Gavel's clear edge is dollar accuracy -- exact, $0 wrongly allowed every repetition -- and citation discipline, not a blowout on every single metric; verdict accuracy is close to Mode A and Mode A is cheaper per run.")}
+    </section>
+    """
+
+
+def slide_10_limits() -> str:
+    reflection = user("6-8 sentence real-world reflection -- evidence/PORTABILITY_AND_REAL_USE.md task #3")
+    return f"""
+    <section>
+      <h2>Limits and next steps</h2>
+      <ul>
+        <li>Policy and all 24 requests are <strong>synthetic</strong> &mdash; no real committee has used Gavel yet</li>
+        <li>The Skeptic has <strong>never caught a real error</strong> in any run (0% observed precision) &mdash; its value is unproven here</li>
+        <li>Instruction-pattern detection is a narrow, 5-phrase list &mdash; a differently-worded injection could reach the model unfiltered</li>
+        <li>No real-policy portability check, no concurrency testing, one browser tested</li>
+      </ul>
+      <p class="small">{reflection}</p>
+      {notes("Close on what we have NOT shown: real users, a real policy, or a caught error. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.")}
+    </section>
+    """
+
+
+SLIDES = [
+    slide_01_title,
+    slide_02_problem,
+    slide_03_whats_new,
+    slide_04_agent_team,
+    slide_05_the_app,
+    slide_06_one_line_traced,
+    slide_07_cost,
+    slide_08_safety,
+    slide_09_impact,
+    slide_10_limits,
+]
+
+
+def build_html() -> str:
+    sections = "\n".join(fn() for fn in SLIDES)
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+<style>{CSS}</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    {sections}
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script>
+  Reveal.initialize({{
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [ RevealNotes ]
+  }});
+</script>
+</body>
+</html>
+"""
+
+
+def main() -> None:
+    html = build_html()
+    out = ROOT / "slides.html"
+    out.write_text(html, encoding="utf-8")
+    print(f"Wrote {out} ({len(html):,} bytes, {len(SLIDES)} slides)")
+    print(f"Placeholders ({len(PLACEHOLDERS)}):")
+    for p in PLACEHOLDERS:
+        print(f"  {p}")
+
+
+if __name__ == "__main__":
+    main()
