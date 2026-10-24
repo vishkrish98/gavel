@@ -2,7 +2,7 @@
   "run_id": "run1",
   "status": "completed",
   "reason": null,
-  "total_tokens_used": 103784,
+  "total_tokens_used": 105783,
   "reader_errors": {},
   "rules": {
     "true_rules": 12,
@@ -23,7 +23,7 @@
         "2.1",
         "5.1"
       ],
-      "notes": "All 12 proposed rules had verified quotes."
+      "notes": "All 12 proposed rules have verified quotes. Food and beverages were mapped to the valid food category."
     }
   },
   "categories_and_verdicts": {
@@ -58,18 +58,16 @@
     "mean_absolute_dollar_diff_per_line": 0.0
   },
   "skeptic": {
-    "lines_flagged": 10,
+    "lines_flagged": 8,
     "flagged_that_were_actual_misclassifications": 0,
-    "flagged_that_were_not_actual_errors": 10,
+    "flagged_that_were_not_actual_errors": 8,
     "flagged_line_ids": [
-      "04-L5",
+      "03-L4",
+      "06-L1",
       "08-L4",
       "08-L5",
       "09-L5",
-      "10-L2",
-      "11-L3",
-      "15-L7",
-      "15-L8",
+      "15-L5",
       "18-L6",
       "23-L8"
     ]
@@ -139,7 +137,7 @@
     }
   },
   "drafts_produced": {
-    "question_drafts": 14,
-    "memo_draft_id": "DRAFT-44f6db19"
+    "question_drafts": 15,
+    "memo_draft_id": "DRAFT-5fc7051a"
   }
 }
