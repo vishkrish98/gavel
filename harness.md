@@ -16,6 +16,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 07 | Safety: `backend/safety.py` (hidden-text stripping + instruction-pattern quarantine + delimiter wrapping, one `DEFENSES_ENABLED` toggle), wired into `backend/chair.py`'s Reader step. `safety_test.py`: 13/13 PASS, including the Q26 false-positive control (0 wrong quarantines) and a tiny-token-cap run ending cleanly. Found that the model resisted the injection even with defenses off in this run (reported honestly, not claimed as the defense "catching" it) — pre-model layers still catch it when it's on. Also found and documented a real, pre-existing data-format limitation: `data/requests_truth.json`'s Q27 entries assume document attachments the HTML format never carries, unrelated to injection defenses. |
 | 08a | The FastAPI route surface (`backend/main.py`): policy upload/compile/approve/reject, request upload (txt/html/json/paste), the zero-upload demo, background-run lifecycle (start/status/events/verdicts/drafts/approve/export), consistency, the optimizer, line explanations. `tests/test_api.py`: 27/27 passing against the real app and a real database, including real model calls (compile, demo load) and a real small background pipeline run. Generalized `backend/hidden_html.py` beyond its one Q27 fixture so it also serves general HTML request uploads; found and fixed a `<title>`-tag text leak and a sync-route/event-loop bug along the way. |
 | 08b | The React + Vite + TypeScript frontend (`frontend/`), dark/scholarly/brass theme, all 9 screens from a real run against the real backend — including the injection-blocked banner firing for real on Q25/Q27. Built and committed `frontend/dist`; `run.py` only rebuilds it if Node is present and it's missing. Screenshots in `report_assets/`. Added 4 small read-only GET routes (`/api/policy/paragraphs`, `/api/rules`, `/api/requests`, `/api/requests/{id}`) the frontend needed that step08a's list didn't include. |
+| 09 | Full `README.md` (install, run, use, test/benchmark/safety commands, troubleshooting) and a real timed fresh-clone dry run: clone → venv → `pip install` → `.env` placement → `python run.py` → a complete sample run, **53.0s of active stage time, 112.6s wall-clock total** — far under the 10-minute budget. `evidence/fresh_clone_log.md`. Security check (`evidence/secrets_check.md`): no `.env`, no DB files, nothing from `data/private/`, no key-shaped strings, anywhere in the tracked files or the full git history; `.env.example` fixed to be strictly names-only (dropped a placeholder value it had). |
 
 ## Data tables
 
@@ -648,6 +649,20 @@ API-only with a clear message, rather than failing.
   Rules screen needs every paragraph (to render decoys) and the Review/Run screens need to list
   and open requests. Thin wrappers over existing code (`srv.load_policy`, `srv.list_rules`,
   `srv.get_request`), nothing new underneath; not a scope expansion of what Gavel can do.
+- Step09: the fresh-clone dry run used a **local** `git clone <path> <folder>` rather than cloning
+  from GitHub over the network, since no remote has been pushed yet (the user still needs to
+  create the GitHub repo and push per `START_HERE.md`). A local clone still reads only from git's
+  object store (not the working tree), which is what actually matters for "does the committed
+  state alone reproduce a working project" — it just skips a few seconds of network latency a real
+  `git clone <github-url>` would add, nowhere near enough to threaten the 10-minute budget (53s of
+  active stage time measured). Noted explicitly in `evidence/fresh_clone_log.md` rather than
+  silently presented as a true network clone.
+- Step09: "complete a sample run end to end" was exercised via direct API calls (`POST /api/demo/
+  load`, `.../rules/approve-all-verified`, `POST /api/runs`, poll to completion) rather than
+  re-driving the browser UI — the UI's own behavior was already verified visually in step08b
+  against this identical backend code, so the fresh-clone test's job is to verify the *clone*
+  (dependencies, paths, `.env` resolution, the database being created fresh), not re-prove the UI
+  renders correctly, which doesn't change based on which folder the repo lives in.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage
