@@ -2,6 +2,8 @@
 .venv/
 venv/
 node_modules/
+# frontend/dist is intentionally NOT ignored -- it's committed so a fresh clone needs no Node
+# (step08b). Only frontend/node_modules (matched by node_modules/ above) is excluded.
 __pycache__/
 *.pyc
 *.log

@@ -15,6 +15,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 06 | `backend/benchmark.py`: Mode A (generic single-prompt assistant) vs. Mode B (Gavel: Compiler+Reader+Skeptic+code Engine), each run 3x, plus 5 experiments on Mode B. Mode B wins decisively on dollar accuracy (exact, $0 error, all 3 reps) and citation discipline (158/158 correct vs. 80/158 for Mode A); overall verdict accuracy is closer (0.883 vs. 0.860) — reported honestly, not oversold. `evidence/benchmark.json` / `evidence/benchmark.md`. Mode C (human baseline) reported as not-yet-available: it depends on the user's own timed exercise (`evidence/manual_first5.csv`, not yet filled in). |
 | 07 | Safety: `backend/safety.py` (hidden-text stripping + instruction-pattern quarantine + delimiter wrapping, one `DEFENSES_ENABLED` toggle), wired into `backend/chair.py`'s Reader step. `safety_test.py`: 13/13 PASS, including the Q26 false-positive control (0 wrong quarantines) and a tiny-token-cap run ending cleanly. Found that the model resisted the injection even with defenses off in this run (reported honestly, not claimed as the defense "catching" it) — pre-model layers still catch it when it's on. Also found and documented a real, pre-existing data-format limitation: `data/requests_truth.json`'s Q27 entries assume document attachments the HTML format never carries, unrelated to injection defenses. |
 | 08a | The FastAPI route surface (`backend/main.py`): policy upload/compile/approve/reject, request upload (txt/html/json/paste), the zero-upload demo, background-run lifecycle (start/status/events/verdicts/drafts/approve/export), consistency, the optimizer, line explanations. `tests/test_api.py`: 27/27 passing against the real app and a real database, including real model calls (compile, demo load) and a real small background pipeline run. Generalized `backend/hidden_html.py` beyond its one Q27 fixture so it also serves general HTML request uploads; found and fixed a `<title>`-tag text leak and a sync-route/event-loop bug along the way. |
+| 08b | The React + Vite + TypeScript frontend (`frontend/`), dark/scholarly/brass theme, all 9 screens from a real run against the real backend — including the injection-blocked banner firing for real on Q25/Q27. Built and committed `frontend/dist`; `run.py` only rebuilds it if Node is present and it's missing. Screenshots in `report_assets/`. Added 4 small read-only GET routes (`/api/policy/paragraphs`, `/api/rules`, `/api/requests`, `/api/requests/{id}`) the frontend needed that step08a's list didn't include. |
 
 ## Data tables
 
@@ -419,7 +420,60 @@ unlike `backend/load.py`'s loader, it adds one request without wiping anything.
 
 ## Frontend
 
-(filled in step08b)
+`frontend/` — React 19 + Vite + TypeScript, plain CSS (no component library). Dark, scholarly,
+brass-accent theme (`src/index.css`): charcoal-navy background, serif headings (system serif
+stack, no external font load — keeps it working offline), brass (`#cf9d3f`) accent for primary
+actions and highlighted quotes, verdict colors (green/amber/red/blue for
+allowed/reduced/denied/needs_docs). Structural patterns (panels, chips, nameplates, a feed, a side
+panel) follow the reference chassis's dashboard, inverted to dark per CONTEXT.md's brief (the
+reference itself is light/parchment).
+
+Single-page app, tab navigation (`src/App.tsx`), no router needed — the workflow is inherently a
+guided sequence (Start → Rules → Run → Review/Scenarios/Consistency/Drafts/Cost) but every tab
+stays reachable once data is loaded, not locked into one-way progression. `src/api.ts` wraps every
+backend route with a consistent error path (`ApiError` surfaces the backend's own `detail`
+message). `src/types.ts` mirrors the backend's JSON shapes.
+
+**The 9 required screens**, each verified against a real run (`run-a71a3b35`, 27 requests
+including the 3 safety cases, completed, $0.018551 / 119,468 tokens / 70 calls) — screenshots in
+`report_assets/` (see `evidence/SCREENSHOTS.md`):
+
+1. **Start** — hero + "Try the sample" (loads the demo, auto-advances to Rules), plus paste/upload
+   cards for a custom policy and request, each with a plain-language format hint.
+2. **Rules** — compiled rules as cards (exact quote highlighted, Verified badge, Approve/Reject),
+   "Approve all verified," decoy paragraphs shown as "Not a rule" with a client-derived reason
+   (modal "may" → guidance; otherwise → informational).
+3. **Run** — the 7 agents as nameplates with live status (waiting/working/done, derived from which
+   usage-table agent families have appeared and the run's terminal status — see ambiguous-call
+   note), a progress bar, and the live event feed (the audit trail, polled).
+4. **Review** — every line with verdict chips, a verdict-type filter, a "flagged by Skeptic" filter,
+   search; clicking a row opens a side panel with the description, requested/allowed amounts, the
+   Skeptic's note if flagged, and the exact policy quote via `explain_line`.
+5. **Scenarios** — pot and alpha sliders (two independent scenarios, A and B), an instant bar chart
+   (allowed vs. allocated per club, recomputed via `POST /api/allocate` on every move, debounced
+   120ms), a plain-language trade-off sentence, and a gains/losses table comparing A against B.
+6. **Consistency** — the inconsistency rate, matched/unmatched counts, and a table of the decisions
+   that disagree with this year's rules, with the dollar gap.
+7. **Injection-blocked banner** — a global banner (shown above the content on every tab, not just
+   Run) whenever the active run's audit trail contains a `blocked_injection` event, naming the
+   request, field, defense, and the exact blocked text. Fired for real against Q25 (instruction
+   pattern) and Q27 (both hidden-text locations) in the verification run.
+8. **Cost** — real token counts (input/cached/output) and dollars for the active run from
+   `/api/usage?run_id=`, plus a per-agent breakdown table.
+9. **Drafts** — committee questions and the decision memo, labeled DRAFT until a human clicks
+   Approve (which flips to a green "Approved" badge), and a "Download verdicts CSV" link.
+
+Empty/loading/error states (`src/components/StateBox.tsx`) are used everywhere data is fetched;
+keyboard focus is visible (`:focus-visible` outlines in brass) and the side panel auto-focuses its
+Close button. Verified responsive at mobile width (375px) — nav wraps, cards stack to one column
+below 860px (`@media` in `index.css`); verified with zero console errors/warnings throughout a full
+click-through of every screen.
+
+**Build**: `frontend/dist` is committed (not gitignored — both the root and `frontend/`
+`.gitignore` needed a line removed/annotated, since Vite's own scaffolded `frontend/.gitignore`
+ignored `dist` by default). `run.py`'s `_ensure_frontend_built()` only runs `npm install && npm
+run build` if `frontend/dist` is missing AND Node/npm are on PATH; otherwise it starts the backend
+API-only with a clear message, rather than failing.
 
 ## Ambiguous calls made along the way
 
@@ -575,6 +629,25 @@ unlike `backend/load.py`'s loader, it adds one request without wiping anything.
   it's called, rather than faking a "sample proposal" from the known-correct rule set — the point
   of a demo button is to show the real app working, and a few seconds / ~$0.0008 per click is cheap
   enough not to matter.
+- Step08b: agent nameplate status (waiting/working/done) is INFERRED on the frontend, not pushed
+  by the backend — there's no per-agent "currently working" flag in the API, only which agent
+  families have appeared in `progress_by_agent` (from the usage table) and the run's own terminal
+  status. The inference assumes CHAIR's known fixed phase order (compile → read → skeptic →
+  engine/optimizer → draft), which is accurate for this architecture but would need a real
+  per-agent status field if the pipeline ever became less strictly sequential.
+- Step08b: decoy-paragraph "why" text (screen 2) is generated client-side from the paragraph's own
+  wording (a modal "may" not followed by "not" → guidance; otherwise → informational), not sourced
+  from the Policy Compiler's own reasoning — the compiler's summary only records counts and which
+  para_ids were skipped, not a per-paragraph explanation. This is a reasonable, honest
+  approximation, not the model's actual stated reasoning.
+- Step08b: no router library — a single `tab` state in `App.tsx` with conditional rendering. The
+  workflow is a short, fixed set of screens where every tab should stay reachable once data
+  exists, not a deep multi-page app; a router would add a dependency for no real benefit here.
+- Step08b: added 4 small read-only GET routes to `backend/main.py` that step08a's list didn't
+  include (`/api/policy/paragraphs`, `/api/rules`, `/api/requests`, `/api/requests/{id}`) — the
+  Rules screen needs every paragraph (to render decoys) and the Review/Run screens need to list
+  and open requests. Thin wrappers over existing code (`srv.load_policy`, `srv.list_rules`,
+  `srv.get_request`), nothing new underneath; not a scope expansion of what Gavel can do.
 - Step04: the whole-run 400,000-token cap is tracked manually in Python (summed after each call),
   not passed as a single shared `usage=` object into every PydanticAI call — PydanticAI's
   `UsageLimits` checks against whatever `usage` object you pass it, and a per-call fresh usage

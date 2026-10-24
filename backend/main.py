@@ -118,6 +118,39 @@ def _agent_family(agent_name: str) -> str:
 # ---------------------------------------------------------------------------
 # Policy: upload/paste, compile, approve/reject
 # ---------------------------------------------------------------------------
+# GET /api/policy/paragraphs, GET /api/rules, GET /api/requests, and GET /api/requests/{id} below
+# are small read-only additions discovered while building the frontend (step08b) -- step08a's
+# route list didn't include them, but the Rules screen needs every paragraph (to show decoys as
+# "not a rule") and the Review screen needs to list/open requests. Thin wrappers over existing
+# code (srv.load_policy, srv.list_rules, srv.get_request), nothing new underneath.
+
+
+@app.get("/api/policy/paragraphs")
+def list_policy_paragraphs() -> list[dict]:
+    return srv.load_policy()
+
+
+@app.get("/api/rules")
+def list_rules_route(status: Optional[str] = None) -> list[dict]:
+    return srv.list_rules(status=status)
+
+
+@app.get("/api/requests")
+def list_requests() -> list[dict]:
+    conn = get_connection()
+    rows = [dict(r) for r in conn.execute("SELECT * FROM requests ORDER BY rowid")]
+    for row in rows:
+        row["line_count"] = conn.execute("SELECT COUNT(*) FROM lines WHERE request_id = ?", (row["id"],)).fetchone()[0]
+    conn.close()
+    return rows
+
+
+@app.get("/api/requests/{request_id}")
+def get_request_route(request_id: str) -> dict:
+    result = srv.get_request(request_id)
+    if not result["found"]:
+        raise HTTPException(404, f"No request with id {request_id!r}.")
+    return result
 
 
 @app.post("/api/policy")
