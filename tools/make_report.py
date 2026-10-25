@@ -622,10 +622,23 @@ def section_limits_and_next() -> str:
         "what happens when reviewers apply a policy inconsistently, and how Gavel's consistency "
         "report would have changed a decision you remember -- see evidence/PORTABILITY_AND_REAL_USE.md task #3"
     )
-    portability = user(
-        "if you did the optional real-policy portability check (evidence/PORTABILITY_AND_REAL_USE.md "
-        "task #2), paste the results here: how many rules compiled, how many quotes verified, how "
-        "many you corrected by hand. If you didn't do it, say so plainly rather than leaving this blank."
+    portability = (
+        "<strong>Real-policy portability check (completed):</strong> a real, public university "
+        "student union's funding policy (text not published in this repo, per the task's own "
+        "instruction) was pasted into the app and run through the real Policy Compiler unmodified. "
+        "Of 22 real paragraphs, only 4 became enforceable rules (21 reviewed, 4/4 quote-verified, "
+        "0 corrected by hand) &mdash; the rest covered cases Gavel's rule schema can't express yet. "
+        "A simulated run of 6 fabricated requests against those 4 rules surfaced three concrete "
+        "errors: a travel-mileage line mis-categorized as \"supplies\" and wrongly capped; one real "
+        "paragraph packing five distinct dollar rules into one piece of prose, of which the "
+        "compiler kept only the headline rate (reducing two valid food lines, one to $0); and a "
+        "cash-prize line allowed in full despite the real policy prohibiting it, because the "
+        "compiler never recognized that paragraph even though the schema already supports it "
+        "(<code>prohibited_category</code>). A separate, structural gap: the schema has no "
+        "percentage-based subsidy rule type at all, and the real policy is built around them "
+        "(travel, coaching). Full write-up: <code>evidence/PORTABILITY_AND_REAL_USE.md</code> task "
+        "#2. Honest takeaway: the pipeline and quote-verification generalize to real text; the rule "
+        "taxonomy does not, yet."
     )
     return f"""
     <h2>8. Limits and next steps</h2>

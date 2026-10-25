@@ -702,3 +702,23 @@ API-only with a clear message, rather than failing.
   image needs, and importing one module's module-level dict (which runs its own file-loading code
   on import) for 3 of 4 values would couple two otherwise-independent build scripts for no real
   benefit.
+- Post-11b (real-policy portability check, done at the user's direct request): the real policy
+  text and the fabricated simulated requests both went into `data/private/` (gitignored) and the
+  live (gitignored) database only — never into any committed file — per `START_HERE.md`'s "no real
+  club, student or university policy text anywhere in the repo" rule and task #2's own "do not
+  publish the policy text in the repo" instruction. `report.html` and `evidence/
+  PORTABILITY_AND_REAL_USE.md` name the real university generically ("a real, public university
+  student union") rather than by name, and describe the 6 simulated requests by club *category*
+  (academic/professional, athletic, hobby) rather than by the specific real club names used while
+  testing — more conservative than strictly required (the kit itself names real competitor
+  products by name elsewhere), chosen because the checklist's wording is ambiguous between
+  banning real policy text specifically and banning real-world identifiers more broadly, and the
+  more conservative reading costs nothing here.
+- Same test: fed the real policy's reformatted paragraphs through the app's own `POST /api/policy`
+  / `POST /api/policy/compile` routes rather than a one-off script calling the agent directly —
+  this exercises the exact same code path a real user would hit, which is the actual question the
+  portability check is asking ("does this generalize"), not just "can the agent function be
+  called."
+- Same test: reset the live database back to the synthetic demo state (`python -m backend.load`)
+  immediately after, so the app returns to its normal committed-demo behavior rather than being
+  left pointed at a real policy and fabricated requests.
