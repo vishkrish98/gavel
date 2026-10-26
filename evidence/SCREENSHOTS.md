@@ -25,6 +25,7 @@ For each item below: the screen to open, and exactly what must be visible in the
 | 13 | `13_cost.jpg` | Cost | The total cost figure and the input/cached/output token breakdown, both real numbers from `/api/usage` |
 | 14 | `14_mobile_responsive.jpg` | Start, at mobile width (375px) | The layout degrading to one column, nav wrapping, nothing cut off |
 | 15 | `15_safety_pass_table.png` | Terminal, after `python -m safety_test` | **The full PASS/FAIL table** (all 13 checks) and the "Overall: ALL PASS" line — this is a terminal screenshot, not a browser one |
+| 16 | `16_clubs_registry.jpg` | Clubs tab, after a run | Several clubs' pre-approved budget, spent, and remaining balance columns, with real (non-zero) numbers — added post-11b for the club/budget bulk-import feature |
 
 ## How to (re-)take any of these
 

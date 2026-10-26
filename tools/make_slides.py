@@ -234,11 +234,12 @@ def slide_03_whats_new() -> str:
       <table>
         <tr><th></th><th>Existing tools</th><th>Gavel</th></tr>
         <tr><td>Verdicts</td><td>Manual judgment call</td><td>Deterministic engine, cites the exact policy sentence</td></tr>
+        <tr><td>Budget tracking</td><td>Tracked separately from policy</td><td>Same budget, checked against policy, in one place</td></tr>
         <tr><td>Consistency across clubs</td><td>Not checked</td><td>Checked against every prior decision, every run</td></tr>
         <tr><td>Hidden-text injection</td><td>Not addressed</td><td>Stripped, quarantined, and logged</td></tr>
       </table>
       <p>{competitors}</p>
-      {notes("CampusGroups (Ready Education) and Anthology Engage both manage budgets and payments at the organization level. Neither's public materials claim to check an individual line against specific policy language the way Gavel's engine does.")}
+      {notes("CampusGroups (Ready Education) and Anthology Engage both manage budgets and payments at the organization level. Neither's public materials claim to check an individual line against specific policy language the way Gavel's engine does. Gavel's own Clubs tab now does both: a real running balance per club, bulk-importable, checked against the same approved rules.")}
     </section>
     """
 

@@ -471,6 +471,16 @@ model call). 53/53 tests passing overall. Verified live in the browser against t
 policy/clubs from the portability check: a real, over-budget club (negative balance, rendered in
 red) showed up correctly on the first real-data run.
 
+**Added to the report and slides** (at the user's explicit request to "update everything" once the
+feature was built): `report.html` Section 3 ("What is new") now describes the club registry and
+closes the other half of the competitor-gap argument (CampusGroups/Anthology Engage track budgets
+but don't check policy; Gavel now does both in one place), with a new screenshot
+(`report_assets/16_clubs_registry.jpg`, the **synthetic** demo data, not the real RPI data used
+while building the feature, to keep the same conservative no-real-club-names stance as the rest of
+this report). `slides.html`'s "What is new" slide gained one table row making the same point in a
+few words. Both regenerated and re-verified: `report.html` still 12 pages (within the 10-15
+range), `slides.html` still 10 slides with no overflow on the changed slide.
+
 ## Frontend
 
 `frontend/` — React 19 + Vite + TypeScript, plain CSS (no component library). Dark, scholarly,

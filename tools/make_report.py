@@ -71,7 +71,7 @@ MANUAL_BASELINE_MINUTES = 17
 IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
     "04_run_in_progress", "05_run_completed_injection_banner",
     "06_run_event_trace", "08_review_side_panel_citation", "09_scenarios_two_settings",
-    "11_consistency",
+    "11_consistency", "16_clubs_registry",
 ]}
 
 
@@ -369,6 +369,21 @@ def section_what_is_new() -> str:
     words. That distinction is also what makes Gavel's accuracy numbers in Section 7 look the way
     they do: a generic assistant asked to review the same requests in one prompt gets the dollar
     amounts wrong in a way Gavel structurally cannot.</p>
+    <p>Gavel also now closes the other half of the gap noted above: a club registry
+    (<code>POST /api/clubs/bulk</code>) with a real running balance, computed live from every
+    allowed or reduced dollar across a club's reviewed lines, not stored separately where it could
+    drift out of sync. The budget model behind it is deliberately not an arbitrary number: it
+    supports both a flat per-club grant (Yale SOM's Clubs &amp; Finance Committee gives every club
+    $1,000 at the start of the year, not carried over) and a variable per-club annual amount (the
+    pattern the real university policy in Section 7's portability check actually uses).
+    Many clubs' full line-itemized budgets, or many budgets at once, import in a single call
+    (<code>POST /api/requests/bulk</code>), with per-row success/failure reporting rather than an
+    all-or-nothing upload.</p>
+    <figure>
+      <img src="{IMG['16_clubs_registry']}" alt="Clubs screen showing each club's pre-approved budget, amount spent, and remaining balance">
+      <figcaption>Figure 1b. The Clubs screen: every club's budget, spent, and remaining balance,
+      computed live from the same run shown throughout this report.</figcaption>
+    </figure>
     """
 
 
