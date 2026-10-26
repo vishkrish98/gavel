@@ -323,10 +323,10 @@ footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; mar
     <h3>Mode A (generic assistant) vs. Mode B (Gavel), 3 repetitions each</h3>
     <table>
       <tr><th>Metric</th><th>Mode A</th><th>Mode B</th></tr>
-      <tr><td>Overall verdict accuracy</td><td class="num">0.860</td><td class="num">0.883</td></tr>
-      <tr><td>Sum of absolute allowed-dollar error</td><td class="num">$9,000.00</td><td class="num">$0.00</td></tr>
-      <tr><td>Avg cost, 24-request run</td><td class="num">$0.00902</td><td class="num">$0.01426</td></tr>
-      <tr><td>Avg wall-clock seconds</td><td class="num">33.3</td><td class="num">29.8</td></tr>
+      <tr><td>Overall verdict accuracy</td><td class="num">0.981</td><td class="num">1.000</td></tr>
+      <tr><td>Sum of absolute allowed-dollar error</td><td class="num">$9,500.00</td><td class="num">$0.00</td></tr>
+      <tr><td>Avg cost, 24-request run</td><td class="num">$0.00954</td><td class="num">$0.01466</td></tr>
+      <tr><td>Avg wall-clock seconds</td><td class="num">4.2</td><td class="num">24.3</td></tr>
     </table>
     <p class="small">Full benchmark, including the 5 experiments on Mode B (Skeptic on/off, cache
     prefix, reasoning effort, parallel vs. sequential, compile-once vs. per-request), is in
@@ -397,36 +397,44 @@ footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; mar
     <h3>Head-to-head: Excel vs. a generic AI assistant vs. Gavel</h3>
     <table>
       <tr><th>Metric</th><th>Excel (1 expert, 5 requests)</th><th>Generic AI (Mode A, 24 requests)</th><th>Gavel (Mode B, 24 requests)</th></tr>
-      <tr><td>Verdict accuracy</td><td>0.882</td><td class="num">0.860</td><td class="num">0.883</td></tr>
-      <tr><td>Dollars wrongly allowed</td><td>$3,210.00</td><td class="num">$9,000.00</td><td class="num">$0.00</td></tr>
+      <tr><td>Verdict accuracy</td><td>0.882</td><td class="num">0.981</td><td class="num">1.000</td></tr>
+      <tr><td>Dollars wrongly allowed</td><td>$3,210.00</td><td class="num">$9,500.00</td><td class="num">$0.00</td></tr>
       <tr><td>Cross-club inconsistency rate</td><td class="small">not measured at this scale</td><td class="num">0.233</td><td class="num">0.233</td></tr>
-      <tr><td>Time</td><td>17 min for 34 lines</td><td class="num">33.3s for 24 requests</td><td class="num">29.8s for 24 requests</td></tr>
+      <tr><td>Time</td><td>17 min for 34 lines</td><td class="num">4.2s for 24 requests</td><td class="num">24.3s for 24 requests</td></tr>
     </table>
     <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. Excel figures:
     <code>evidence/manual_first5_scored.json</code>, one expert reviewer, timed, no access to the
     answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than
     the policy actually permits &mdash; the costly error for a committee, since it's money that
     shouldn't have gone out.</p>
-    <p><strong>The human baseline is close to Gavel on accuracy, not on dollar discipline:</strong>
-    the manual reviewer scored 0.882 verdict accuracy on 34 lines in
-    17 minutes &mdash; essentially tied with Gavel's 0.883
-    and ahead of Mode A's 0.860, consistent with one
-    competent reviewer being a strong baseline on a 16-rule synthetic policy. The gap shows up on
-    dollar discipline instead: the manual review had $3,210.00 wrongly allowed, from 4
-    mismatched lines out of 34. Three of those four missed the same rule &mdash; 3.5 ("any single
-    purchase over $500 requires three written quotes") &mdash; allowing or reducing a line instead
-    of holding it for documentation when the attached docs didn't include three quotes; the fourth
-    cited the correct rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Both are
-    exactly the kind of one-off slip a careful human makes once while moving quickly through 34
-    lines, and exactly what a code engine checking the same two fields (<code>docs</code>,
-    <code>qty</code>) on every line, every time, doesn't miss.</p>
-    <p><strong>Honestly, where Gavel was not dramatically better:</strong> overall verdict accuracy
-    is close (0.883 vs. 0.860
-    for Mode A), Mode A is cheaper per run ($0.00902 vs.
-    $0.01426), and the cross-club inconsistency rate was identical
-    between the two modes (0.233 each) &mdash; Gavel's clear advantage
-    is specifically on dollar accuracy (exact, $0 wrongly allowed, every repetition) and citation
-    discipline (158/158 correct vs. 80/158 for Mode A), not a blowout on every metric.</p>
+    <p><strong>Both AI modes clearly beat the human baseline on verdict accuracy; Gavel is the only
+    one with zero dollar errors:</strong> the manual reviewer scored 0.882 verdict
+    accuracy on 34 lines in 17 minutes &mdash; behind Mode A's
+    0.981 and Gavel's
+    1.000. That gap traces to a specific, identifiable
+    cause: the manual review had $3,210.00 wrongly allowed from 4 mismatched lines out of 34,
+    and three of those four missed the same rule &mdash; 3.5 ("any single purchase over $500
+    requires three written quotes") &mdash; allowing or reducing a line instead of holding it for
+    documentation when the attached docs didn't include three quotes; the fourth cited the correct
+    rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Exactly the kind of
+    one-off slip a careful human makes once while moving quickly through 34 lines &mdash; and
+    exactly what a code engine checking the same two fields (<code>docs</code>, <code>qty</code>)
+    on every line, every time, doesn't miss.</p>
+    <p><strong>Honestly, where Gavel was not dramatically better:</strong> Mode A's own verdict
+    accuracy is now high too (0.981 vs. Gavel's
+    1.000) &mdash; a single generic prompt gets most
+    verdicts right on this synthetic policy. Mode A is also cheaper per run
+    ($0.00954 vs. $0.01466), and
+    the cross-club inconsistency rate was identical between the two modes
+    (0.233 each). Gavel's clear, consistent advantage is specifically
+    on dollar accuracy (exact, $0 wrongly allowed every repetition, vs.
+    $9,500.00 for Mode A) and citation discipline
+    (158/158 correct vs. 79/158 for Mode A, the rest real-but-
+    irrelevant quotes rather than invented ones) &mdash; and on the hardest verdict category,
+    <code>needs_docs</code>, where Mode A's accuracy drops to 0.846 while Gavel's code Engine stays
+    at 1.000 by construction (it checks the <code>docs</code> field directly, it doesn't infer).
+    Not a blowout on every metric, but a real, structural edge on the two things that matter most
+    for a committee: never releasing money it shouldn't, and never citing a rule that didn't fire.</p>
 
     <h3>Consistency with prior decisions</h3>
     <p>Comparing all 30 of last year's committee decisions against what this year's approved rules

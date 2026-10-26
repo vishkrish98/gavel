@@ -154,10 +154,17 @@ async def run_mode_b(run_id: str, with_skeptic: bool = True) -> tuple[dict, dict
 
 
 def load_truth() -> tuple[dict, dict]:
+    """Returns the truth key scoped to exactly the 24 real requests / 158 lines this benchmark
+    compares on (PROMPTS/step06_benchmark.md: "Compare on the 24 requests (158 lines)").
+    data/requests_truth.json also carries Q25-27's answer-key entries (step07's safety cases,
+    never passed to Mode A or Mode B here) -- including them inflated every accuracy denominator
+    with 21 lines neither mode was ever asked to classify. Found by diagnosing why Mode B's
+    overall_verdict_accuracy (0.8827) exactly equalled 158/179: every real line was being scored
+    correctly, but the 21 out-of-scope lines were still being counted as present-and-wrong."""
     truth = json.loads((DATA / "requests_truth.json").read_text())["requests"]
     line_truth: dict[str, dict] = {}
-    for info in truth.values():
-        line_truth.update(info["lines"])
+    for request_id in REAL_REQUEST_IDS:
+        line_truth.update(truth[request_id]["lines"])
     ruleid_to_quote = {r["rule_id"]: r["quote"] for r in json.loads((DATA / "policy_rules_truth.json").read_text())["rules"]}
     return line_truth, ruleid_to_quote
 
@@ -444,6 +451,13 @@ async def experiment_parallel_vs_sequential(sample_request_ids: list[str], run_i
                 ),
                 timeout=60,
             )
+
+    # Untimed warm-up call: the first time this experiment calls agents.request_reader_agent.run()
+    # directly in a given process, it pays a one-time connection/session setup cost (observed: a
+    # fresh process's first parallel batch of 8 took ~2.5s; immediate repeats took ~0.25s). That
+    # one-time cost would distort "parallel vs sequential" either way depending on which phase runs
+    # first, so it's paid once here, outside both timed blocks, instead of inside either of them.
+    await one(sample_request_ids[0])
 
     start = time.monotonic()
     parallel_results = await asyncio.gather(*(one(rid) for rid in sample_request_ids))

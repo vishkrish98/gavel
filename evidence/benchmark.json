@@ -1,51 +1,29 @@
 {
-  "generated_at": "2026-10-23T23:57:19.420239+00:00",
+  "generated_at": "2026-10-26T11:21:15.420869+00:00",
   "dataset": {
     "requests": 24,
-    "lines": 179
+    "lines": 158
   },
   "mode_a": {
     "repetitions": [
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.8603351955307262,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 0.9810126582278481,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.6428571428571429,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 0.8461538461538461,
+            "reduced": 0.9523809523809523,
+            "denied": 1.0
           },
-          "sum_abs_dollar_diff": 9000.0,
-          "total_dollars_wrongly_allowed": 9000.0,
-          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "sum_abs_dollar_diff": 9500.0,
+          "total_dollars_wrongly_allowed": 9500.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 1,
           "citations": {
-            "correct": 80,
+            "correct": 79,
             "missing": 0,
-            "wrong_real_quote": 78,
+            "wrong_real_quote": 79,
             "invented_not_in_policy": 0
           }
         },
@@ -208,16 +186,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.6428571428571429
+            "n": 13,
+            "verdict_accuracy": 0.8461538461538461
           },
           "late_requests_deadline": {
             "n": 19,
@@ -225,57 +203,35 @@
           }
         },
         "usage": {
-          "input_tokens": 33641,
+          "input_tokens": 32443,
           "cached_tokens": 0,
-          "cache_write_tokens": 30617,
-          "output_tokens": 9781,
-          "reasoning_tokens": 3715,
-          "total_tokens": 43422,
-          "seconds": 88.01137666599607,
-          "cost_usd": 0.00902009,
+          "cache_write_tokens": 29419,
+          "output_tokens": 11116,
+          "reasoning_tokens": 5034,
+          "total_tokens": 43559,
+          "seconds": 7.396402793005109,
+          "cost_usd": 0.00953783,
           "calls": 24
         }
       },
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.8603351955307262,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 0.9810126582278481,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.6428571428571429,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 0.8461538461538461,
+            "reduced": 0.9523809523809523,
+            "denied": 1.0
           },
-          "sum_abs_dollar_diff": 9000.0,
-          "total_dollars_wrongly_allowed": 9000.0,
-          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "sum_abs_dollar_diff": 9500.0,
+          "total_dollars_wrongly_allowed": 9500.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 1,
           "citations": {
-            "correct": 80,
+            "correct": 79,
             "missing": 0,
-            "wrong_real_quote": 78,
+            "wrong_real_quote": 79,
             "invented_not_in_policy": 0
           }
         },
@@ -438,16 +394,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.6428571428571429
+            "n": 13,
+            "verdict_accuracy": 0.8461538461538461
           },
           "late_requests_deadline": {
             "n": 19,
@@ -455,57 +411,35 @@
           }
         },
         "usage": {
-          "input_tokens": 33641,
+          "input_tokens": 32443,
           "cached_tokens": 0,
-          "cache_write_tokens": 30617,
-          "output_tokens": 9781,
-          "reasoning_tokens": 3715,
-          "total_tokens": 43422,
-          "seconds": 6.338078667997252,
-          "cost_usd": 0.00902009,
+          "cache_write_tokens": 29419,
+          "output_tokens": 11116,
+          "reasoning_tokens": 5034,
+          "total_tokens": 43559,
+          "seconds": 2.786947960004909,
+          "cost_usd": 0.00953783,
           "calls": 24
         }
       },
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.8603351955307262,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 0.9810126582278481,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.6428571428571429,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 0.8461538461538461,
+            "reduced": 0.9523809523809523,
+            "denied": 1.0
           },
-          "sum_abs_dollar_diff": 9000.0,
-          "total_dollars_wrongly_allowed": 9000.0,
-          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+          "sum_abs_dollar_diff": 9500.0,
+          "total_dollars_wrongly_allowed": 9500.0,
+          "lines_wrongly_allowed_that_should_be_denied_or_reduced": 1,
           "citations": {
-            "correct": 80,
+            "correct": 79,
             "missing": 0,
-            "wrong_real_quote": 78,
+            "wrong_real_quote": 79,
             "invented_not_in_policy": 0
           }
         },
@@ -668,16 +602,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.6428571428571429
+            "n": 13,
+            "verdict_accuracy": 0.8461538461538461
           },
           "late_requests_deadline": {
             "n": 19,
@@ -685,57 +619,57 @@
           }
         },
         "usage": {
-          "input_tokens": 33641,
+          "input_tokens": 32443,
           "cached_tokens": 0,
-          "cache_write_tokens": 30617,
-          "output_tokens": 9781,
-          "reasoning_tokens": 3715,
-          "total_tokens": 43422,
-          "seconds": 5.418933456998275,
-          "cost_usd": 0.00902009,
+          "cache_write_tokens": 29419,
+          "output_tokens": 11116,
+          "reasoning_tokens": 5034,
+          "total_tokens": 43559,
+          "seconds": 2.5030159590023686,
+          "cost_usd": 0.00953783,
           "calls": 24
         }
       }
     ],
     "summary": {
       "overall_verdict_accuracy": {
-        "avg": 0.860335,
-        "min": 0.860335,
-        "max": 0.860335,
+        "avg": 0.981013,
+        "min": 0.981013,
+        "max": 0.981013,
         "values": [
-          0.860335,
-          0.860335,
-          0.860335
+          0.981013,
+          0.981013,
+          0.981013
         ]
       },
       "sum_abs_dollar_diff": {
-        "avg": 9000.0,
-        "min": 9000.0,
-        "max": 9000.0,
+        "avg": 9500.0,
+        "min": 9500.0,
+        "max": 9500.0,
         "values": [
-          9000.0,
-          9000.0,
-          9000.0
+          9500.0,
+          9500.0,
+          9500.0
         ]
       },
       "total_dollars_wrongly_allowed": {
-        "avg": 9000.0,
-        "min": 9000.0,
-        "max": 9000.0,
+        "avg": 9500.0,
+        "min": 9500.0,
+        "max": 9500.0,
         "values": [
-          9000.0,
-          9000.0,
-          9000.0
+          9500.0,
+          9500.0,
+          9500.0
         ]
       },
       "input_tokens": {
-        "avg": 33641,
-        "min": 33641,
-        "max": 33641,
+        "avg": 32443,
+        "min": 32443,
+        "max": 32443,
         "values": [
-          33641,
-          33641,
-          33641
+          32443,
+          32443,
+          32443
         ]
       },
       "cached_tokens": {
@@ -749,43 +683,43 @@
         ]
       },
       "output_tokens": {
-        "avg": 9781,
-        "min": 9781,
-        "max": 9781,
+        "avg": 11116,
+        "min": 11116,
+        "max": 11116,
         "values": [
-          9781,
-          9781,
-          9781
+          11116,
+          11116,
+          11116
         ]
       },
       "reasoning_tokens": {
-        "avg": 3715,
-        "min": 3715,
-        "max": 3715,
+        "avg": 5034,
+        "min": 5034,
+        "max": 5034,
         "values": [
-          3715,
-          3715,
-          3715
+          5034,
+          5034,
+          5034
         ]
       },
       "cost_usd": {
-        "avg": 0.00902,
-        "min": 0.00902,
-        "max": 0.00902,
+        "avg": 0.009538,
+        "min": 0.009538,
+        "max": 0.009538,
         "values": [
-          0.00902,
-          0.00902,
-          0.00902
+          0.009538,
+          0.009538,
+          0.009538
         ]
       },
       "seconds": {
-        "avg": 33.25613,
-        "min": 5.418933,
-        "max": 88.011377,
+        "avg": 4.228789,
+        "min": 2.503016,
+        "max": 7.396403,
         "values": [
-          88.011377,
-          6.338079,
-          5.418933
+          7.396403,
+          2.786948,
+          2.503016
         ]
       }
     }
@@ -794,36 +728,14 @@
     "repetitions": [
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.88268156424581,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 1.0,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.9285714285714286,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 1.0,
+            "reduced": 1.0,
+            "denied": 1.0
           },
           "sum_abs_dollar_diff": 0.0,
           "total_dollars_wrongly_allowed": 0.0,
@@ -992,16 +904,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.9285714285714286
+            "n": 13,
+            "verdict_accuracy": 1.0
           },
           "late_requests_deadline": {
             "n": 19,
@@ -1009,49 +921,27 @@
           }
         },
         "usage": {
-          "input_tokens": 84299,
-          "cached_tokens": 1236,
-          "cache_write_tokens": 30196,
-          "output_tokens": 10380,
-          "reasoning_tokens": 1535,
-          "total_tokens": 94679,
-          "seconds": 46.35874029400293,
-          "cost_usd": 0.01426357,
+          "input_tokens": 86551,
+          "cached_tokens": 0,
+          "cache_write_tokens": 38877,
+          "output_tokens": 10074,
+          "reasoning_tokens": 1303,
+          "total_tokens": 96625,
+          "seconds": 38.250290377000056,
+          "cost_usd": 0.01466403,
           "calls": 46
         }
       },
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.88268156424581,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 1.0,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.9285714285714286,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 1.0,
+            "reduced": 1.0,
+            "denied": 1.0
           },
           "sum_abs_dollar_diff": 0.0,
           "total_dollars_wrongly_allowed": 0.0,
@@ -1220,16 +1110,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.9285714285714286
+            "n": 13,
+            "verdict_accuracy": 1.0
           },
           "late_requests_deadline": {
             "n": 19,
@@ -1237,49 +1127,27 @@
           }
         },
         "usage": {
-          "input_tokens": 84301,
-          "cached_tokens": 1236,
-          "cache_write_tokens": 30198,
-          "output_tokens": 10380,
-          "reasoning_tokens": 1535,
-          "total_tokens": 94681,
-          "seconds": 21.527452582007754,
-          "cost_usd": 0.01426382,
+          "input_tokens": 86549,
+          "cached_tokens": 0,
+          "cache_write_tokens": 38875,
+          "output_tokens": 10052,
+          "reasoning_tokens": 1303,
+          "total_tokens": 96601,
+          "seconds": 21.082666539994534,
+          "cost_usd": 0.01465278,
           "calls": 46
         }
       },
       {
         "score": {
-          "total_lines": 179,
-          "missing_lines": [
-            "25-L1",
-            "25-L2",
-            "25-L3",
-            "25-L4",
-            "25-L5",
-            "25-L6",
-            "25-L7",
-            "25-L8",
-            "26-L1",
-            "26-L2",
-            "26-L3",
-            "26-L4",
-            "26-L5",
-            "26-L6",
-            "26-L7",
-            "26-L8",
-            "27-L1",
-            "27-L2",
-            "27-L3",
-            "27-L4",
-            "27-L5"
-          ],
-          "overall_verdict_accuracy": 0.88268156424581,
+          "total_lines": 158,
+          "missing_lines": [],
+          "overall_verdict_accuracy": 1.0,
           "verdict_accuracy_per_type": {
-            "allowed": 0.8736842105263158,
-            "needs_docs": 0.9285714285714286,
-            "reduced": 0.7777777777777778,
-            "denied": 0.9534883720930233
+            "allowed": 1.0,
+            "needs_docs": 1.0,
+            "reduced": 1.0,
+            "denied": 1.0
           },
           "sum_abs_dollar_diff": 0.0,
           "total_dollars_wrongly_allowed": 0.0,
@@ -1448,16 +1316,16 @@
         },
         "hard_cases": {
           "ambiguous_wording_alcohol_or_gift_card": {
-            "n": 9,
-            "verdict_accuracy": 0.8888888888888888
+            "n": 8,
+            "verdict_accuracy": 1.0
           },
           "semester_cap_interactions": {
             "n": 0,
             "verdict_accuracy": null
           },
           "needs_docs_threshold": {
-            "n": 14,
-            "verdict_accuracy": 0.9285714285714286
+            "n": 13,
+            "verdict_accuracy": 1.0
           },
           "late_requests_deadline": {
             "n": 19,
@@ -1465,27 +1333,27 @@
           }
         },
         "usage": {
-          "input_tokens": 84297,
-          "cached_tokens": 1236,
-          "cache_write_tokens": 30194,
-          "output_tokens": 10370,
-          "reasoning_tokens": 1535,
-          "total_tokens": 94667,
-          "seconds": 21.523945705008373,
-          "cost_usd": 0.01425832,
+          "input_tokens": 86547,
+          "cached_tokens": 0,
+          "cache_write_tokens": 38873,
+          "output_tokens": 10077,
+          "reasoning_tokens": 1303,
+          "total_tokens": 96624,
+          "seconds": 13.601181832011207,
+          "cost_usd": 0.01466503,
           "calls": 46
         }
       }
     ],
     "summary": {
       "overall_verdict_accuracy": {
-        "avg": 0.882682,
-        "min": 0.882682,
-        "max": 0.882682,
+        "avg": 1.0,
+        "min": 1.0,
+        "max": 1.0,
         "values": [
-          0.882682,
-          0.882682,
-          0.882682
+          1.0,
+          1.0,
+          1.0
         ]
       },
       "sum_abs_dollar_diff": {
@@ -1509,98 +1377,98 @@
         ]
       },
       "input_tokens": {
-        "avg": 84299,
-        "min": 84297,
-        "max": 84301,
+        "avg": 86549,
+        "min": 86547,
+        "max": 86551,
         "values": [
-          84299,
-          84301,
-          84297
+          86551,
+          86549,
+          86547
         ]
       },
       "cached_tokens": {
-        "avg": 1236,
-        "min": 1236,
-        "max": 1236,
+        "avg": 0,
+        "min": 0,
+        "max": 0,
         "values": [
-          1236,
-          1236,
-          1236
+          0,
+          0,
+          0
         ]
       },
       "output_tokens": {
-        "avg": 10376.666667,
-        "min": 10370,
-        "max": 10380,
+        "avg": 10067.666667,
+        "min": 10052,
+        "max": 10077,
         "values": [
-          10380,
-          10380,
-          10370
+          10074,
+          10052,
+          10077
         ]
       },
       "reasoning_tokens": {
-        "avg": 1535,
-        "min": 1535,
-        "max": 1535,
+        "avg": 1303,
+        "min": 1303,
+        "max": 1303,
         "values": [
-          1535,
-          1535,
-          1535
+          1303,
+          1303,
+          1303
         ]
       },
       "cost_usd": {
-        "avg": 0.014262,
-        "min": 0.014258,
-        "max": 0.014264,
+        "avg": 0.014661,
+        "min": 0.014653,
+        "max": 0.014665,
         "values": [
-          0.014264,
-          0.014264,
-          0.014258
+          0.014664,
+          0.014653,
+          0.014665
         ]
       },
       "seconds": {
-        "avg": 29.80338,
-        "min": 21.523946,
-        "max": 46.35874,
+        "avg": 24.31138,
+        "min": 13.601182,
+        "max": 38.25029,
         "values": [
-          46.35874,
-          21.527453,
-          21.523946
+          38.25029,
+          21.082667,
+          13.601182
         ]
       }
     }
   },
   "mode_c_human_baseline": {
-    "available": false,
-    "note": "evidence/manual_first5.csv does not exist yet -- this is the user's own timed, by-hand review of Q01-Q05 (START_HERE.md task #1), not something this script can produce. Fill evidence/manual_first5_TEMPLATE.csv and save it as evidence/manual_first5.csv, then step10's score_manual.py will score it against the same answer key used here."
+    "available": true,
+    "note": "See evidence/manual_first5.csv and step10's score_manual.py for scoring."
   },
   "experiments": {
     "1_skeptic_on_vs_off": {
       "with_skeptic_usage": {
-        "input_tokens": 84297,
-        "cached_tokens": 1236,
-        "cache_write_tokens": 30194,
-        "output_tokens": 10370,
-        "reasoning_tokens": 1535,
-        "total_tokens": 94667,
-        "seconds": 21.523945705008373,
-        "cost_usd": 0.01425832,
+        "input_tokens": 86547,
+        "cached_tokens": 0,
+        "cache_write_tokens": 38873,
+        "output_tokens": 10077,
+        "reasoning_tokens": 1303,
+        "total_tokens": 96624,
+        "seconds": 13.601181832011207,
+        "cost_usd": 0.01466503,
         "calls": 46
       },
       "without_skeptic_usage": {
-        "input_tokens": 53589,
-        "cached_tokens": 1236,
-        "cache_write_tokens": 30194,
-        "output_tokens": 7045,
-        "reasoning_tokens": 437,
-        "total_tokens": 60634,
-        "seconds": 11.763345040004424,
-        "cost_usd": 0.00952502,
+        "input_tokens": 54789,
+        "cached_tokens": 0,
+        "cache_write_tokens": 32630,
+        "output_tokens": 6879,
+        "reasoning_tokens": 262,
+        "total_tokens": 61668,
+        "seconds": 8.373129667015746,
+        "cost_usd": 0.00973417,
         "calls": 25
       },
-      "lines_flagged": 10,
+      "lines_flagged": 8,
       "flagged_that_were_actual_misclassifications": 0,
-      "flagged_that_were_not_actual_errors": 10,
+      "flagged_that_were_not_actual_errors": 8,
       "note": "Verdict/category accuracy is identical with or without the Skeptic by construction -- it never changes a category or verdict, only flags lines for human review. The only real difference is cost/tokens (its own calls) and how many of its flags were real Reader errors vs. reasonable-but-unnecessary caution."
     },
     "2_cache_breakpoint": {
@@ -1629,26 +1497,26 @@
       "sample_size": 6,
       "low_effort": {
         "category_accuracy": 1.0,
-        "total_tokens": 13962,
-        "cost_usd": 0.002205
+        "total_tokens": 14201,
+        "cost_usd": 0.002212
       },
       "medium_effort": {
         "category_accuracy": 1.0,
-        "total_tokens": 14195,
-        "cost_usd": 0.002322
+        "total_tokens": 14524,
+        "cost_usd": 0.002374
       }
     },
     "4_parallel_vs_sequential": {
       "sample_size": 8,
-      "parallel_seconds": 0.77,
-      "sequential_seconds": 3.09,
-      "speedup_factor": 4.02
+      "parallel_seconds": 0.57,
+      "sequential_seconds": 1.58,
+      "speedup_factor": 2.76
     },
     "5_compile_once_vs_per_request": {
-      "compile_once_cost_usd": 0.00075,
+      "compile_once_cost_usd": 0.000899,
       "num_requests": 24,
-      "projected_cost_if_compiled_once_per_request_usd": 0.018006,
-      "savings_usd": 0.017256,
+      "projected_cost_if_compiled_once_per_request_usd": 0.021574,
+      "savings_usd": 0.020675,
       "savings_factor": 24.0
     }
   }

@@ -558,6 +558,8 @@ def section_impact() -> str:
     mode_b = benchmark["mode_b"]["summary"]
     cross_a = benchmark["mode_a"]["repetitions"][0]["cross_club_inconsistency"]
     cross_b = benchmark["mode_b"]["repetitions"][0]["cross_club_inconsistency"]
+    cites_a = benchmark["mode_a"]["repetitions"][0]["score"]["citations"]
+    cites_b = benchmark["mode_b"]["repetitions"][0]["score"]["citations"]
     cv = run_check["categories_and_verdicts"]
     consistency = run_check["consistency"]
     alloc = run_check["allocation_scenario_alpha_0.5"]
@@ -596,26 +598,34 @@ def section_impact() -> str:
     answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than
     the policy actually permits &mdash; the costly error for a committee, since it's money that
     shouldn't have gone out.</p>
-    <p><strong>The human baseline is close to Gavel on accuracy, not on dollar discipline:</strong>
-    the manual reviewer scored {excel_accuracy} verdict accuracy on 34 lines in
-    {MANUAL_BASELINE_MINUTES} minutes &mdash; essentially tied with Gavel's {mode_b['overall_verdict_accuracy']['avg']:.3f}
-    and ahead of Mode A's {mode_a['overall_verdict_accuracy']['avg']:.3f}, consistent with one
-    competent reviewer being a strong baseline on a 16-rule synthetic policy. The gap shows up on
-    dollar discipline instead: the manual review had {excel_dollars} wrongly allowed, from 4
-    mismatched lines out of 34. Three of those four missed the same rule &mdash; 3.5 ("any single
-    purchase over $500 requires three written quotes") &mdash; allowing or reducing a line instead
-    of holding it for documentation when the attached docs didn't include three quotes; the fourth
-    cited the correct rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Both are
-    exactly the kind of one-off slip a careful human makes once while moving quickly through 34
-    lines, and exactly what a code engine checking the same two fields (<code>docs</code>,
-    <code>qty</code>) on every line, every time, doesn't miss.</p>
-    <p><strong>Honestly, where Gavel was not dramatically better:</strong> overall verdict accuracy
-    is close ({mode_b['overall_verdict_accuracy']['avg']:.3f} vs. {mode_a['overall_verdict_accuracy']['avg']:.3f}
-    for Mode A), Mode A is cheaper per run ({fmt_money(mode_a['cost_usd']['avg'], 5)} vs.
-    {fmt_money(mode_b['cost_usd']['avg'], 5)}), and the cross-club inconsistency rate was identical
-    between the two modes ({cross_a['inconsistency_rate']:.3f} each) &mdash; Gavel's clear advantage
-    is specifically on dollar accuracy (exact, $0 wrongly allowed, every repetition) and citation
-    discipline (158/158 correct vs. 80/158 for Mode A), not a blowout on every metric.</p>
+    <p><strong>Both AI modes clearly beat the human baseline on verdict accuracy; Gavel is the only
+    one with zero dollar errors:</strong> the manual reviewer scored {excel_accuracy} verdict
+    accuracy on 34 lines in {MANUAL_BASELINE_MINUTES} minutes &mdash; behind Mode A's
+    {mode_a['overall_verdict_accuracy']['avg']:.3f} and Gavel's
+    {mode_b['overall_verdict_accuracy']['avg']:.3f}. That gap traces to a specific, identifiable
+    cause: the manual review had {excel_dollars} wrongly allowed from 4 mismatched lines out of 34,
+    and three of those four missed the same rule &mdash; 3.5 ("any single purchase over $500
+    requires three written quotes") &mdash; allowing or reducing a line instead of holding it for
+    documentation when the attached docs didn't include three quotes; the fourth cited the correct
+    rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Exactly the kind of
+    one-off slip a careful human makes once while moving quickly through 34 lines &mdash; and
+    exactly what a code engine checking the same two fields (<code>docs</code>, <code>qty</code>)
+    on every line, every time, doesn't miss.</p>
+    <p><strong>Honestly, where Gavel was not dramatically better:</strong> Mode A's own verdict
+    accuracy is now high too ({mode_a['overall_verdict_accuracy']['avg']:.3f} vs. Gavel's
+    {mode_b['overall_verdict_accuracy']['avg']:.3f}) &mdash; a single generic prompt gets most
+    verdicts right on this synthetic policy. Mode A is also cheaper per run
+    ({fmt_money(mode_a['cost_usd']['avg'], 5)} vs. {fmt_money(mode_b['cost_usd']['avg'], 5)}), and
+    the cross-club inconsistency rate was identical between the two modes
+    ({cross_a['inconsistency_rate']:.3f} each). Gavel's clear, consistent advantage is specifically
+    on dollar accuracy (exact, $0 wrongly allowed every repetition, vs.
+    {fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])} for Mode A) and citation discipline
+    ({cites_b['correct']}/158 correct vs. {cites_a['correct']}/158 for Mode A, the rest real-but-
+    irrelevant quotes rather than invented ones) &mdash; and on the hardest verdict category,
+    <code>needs_docs</code>, where Mode A's accuracy drops to 0.846 while Gavel's code Engine stays
+    at 1.000 by construction (it checks the <code>docs</code> field directly, it doesn't infer).
+    Not a blowout on every metric, but a real, structural edge on the two things that matter most
+    for a committee: never releasing money it shouldn't, and never citing a rule that didn't fire.</p>
 
     <h3>Consistency with prior decisions</h3>
     <p>Comparing all 30 of last year's committee decisions against what this year's approved rules

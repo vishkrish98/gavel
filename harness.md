@@ -12,7 +12,7 @@ Technical reference, updated at every build step. Sections fill in as the matchi
 | 03 | `evidence/engine_eval.json` (via `tools/make_engine_eval.py`): formal validation of the deterministic layer against the reference answer key, zero model calls. 158/158 lines match verdict+amount+rules exactly; `allocate` matches `data/optimizer_truth.json` to the cent across all 4 scenarios; `consistency_report` finds 6/30 inconsistent. |
 | 04 | The agent team (`backend/agents.py`, `backend/chair.py`, `backend/models.py`, `backend/prompts/`). First step with real model calls. `python -m backend.run_check` runs the full pipeline over the 24 real requests and scores it: 100% rule recall/precision, 0 decoys turned into rules, 100% category accuracy, 100% verdict accuracy, exact dollar match (158/158), 100% consistency-report agreement with the step03 baseline, 10 Skeptic flags (0 of which were actual misclassifications). 61 model calls, 103,793 tokens, $0.016, run saved as `output/trace_run1.json`. |
 | 05 | Token logging and cost: confirmed `log_usage` already logs the provider's real response fields (no change needed, inspected and documented below); `backend/pricing.py` now dated and cites the course Lecture 11 table; `GET /api/usage?run_id=` and `GET /api/runs` added to `backend/main.py`; `backend/projection.py` turns measured usage into unit costs and semester projections, all assumptions in one labeled block, output at `evidence/cost_model.md`. |
-| 06 | `backend/benchmark.py`: Mode A (generic single-prompt assistant) vs. Mode B (Gavel: Compiler+Reader+Skeptic+code Engine), each run 3x, plus 5 experiments on Mode B. Mode B wins decisively on dollar accuracy (exact, $0 error, all 3 reps) and citation discipline (158/158 correct vs. 80/158 for Mode A); overall verdict accuracy is closer (0.883 vs. 0.860) — reported honestly, not oversold. `evidence/benchmark.json` / `evidence/benchmark.md`. Mode C (human baseline) reported as not-yet-available: it depends on the user's own timed exercise (`evidence/manual_first5.csv`, not yet filled in). |
+| 06 | `backend/benchmark.py`: Mode A (generic single-prompt assistant) vs. Mode B (Gavel: Compiler+Reader+Skeptic+code Engine), each run 3x, plus 5 experiments on Mode B. **Corrected 2026-10-26** (see Ambiguous calls below): a scoring bug had deflated both modes' reported accuracy by ~12-14 points. True numbers: Mode B 100% verdict accuracy, $0 wrongly allowed, 158/158 correct citations, every rep; Mode A 98.1% verdict accuracy, $9,500 wrongly allowed, 79/158 correct citations (the rest real-but-irrelevant, not invented), and a real, specific weakness on `needs_docs` lines (84.6% vs. Gavel's 100%). `evidence/benchmark.json` / `evidence/benchmark.md`. Mode C (human baseline) completed post-11b: 0.882 verdict accuracy, $3,210 wrongly allowed, 17 minutes, `evidence/manual_first5.csv` / `evidence/manual_first5_scored.json`. |
 | 07 | Safety: `backend/safety.py` (hidden-text stripping + instruction-pattern quarantine + delimiter wrapping, one `DEFENSES_ENABLED` toggle), wired into `backend/chair.py`'s Reader step. `safety_test.py`: 13/13 PASS, including the Q26 false-positive control (0 wrong quarantines) and a tiny-token-cap run ending cleanly. Found that the model resisted the injection even with defenses off in this run (reported honestly, not claimed as the defense "catching" it) — pre-model layers still catch it when it's on. Also found and documented a real, pre-existing data-format limitation: `data/requests_truth.json`'s Q27 entries assume document attachments the HTML format never carries, unrelated to injection defenses. |
 | 08a | The FastAPI route surface (`backend/main.py`): policy upload/compile/approve/reject, request upload (txt/html/json/paste), the zero-upload demo, background-run lifecycle (start/status/events/verdicts/drafts/approve/export), consistency, the optimizer, line explanations. `tests/test_api.py`: 27/27 passing against the real app and a real database, including real model calls (compile, demo load) and a real small background pipeline run. Generalized `backend/hidden_html.py` beyond its one Q27 fixture so it also serves general HTML request uploads; found and fixed a `<title>`-tag text leak and a sync-route/event-loop bug along the way. |
 | 08b | The React + Vite + TypeScript frontend (`frontend/`), dark/scholarly/brass theme, all 9 screens from a real run against the real backend — including the injection-blocked banner firing for real on Q25/Q27. Built and committed `frontend/dist`; `run.py` only rebuilds it if Node is present and it's missing. Screenshots in `report_assets/`. Added 4 small read-only GET routes (`/api/policy/paragraphs`, `/api/rules`, `/api/requests`, `/api/requests/{id}`) the frontend needed that step08a's list didn't include. |
@@ -722,3 +722,46 @@ API-only with a clear message, rather than failing.
 - Same test: reset the live database back to the synthetic demo state (`python -m backend.load`)
   immediately after, so the app returns to its normal committed-demo behavior rather than being
   left pointed at a real policy and fabricated requests.
+- **2026-10-26, real bug found and fixed in `backend/benchmark.py` (step06's scoring), at the
+  user's prompting ("could we increase the accuracy of Gavel?").** Diagnosed before touching
+  anything: a single fresh diagnostic run of Mode B showed ZERO real verdict mismatches, yet
+  `score_mode()` still reported 0.8827 accuracy — and `158/179 = 0.88268...` matched that figure to
+  every decimal place. Root cause: `load_truth()` built its truth key from *all* of
+  `data/requests_truth.json` (179 lines, Q01-27), but `PROMPTS/step06_benchmark.md` explicitly
+  scopes this comparison to "the 24 requests (158 lines)" — Q25-27 are step07's safety cases,
+  never passed to Mode A or Mode B here. `score_mode()`'s loop incremented `verdict_total` for
+  every line in the truth key *before* checking whether that mode had actually produced a
+  prediction for it, so the 21 out-of-scope lines inflated the denominator of every mode's
+  accuracy (and two of the four `hard_case_subsets` — the ones touching `gift_card` category or
+  `needs_docs` verdict — happened to include some of those 21 lines too, for the same reason) while
+  never being able to contribute to the numerator. Confirmed before fixing: Mode A's old reported
+  0.860 × 179 = 154.0 exactly (an integer), meaning Mode A's *real* accuracy on the 158 lines it
+  was actually asked to score was 154/158 = 0.9747, not 86.0%. Fixed by scoping `load_truth()`'s
+  line key to `REAL_REQUEST_IDS` (Q01-24) only — verified this doesn't break the three experiments
+  that also call `load_truth()` or do direct line-id lookups, since their own sample sets
+  (`sample6`, `sample8`) are already drawn from `REAL_REQUEST_IDS`. Re-ran the full benchmark for
+  real (not a rescore of old data — fresh model calls, since the bug was in scoring, not in what
+  was asked of the model): Mode B 100% every rep (matching the full pipeline's own 158/158 exactly,
+  as it always should have), Mode A 98.1%. This is a scoring-code fix, not a prompt change — it
+  doesn't trigger the "you may change prompts at most twice" disclosure rule, since no prompt was
+  touched.
+- Same fix, same day: while re-running the benchmark, experiment 4 (parallel vs. sequential) came
+  back as **parallel being slower** (0.53x) — the opposite of the architecture's design and a
+  reversal of the previously-reported 4.02x speedup. Diagnosed with a standalone recheck script
+  (3 repeated calls to `experiment_parallel_vs_sequential` in one process) before accepting or
+  discarding the number: the *first* call to `agents.request_reader_agent.run()` in a fresh process
+  consistently took ~2.5s regardless of whether it happened to land in the "parallel" or
+  "sequential" timed block, while every call after that took ~0.25-0.3s — a one-time connection/
+  session setup cost, not a real parallelism finding. Fixed by adding one untimed warm-up call
+  (reusing `sample_request_ids[0]`) before either timed block, which is standard practice for
+  measuring steady-state behavior in network-bound benchmarks. Re-verified from a fresh process
+  after the fix: 2.38x, 3.83x, 5.0x across three independent runs — consistent, sane, no more
+  catastrophic outliers. The final official run (used in the committed `evidence/benchmark.json`)
+  measured 2.76x.
+- Rewrote `tools/make_report.py`'s Impact-section narrative prose after the fix rather than just
+  letting the f-string variables silently update to the new numbers — the sentence "the human
+  baseline is close to Gavel on accuracy ... and ahead of Mode A's [accuracy]" was true under the
+  old (buggy) numbers and became false under the corrected ones (both AI modes now clearly beat the
+  0.882 human baseline). Checked every hardcoded narrative claim against the new numbers one at a
+  time (cost ordering, citation counts, cross-club rate) rather than assuming the old prose still
+  held just because the variables auto-updated.

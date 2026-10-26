@@ -48,6 +48,9 @@ run_check = load_json("run_check.json")
 usage_final = load_json("usage_final.json")
 benchmark = load_json("benchmark.json")
 safety = load_json("safety_results.json")
+_manual_scored_path = EVIDENCE / "manual_first5_scored.json"
+manual_scored = json.loads(_manual_scored_path.read_text()) if _manual_scored_path.exists() else None
+MANUAL_BASELINE_MINUTES = 17  # same source note as tools/make_report.py: not in any file, the user's own stopwatch
 
 IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
     "07_review_table", "08_review_side_panel_citation",
@@ -331,20 +334,25 @@ def slide_08_safety() -> str:
 def slide_09_impact() -> str:
     mode_a = benchmark["mode_a"]["summary"]
     mode_b = benchmark["mode_b"]["summary"]
-    excel_accuracy = user("verdict accuracy from evidence/manual_first5_scored.json, after filling in the Excel baseline")
+    if manual_scored is not None:
+        excel_accuracy = f"{manual_scored['overall_verdict_accuracy']:.3f}"
+        excel_dollars = f'<td class="num">{fmt_money(manual_scored["total_dollars_wrongly_allowed"])}</td>'
+    else:
+        excel_accuracy = user("verdict accuracy from evidence/manual_first5_scored.json, after filling in the Excel baseline")
+        excel_dollars = '<td class="small">not measured at this scale</td>'
     return f"""
     <section>
       <h2>Impact</h2>
       <table>
         <tr><th>Metric</th><th>Excel (1 reviewer, 5 req.)</th><th>Generic AI (Mode A)</th><th>Gavel (Mode B)</th></tr>
         <tr><td>Verdict accuracy</td><td>{excel_accuracy}</td><td class="num">{mode_a['overall_verdict_accuracy']['avg']:.3f}</td><td class="num">{mode_b['overall_verdict_accuracy']['avg']:.3f}</td></tr>
-        <tr><td>Dollars wrongly allowed</td><td class="small">not measured at this scale</td><td class="num">{fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])}</td><td class="num">{fmt_money(mode_b['total_dollars_wrongly_allowed']['avg'])}</td></tr>
+        <tr><td>Dollars wrongly allowed</td>{excel_dollars}<td class="num">{fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])}</td><td class="num">{fmt_money(mode_b['total_dollars_wrongly_allowed']['avg'])}</td></tr>
       </table>
       <figure>
         <img src="{IMG['09_scenarios_two_settings']}" alt="Scenario sliders showing two alpha settings with different allocation bar charts">
         <figcaption>Moving the scenario slider visibly shifts funding across clubs.</figcaption>
       </figure>
-      {notes("Gavel's clear edge is dollar accuracy -- exact, $0 wrongly allowed every repetition -- and citation discipline, not a blowout on every single metric; verdict accuracy is close to Mode A and Mode A is cheaper per run.")}
+      {notes("Both AI modes beat the human baseline on verdict accuracy. Gavel's distinct edge is zero dollar errors, ever, plus perfect citation discipline -- Mode A is cheaper per run and close on verdict accuracy, but it still released real money it shouldn't have.")}
     </section>
     """
 

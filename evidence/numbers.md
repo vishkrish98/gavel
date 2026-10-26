@@ -63,24 +63,32 @@ they have a real number.
 
 ## Mode A vs. Mode B benchmark (step06, 3 repetitions each)
 
+**Corrected 2026-10-26**: `backend/benchmark.py`'s scoring originally compared against
+`data/requests_truth.json`'s full 179-line truth key (which also carries step07's Q25-27 safety
+cases) instead of scoping to the 24 requests / 158 lines step06 actually asks for -- so 21 lines
+neither mode was ever asked to classify were counted as present-and-wrong in every accuracy
+denominator. Fixed in `backend.load_truth()`; see `harness.md` for the full writeup. Numbers below
+are from the corrected, re-run benchmark (all real model calls, not a rescore of old data).
+
 | Number | Mode A | Mode B | Source |
 | --- | --- | --- | --- |
-| Overall verdict accuracy | 0.860 (identical all 3 reps) | 0.883 (identical all 3 reps) | `evidence/benchmark.json` → `mode_a.summary` / `mode_b.summary` |
-| Sum \|allowed-dollar error\| | $9,000.00 | $0.00 | `evidence/benchmark.json` |
-| Cost per 24-request run | $0.00902 | $0.01426 | `evidence/benchmark.json` |
-| Citations correct / wrong-real-quote / invented | 80 / 78 / 0 | 158 / 0 / 0 | `evidence/benchmark.json` → rep 1 of each mode |
+| Overall verdict accuracy | 0.981 (identical all 3 reps) | 1.000 (identical all 3 reps) | `evidence/benchmark.json` → `mode_a.summary` / `mode_b.summary` |
+| Sum \|allowed-dollar error\| | $9,500.00 | $0.00 | `evidence/benchmark.json` |
+| Cost per 24-request run | $0.00954 | $0.01466 | `evidence/benchmark.json` |
+| Citations correct / wrong-real-quote / invented | 79 / 79 / 0 | 158 / 0 / 0 | `evidence/benchmark.json` → rep 1 of each mode |
 | Cross-club inconsistency (identical facts, different clubs) | 7/30 (0.233) | 7/30 (0.233) | `evidence/benchmark.json` |
+| needs_docs verdict accuracy (hardest category) | 0.846 | 1.000 | `evidence/benchmark.json` → rep 1, `verdict_accuracy_per_type` |
 
 ### Experiments on Mode B (step06)
 
 | Experiment | Result | Source |
 | --- | --- | --- |
-| 1. Skeptic on vs. off (cost) | 46 calls/$0.01426 with it, 25 calls/$0.00953 without | `evidence/benchmark.json` → `experiments.1_skeptic_on_vs_off` |
-| 1. Skeptic flags that were real errors (this run) | 0 of 10 | `evidence/benchmark.json` |
+| 1. Skeptic on vs. off (cost) | 46 calls/$0.01467 with it, 25 calls/$0.00973 without | `evidence/benchmark.json` → `experiments.1_skeptic_on_vs_off` |
+| 1. Skeptic flags that were real errors (this run) | 0 of 8 | `evidence/benchmark.json` |
 | 2. Cached tokens, stable vs. broken prompt prefix | 0 vs. 0 (6-request sample; Portkey doesn't appear to cache at this prompt length) | `evidence/benchmark.json` → `experiments.2_cache_breakpoint` |
-| 3. Reasoning effort low vs. medium (category accuracy / tokens / cost) | 1.0 / 13,962 / $0.002205 vs. 1.0 / 14,195 / $0.002322 | `evidence/benchmark.json` → `experiments.3_reasoning_effort_low_vs_medium` |
-| 4. Parallel vs. sequential (8-request sample, seconds) | 0.77s vs. 3.09s (4.02x speedup) | `evidence/benchmark.json` → `experiments.4_parallel_vs_sequential` |
-| 5. Compile once vs. per request (projected cost, 24 requests) | $0.00075 vs. $0.018006 (24.0x) | `evidence/benchmark.json` → `experiments.5_compile_once_vs_per_request` |
+| 3. Reasoning effort low vs. medium (category accuracy / tokens / cost) | 1.0 / 14,201 / $0.002212 vs. 1.0 / 14,524 / $0.002374 | `evidence/benchmark.json` → `experiments.3_reasoning_effort_low_vs_medium` |
+| 4. Parallel vs. sequential (8-request sample, seconds) | 0.57s vs. 1.58s (2.76x speedup) | `evidence/benchmark.json` → `experiments.4_parallel_vs_sequential` -- an untimed warm-up call was added before this experiment's timed blocks after an early run showed parallel as *slower* (a one-time connection-setup cost in a fresh process, not a real parallelism finding); see `harness.md` |
+| 5. Compile once vs. per request (projected cost, 24 requests) | $0.0009 vs. $0.02157 (24.0x) | `evidence/benchmark.json` → `experiments.5_compile_once_vs_per_request` |
 
 ## Safety (step07)
 
