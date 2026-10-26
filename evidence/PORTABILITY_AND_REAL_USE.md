@@ -49,3 +49,48 @@ around the synthetic policy's specific rule shapes and needs real generalization
 category, percentage-cap and multi-tier-cap rule types, better per-paragraph decomposition) before
 it would reliably catch what this real policy actually requires. This is a genuine limitation, not
 a polished success story, and is reported as such in `report.html` Section 8.
+
+## Task 3-adjacent: a real user's reaction (2026-10-26)
+
+The user showed Gavel to a former Rensselaer Union president (no real name used here, per task 3's
+own instruction), who gave two pieces of concrete, substantive feedback rather than general praise:
+
+1. **The per-rule approval workflow assumes a policy that hasn't been approved yet.** Gavel's
+   default flow treats every compiled rule as "proposed," requiring a fresh human click before it
+   affects anything. That makes sense for a draft or ambiguous policy, but the real RUGP (and most
+   real governing documents) is already a ratified, standing document, approved by the Executive
+   Board through its own separate governance process well before anyone runs it through Gavel.
+   Asking a committee to re-approve each compiled rule's *substance* is redundant work on top of a
+   decision that's already been made; what the compiler should be doing for an already-ratified
+   document is closer to a verification step (does this compiled rule actually match what the real
+   text says) than a fresh approval decision.
+2. **Annual budget approval and off-cycle approvals are genuinely different workflows, not just
+   different import sizes.** This validates a design choice already in the app (the Clubs tab's
+   bulk import for the once-a-year weekend pass, the Start tab's single-request flow for additional
+   requests between cycles), but the suggestion is that this distinction deserves to be more
+   explicit and first-class than two import mechanisms that happen to map onto it.
+
+**What this is, honestly**: one real conversation with one real person who has actually run this
+kind of committee, not a formal user study. It's reported here as exactly that. Feedback point 1
+was acted on directly -- see the "pre-ratified policy" feature below. Feedback point 2 is reported
+as a validated direction, not built further in this submission; the two-cadence mapping already in
+the app (described in `harness.md`'s "Mapped to RPI's real two-cadence process" note) is the
+current state, not a claim that it's a fully first-class concept yet.
+
+## Pre-ratified policy: skip per-rule approval for an already-approved document
+
+Direct response to feedback point 1 above. Added as a genuinely optional path, not a change to the
+default behavior: `POST /api/policy/compile` now accepts an optional
+`{"already_ratified": true}` body. When set, every **quote-verified** proposed rule is approved
+automatically in the same call -- by calling the same bulk-approval function the demo's existing
+"approve all verified" button already uses, just with a distinct `by` label, so this isn't new
+approval logic, it's the existing human bulk action triggered automatically for a document that's
+already been ratified. It's logged with `approved_by: "auto (policy marked as already ratified)"` --
+an honest, searchable label in the audit trail, never dressed up as if a human reviewed and clicked
+each one individually. Quote verification still gates this: a rule whose quote doesn't check out
+character-for-character against the real text is never auto-approved, ratified source document or
+not, since that check catches the compiler's own mistakes, not disagreement over the policy's
+substance. The frontend exposes this as a single checkbox on the Rules screen, next to the
+"Compile policy" button: "This is an already-approved, ratified policy (e.g., our current bylaws)
+-- skip per-rule approval." Unchecked (the default), behavior is byte-for-byte identical to before this
+feature existed.

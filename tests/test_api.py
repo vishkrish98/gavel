@@ -82,6 +82,22 @@ def test_compile_policy_real_call():
     assert all(r["status"] == "proposed" for r in body["rules"])
 
 
+def test_compile_policy_already_ratified_auto_approves_verified_rules():
+    response = client.post("/api/policy/compile", json={"already_ratified": True})
+    assert response.status_code == 200
+    body = response.json()
+    rules = body["rules"]
+    verified = [r for r in rules if r["quote_verified"]]
+    unverified = [r for r in rules if not r["quote_verified"]]
+    assert len(verified) >= 1
+    assert all(r["status"] == "approved" for r in verified)
+    assert all(r["approved_by"] == "auto (policy marked as already ratified)" for r in verified)
+    assert all(r["status"] == "proposed" for r in unverified)
+    assert body["auto_approval"] is not None
+    assert body["auto_approval"]["count"] == len(verified)
+    assert set(body["auto_approval"]["approved_rule_ids"]) == {r["id"] for r in verified}
+
+
 def test_approve_rule_requires_verified_quote():
     response = client.post("/api/rules/NO-SUCH-RULE/approve", json={"by": "test-chair"})
     assert response.status_code == 400

@@ -223,10 +223,18 @@ async def upload_policy(file: Optional[UploadFile] = File(None), text: Optional[
     return {"paragraphs_loaded": count}
 
 
+class CompilePolicyRequest(BaseModel):
+    already_ratified: bool = False
+
+
 @app.post("/api/policy/compile")
-async def compile_policy() -> dict:
+async def compile_policy(body: CompilePolicyRequest = CompilePolicyRequest()) -> dict:
     """Runs the real Policy Compiler agent. Returns every proposed rule (verified or not) --
-    nothing is approved yet; use POST /api/rules/{id}/approve or /api/rules/approve-all-verified."""
+    nothing is approved yet; use POST /api/rules/{id}/approve or /api/rules/approve-all-verified.
+    Pass {"already_ratified": true} only for a policy that's already an approved, standing
+    governing document (e.g. ratified bylaws) -- this auto-approves every quote-verified rule in
+    the same call, labeled distinctly in the audit trail. Default (omitted/false) behavior is
+    unchanged: nothing is auto-approved."""
     conn = get_connection()
     paragraph_count = conn.execute("SELECT COUNT(*) FROM policy_paragraphs").fetchone()[0]
     conn.close()
@@ -245,7 +253,11 @@ async def compile_policy() -> dict:
     except UsageLimitExceeded as exc:
         raise HTTPException(502, f"Policy compilation hit its token/request limit: {exc}") from exc
 
-    return {"summary": result.output.model_dump(), "rules": srv.list_rules()}
+    auto_approval = None
+    if body.already_ratified:
+        auto_approval = srv.approve_all_verified_rules("auto (policy marked as already ratified)")
+
+    return {"summary": result.output.model_dump(), "rules": srv.list_rules(), "auto_approval": auto_approval}
 
 
 class ApproveRuleRequest(BaseModel):

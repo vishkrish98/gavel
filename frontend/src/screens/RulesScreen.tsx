@@ -19,6 +19,7 @@ export function RulesScreen({ onReadyToRun }: { onReadyToRun: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [compiling, setCompiling] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [alreadyRatified, setAlreadyRatified] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -42,7 +43,7 @@ export function RulesScreen({ onReadyToRun }: { onReadyToRun: () => void }) {
     setCompiling(true);
     setError(null);
     try {
-      await api.compilePolicy();
+      await api.compilePolicy(alreadyRatified);
       await load();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Compilation failed.");
@@ -112,7 +113,17 @@ export function RulesScreen({ onReadyToRun }: { onReadyToRun: () => void }) {
               : `${paragraphs.length} policy paragraphs loaded. Compile to propose rules for you to approve.`}
           </p>
         </div>
-        <div className="row">
+        <div className="row" style={{ alignItems: "center", gap: 12 }}>
+          {!compiled && (
+            <label className="hint" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <input
+                type="checkbox"
+                checked={alreadyRatified}
+                onChange={(e) => setAlreadyRatified(e.target.checked)}
+              />
+              This is an already-approved, ratified policy (e.g., our current bylaws) — skip per-rule approval
+            </label>
+          )}
           {!compiled && (
             <button className="btn btn-primary" onClick={handleCompile} disabled={compiling}>
               {compiling ? "Compiling…" : "Compile policy"}

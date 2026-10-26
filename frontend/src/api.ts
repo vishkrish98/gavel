@@ -72,7 +72,11 @@ export const api = {
     form.append("file", file);
     return request<{ paragraphs_loaded: number }>("/api/policy", { method: "POST", body: form });
   },
-  compilePolicy: () => postJson<{ summary: Record<string, unknown>; rules: Rule[] }>("/api/policy/compile", {}),
+  compilePolicy: (alreadyRatified = false) =>
+    postJson<{ summary: Record<string, unknown>; rules: Rule[]; auto_approval: { approved_rule_ids: string[]; count: number } | null }>(
+      "/api/policy/compile",
+      { already_ratified: alreadyRatified },
+    ),
   listPolicy: () => request<PolicyParagraph[]>("/api/policy/paragraphs"),
   listRules: (status?: string) => request<Rule[]>(status ? `/api/rules?status=${status}` : "/api/rules"),
   approveRule: (id: string, by: string) => postJson<{ rule_id: string; approved: boolean; reason?: string }>(`/api/rules/${id}/approve`, { by }),

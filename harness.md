@@ -937,3 +937,29 @@ API-only with a clear message, rather than failing.
   "the model resisted it" claim in place, since that's no longer accurate for this run and is
   honestly a stronger example for the report: real, not hypothetical, evidence of why the
   defenses exist. `report.html` now 14 pages (still within 10-15); 57/57 tests passing.
+- 2026-10-26, real user feedback from a former Rensselaer Union president (shown the live app, not
+  a formal study): the per-rule approval workflow assumes a policy that hasn't been approved yet,
+  but a real governing document like the RUGP is already ratified by the Executive Board through
+  its own separate process, so re-approving each compiled rule's substance is redundant work on top
+  of a decision already made. Built a genuinely optional response rather than changing default
+  behavior: `POST /api/policy/compile` now accepts `{"already_ratified": true}`; when set, it calls
+  the exact same bulk-approval function the demo's existing "approve all verified" button already
+  uses (`approve_all_verified_rules`), just with the distinct `by` label
+  `"auto (policy marked as already ratified)"` — not new approval logic, the existing human bulk
+  action triggered automatically for a document that's already been ratified. Quote verification
+  still gates it unconditionally: an unverified rule is never auto-approved regardless of the flag,
+  since that check catches the compiler's own mistakes, not disagreement over the policy's
+  substance. Considered a stricter gate (also requiring a rule be the only proposal for its
+  paragraph, matching `chair.py`'s benchmark-mode auto-approve) before deciding against it — the
+  existing bulk-approve tool doesn't make that distinction either, and reusing untouched, already-
+  tested logic beats writing a new, narrower gate that the rest of the app doesn't apply
+  consistently. Added a checkbox on the Rules screen next to "Compile policy" (unchecked by
+  default) rather than the Start screen, since compiling is a Rules-screen action, not a Start-
+  screen one. Default behavior (flag omitted) is unchanged, confirmed by the existing
+  `test_compile_policy_real_call` still passing unmodified; added
+  `test_compile_policy_already_ratified_auto_approves_verified_rules` to `tests/test_api.py` to
+  cover the new path. The second person's suggestion (annual budget approval and off-cycle
+  approvals as explicitly distinct workflows) validates a design already in the app — the Clubs
+  tab's bulk import for the annual weekend pass, the Start tab's single-request flow for off-cycle
+  meetings — and is reported as a validated direction in `evidence/PORTABILITY_AND_REAL_USE.md`
+  rather than built further in this submission. 58/58 tests passing.
