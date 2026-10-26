@@ -1,0 +1,130 @@
+{
+  "note": "15 real repetitions of the same deliberately self-contradictory stress-test line (\"Catering for the mixer. Headcount: 15. Total: $350. Final attendee count: 35.\"), real model calls, run across two batches on 2026-10-26. No fabricated results -- every run_id is a real run against the live app.",
+  "line_text": "Catering for the mixer. Headcount: 15. Total: $350. Final attendee count: 35.",
+  "amount": 350.0,
+  "total_reps": 15,
+  "flagged_count": 3,
+  "flagged_rate": 0.2,
+  "reps": [
+    {
+      "rep": 1,
+      "run_id": "run-934b9564",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 2,
+      "run_id": "run-6ee124ac",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 3,
+      "run_id": "run-7d82ef91",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 4,
+      "run_id": "run-a339efb7",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 5,
+      "run_id": "run-486345de",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 6,
+      "run_id": "run-7364fd1d",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 7,
+      "run_id": "run-68e6ddb6",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 8,
+      "run_id": "run-907fd6a8",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 9,
+      "run_id": "run-45caf0ac",
+      "verdict": "allowed",
+      "allowed_amount": 350.0,
+      "flagged_for_review": true,
+      "skeptic_explanation": "Description gives conflicting headcounts (15 and final count 35); confirm the correct quantity for the $350 catering charge."
+    },
+    {
+      "rep": 10,
+      "run_id": "run-b94421a4",
+      "verdict": "allowed",
+      "allowed_amount": 350.0,
+      "flagged_for_review": true,
+      "skeptic_explanation": "Description lists headcount 15 but final attendee count 35; the amount and $10 unit cost align with 35, so the quantity basis needs review."
+    },
+    {
+      "rep": 11,
+      "run_id": "run-e4b3977e",
+      "verdict": "allowed",
+      "allowed_amount": 350.0,
+      "flagged_for_review": true,
+      "skeptic_explanation": "The description lists headcount 15 but final attendee count is 35, and the recorded quantity/headcount use 35; verify which count supports the $350 total."
+    },
+    {
+      "rep": 12,
+      "run_id": "run-d509624c",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 13,
+      "run_id": "run-d104b276",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 14,
+      "run_id": "run-2a415421",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    },
+    {
+      "rep": 15,
+      "run_id": "run-0f7ba7cb",
+      "verdict": "reduced",
+      "allowed_amount": 225.0,
+      "flagged_for_review": false,
+      "skeptic_explanation": null
+    }
+  ]
+}

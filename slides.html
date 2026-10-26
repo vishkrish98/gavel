@@ -329,7 +329,7 @@ html, body { background: var(--bg); }
         <div>
           <ul>
             <li>Policy and all 24 requests are <strong>synthetic</strong>; a former officer of a real student union reviewed the live app and shaped one real feature, but no current committee has used Gavel on real decisions yet</li>
-            <li>The Skeptic has <strong>never caught a real error</strong> in any run (0% observed precision across 8 flags), so its value is unproven, not disproven</li>
+            <li>The Skeptic has <strong>never caught a real error</strong> on the graded dataset (0% precision, 8 flags); a stress test with a self-contradictory line flagged correctly 3 of 15 runs (20%), the rest silently capped before it ever reviewed them</li>
             <li>Instruction-pattern detection is a narrow, 5-phrase list by design, so a differently-worded injection could reach the model unfiltered, though never past the engine/approval-gate guarantees</li>
             <li>The real-policy portability check found only 4 of 22 real paragraphs compile into enforceable rules; the schema has no percentage-based subsidy type at all, so that real policy's travel and coaching provisions can't be enforced yet</li>
           </ul>
@@ -344,7 +344,7 @@ html, body { background: var(--bg); }
         </div>
       </div>
       <p>From my own committee experience: six review rooms applying one policy led to six different readings of the same food rule. Gavel's consistency check exists to catch exactly that pattern, the moment it happens.</p>
-      <aside class="notes">We do have one real data point now: a former officer of the same real student union whose policy we used for the portability check reviewed the live app and flagged that per-rule approval is redundant for an already-ratified document like theirs, which we acted on directly (the pre-ratified-policy flag on the Compile route). What we still haven't shown is a current committee using Gavel on real decisions, or a caught error in Gavel's own runs. The real-policy check we did run found the rule taxonomy doesn't generalize yet. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.</aside>
+      <aside class="notes">We do have one real data point now: a former officer of the same real student union whose policy we used for the portability check reviewed the live app and flagged that per-rule approval is redundant for an already-ratified document like theirs, which we acted on directly (the pre-ratified-policy flag on the Compile route). We also deliberately stress-tested the Skeptic since the graded dataset never gives it a real error: six adversarial category/quantity traps all came back correctly classified (see evidence/skeptic_stress_test.md), but a genuinely self-contradictory line (two conflicting headcounts, no resolving narrative) got flagged on 3 of 15 real runs -- and surfaced a real architectural gap, that the Skeptic only reviews lines the engine would currently allow in full, so an ambiguity resolving toward a smaller number gets silently capped with no human alerted. What we still haven't shown is a current committee using Gavel on real decisions. The real-policy check we did run found the rule taxonomy doesn't generalize yet. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.</aside>
     </section>
     
   </div>

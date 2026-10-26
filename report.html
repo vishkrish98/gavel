@@ -578,6 +578,20 @@ footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; mar
     <strong>0 of them were real
     errors</strong>. The Skeptic does what it's specified to do (flag without ever changing a
     verdict), but we have no evidence yet that it would catch a mistake if one occurred.</p>
+    <p><strong>Stress test (completed):</strong> since the synthetic dataset never gives the
+    Skeptic a real error to find, we built one on purpose. Six adversarial attempts against the
+    Request Reader (16 lines: disguised alcohol, disguised gift cards, obscure quantity words,
+    bulk-unit math, implicit category cues) all came back correctly classified; the model is more
+    robust against these tricks than expected. A second round removed all resolving information:
+    the same genuinely self-contradictory line ("Headcount: 15... Final attendee count: 35"), run
+    15 times. The Skeptic correctly flagged the contradiction on 3 of 15 runs (20%), e.g.
+    &ldquo;Description gives conflicting headcounts (15 and final count 35); confirm the correct
+    quantity for the $350 catering charge.&rdquo; On the other 12, the ambiguity happened to
+    resolve toward the smaller number, which the per-person cap mechanically reduced before the
+    Skeptic ever saw the line, a real, previously undocumented limitation: this pipeline only
+    sends the Skeptic lines the engine would currently allow in full, so an ambiguity that resolves
+    downward can be silently capped with no human ever alerted that the underlying data was
+    contradictory. Full write-up: <code>evidence/skeptic_stress_test.md</code>.</p>
     <p>Other limits, in full in <code>evidence/limits.md</code>: the instruction-pattern injection
     detector is a narrow, 5-phrase list by design, so a differently-worded injection could slip
     past it (though never past the engine/approval-gate guarantees in Section 6); no concurrency

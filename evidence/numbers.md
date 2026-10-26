@@ -61,6 +61,16 @@ they have a real number.
 | Agreement with the step03 true-fixture baseline | 30/30 decisions (100%) | `evidence/run_check.json` → `consistency.agreement_rate` |
 | Full verdicts CSV (158 rows) | every line, verdict, citation | `evidence/verdicts_final.csv` |
 
+## Skeptic stress test (2026-10-26, outside the graded dataset)
+
+| Number | Value | Source |
+| --- | --- | --- |
+| Round 1: adversarial lines tried / correctly classified | 16 / 16 | `evidence/skeptic_stress_test.md` |
+| Round 1: lines flagged for genuine price-plausibility reasons | 2 | `evidence/skeptic_stress_test.json` |
+| Round 2: repetitions of one self-contradictory line | 15 | `evidence/skeptic_stress_test_reps.json` |
+| Round 2: of those, Skeptic flagged the contradiction | 3 (20%) | `evidence/skeptic_stress_test_reps.json` → `flagged_count` / `flagged_rate` |
+| Round 2: of those, the ambiguity resolved to a mechanical cap reduction, never reaching the Skeptic | 12 (80%) | `evidence/skeptic_stress_test_reps.json` |
+
 ## Mode A vs. Mode B benchmark (step06, 3 repetitions each)
 
 **Corrected 2026-10-26**: `backend/benchmark.py`'s scoring originally compared against

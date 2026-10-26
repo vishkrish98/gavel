@@ -1000,3 +1000,27 @@ API-only with a clear message, rather than failing.
   more tightly cropped, not a content change). slides.html: still 10 slides, no overflow. 58/58
   tests passing throughout; also swapped README.md's `<this-repo-url>` placeholder for the real
   GitHub URL now that the repo exists, so the clone command is copy-paste ready for a grader.
+- 2026-10-26, "can we have a scenario where the skeptic catches an error?": the project's own
+  honest numbers say 0 of 8 flagged lines across every run have ever been a real error, since the
+  synthetic dataset scores 100% on every metric. Rather than invent a result, built a real stress
+  test. Round 1: six adversarial attempts against the Request Reader (16 lines total) targeting
+  different failure modes -- alcohol/gift-cards disguised as food/prizes, obscure quantity words
+  ("a dozen," "a gross"), bulk-unit math ("3 boxes of 24 bars... $1 per bar"), implicit category
+  cues with no literal trigger word ("happy hour and bar snacks"), and a reverse trap (the literal
+  word "beer" inside a non-alcoholic "root beer float" line, to see if the model pattern-matches on
+  the word rather than the substance). All 16 came back correctly classified -- the model turned
+  out to be considerably more robust against these tricks than expected, a genuine (if negative)
+  finding in itself. Round 2 removed all resolving narrative and used a flatly self-contradictory
+  line ("Headcount: 15. Total: $350. Final attendee count: 35.") with no objectively correct
+  answer, run 15 times for real (two batches, `evidence/skeptic_stress_test_reps.json`). Real,
+  reproducible, non-cherry-picked result: the Skeptic correctly flagged the contradiction on 3 of
+  15 runs (20%, e.g. run `run-45caf0ac`: "Description gives conflicting headcounts (15 and final
+  count 35); confirm the correct quantity for the $350 catering charge"), but on the other 12 the
+  same ambiguous line resolved toward the smaller headcount, which `per_person_cap` mechanically
+  reduced to $225 *before* the Skeptic ever got to review it -- a real, previously undocumented
+  architectural gap: this pipeline only sends the Skeptic lines the engine would currently allow in
+  full (per `backend/prompts/skeptic.md`'s own framing), so an ambiguity that happens to resolve
+  downward gets silently capped with nobody ever alerted the underlying data was contradictory.
+  Both the capability and the gap are now in `report.html` Section 8 and the matching slide, each
+  with the real numbers and a real run ID, not a single cherry-picked anecdote. 58/58 tests
+  passing; report.html page count and slides.html slide count re-verified unchanged.

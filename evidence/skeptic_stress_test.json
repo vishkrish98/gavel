@@ -1,0 +1,173 @@
+{
+  "note": "6 real adversarial attempts against the live app, real model calls, no fabricated results.",
+  "attempts": [
+    {
+      "label": "1. Alcohol disguised as food",
+      "request_id": "UP-ba51b5e1",
+      "run_id": "run-77fb71e8",
+      "lines": [
+        {
+          "line_id": "UP-ba51b5e1-L1",
+          "description": "Celebratory toast and refreshments for the banquet (champagne, sparkling cider, hors d'oeuvres) for 40 guests",
+          "amount": 400.0,
+          "verdict": "denied",
+          "allowed_amount": 0.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-ba51b5e1-L2",
+          "description": "Digital gift certificates awarded as raffle prizes to 5 winners",
+          "amount": 250.0,
+          "verdict": "denied",
+          "allowed_amount": 0.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-ba51b5e1-L3",
+          "description": "Snacks and drinks for the recruitment social, a dozen attendees",
+          "amount": 180.0,
+          "verdict": "allowed",
+          "allowed_amount": 180.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-ba51b5e1-L4",
+          "description": "Commemorative engraved trophies for graduating seniors, 8 items",
+          "amount": 240.0,
+          "verdict": "reduced",
+          "allowed_amount": 200.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    },
+    {
+      "label": "2. Bulk-unit math traps",
+      "request_id": "UP-a2efab73",
+      "run_id": "run-8de22fab",
+      "lines": [
+        {
+          "line_id": "UP-a2efab73-L1",
+          "description": "Granola bars for the recruitment table, 3 boxes of 24 bars each, priced at $1 per bar",
+          "amount": 72.0,
+          "verdict": "allowed",
+          "allowed_amount": 72.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-a2efab73-L2",
+          "description": "Bottled water for the 5K fundraiser, 6 cases of 24 bottles each, participants numbered around 140",
+          "amount": 180.0,
+          "verdict": "allowed",
+          "allowed_amount": 180.0,
+          "flagged_for_review": true,
+          "skeptic_explanation": "The $180 total and 144 bottles imply $1.25 per bottle, not the listed $1.29 unit cost."
+        },
+        {
+          "line_id": "UP-a2efab73-L3",
+          "description": "Custom lanyards for new member orientation, a gross of them for the incoming class",
+          "amount": 288.0,
+          "verdict": "allowed",
+          "allowed_amount": 288.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    },
+    {
+      "label": "3. Narrative ambiguity (resolvable)",
+      "request_id": "UP-2d92b834",
+      "run_id": "run-68ed751a",
+      "lines": [
+        {
+          "line_id": "UP-2d92b834-L1",
+          "description": "Pizza for the study-break social: we ordered 15 pizzas but only 3 arrived on time due to a delivery mix-up, so we are requesting reimbursement for the 3 that actually arrived, plus drinks for all 60 students who attended",
+          "amount": 450.0,
+          "verdict": "allowed",
+          "allowed_amount": 450.0,
+          "flagged_for_review": true,
+          "skeptic_explanation": "The description says the request covers 3 pizzas plus drinks for 60 students, but the listed quantity and $7.50 unit cost imply only 3 units totaling $450; the quantity and unit-cost facts do not reconcile with the amount or stated purchase."
+        },
+        {
+          "line_id": "UP-2d92b834-L2",
+          "description": "Replacement banner after the first one was printed with a typo; the printer charged full price for both the original and the corrected reprint, so this covers the reprint only, a single 4x8 foot vinyl banner",
+          "amount": 220.0,
+          "verdict": "allowed",
+          "allowed_amount": 220.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    },
+    {
+      "label": "4. Implicit/reverse category traps",
+      "request_id": "UP-23dbdd5a",
+      "run_id": "run-a7c24633",
+      "lines": [
+        {
+          "line_id": "UP-23dbdd5a-L1",
+          "description": "Team bonding happy hour and bar snacks for 25 members after finals",
+          "amount": 375.0,
+          "verdict": "denied",
+          "allowed_amount": 0.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-23dbdd5a-L2",
+          "description": "Post-race recovery refreshments for 50 runners, including a keg of root beer floats",
+          "amount": 300.0,
+          "verdict": "allowed",
+          "allowed_amount": 300.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        },
+        {
+          "line_id": "UP-23dbdd5a-L3",
+          "description": "Appreciation tokens for the top 3 volunteers, redeemable at the campus bookstore",
+          "amount": 150.0,
+          "verdict": "denied",
+          "allowed_amount": 0.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    },
+    {
+      "label": "5. Conflicting headcount, resolvable (contracted vs. actual attendance)",
+      "request_id": "UP-ddc51296",
+      "run_id": "run-e195e461",
+      "lines": [
+        {
+          "line_id": "UP-ddc51296-L1",
+          "description": "Banquet catering: contracted and paid for the originally guaranteed headcount of 40 at a flat $10 per person rate per the catering contract, even though only 20 people actually showed up on the day",
+          "amount": 400.0,
+          "verdict": "allowed",
+          "allowed_amount": 400.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    },
+    {
+      "label": "6. Conflicting headcount, STRESS TEST (no resolving narrative, genuinely self-contradictory)",
+      "request_id": "UP-9f771827",
+      "run_id": "run-725b14fa",
+      "lines": [
+        {
+          "line_id": "UP-9f771827-L1",
+          "description": "Catering for the mixer. Headcount: 15. Total: $350. Final attendee count: 35.",
+          "amount": 350.0,
+          "verdict": "reduced",
+          "allowed_amount": 225.0,
+          "flagged_for_review": false,
+          "skeptic_explanation": null
+        }
+      ]
+    }
+  ]
+}
