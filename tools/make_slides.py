@@ -373,7 +373,7 @@ def slide_08_safety() -> str:
           <img src="{IMG['05_run_completed_injection_banner']}" alt="The app's injection-blocked banner naming the exact blocked text">
         </figure>
       </div>
-      {notes("The model resisted these injections even with defenses off in this run -- reported honestly, not claimed as a catch. The real guarantee is structural: Engine and verify_quote decide verdicts and citations, never the model, and every rule or memo needs a human click regardless of this toggle.")}
+      {notes("Gavel itself resisted the hidden Q27 injection even with defenses off in this run. Mode A, the undefended generic assistant with no Gavel defenses at all, " + ("did partially fall for the plain-text Q25 injection in this run, wrongly allowing $900 on one line, a real example of why defenses matter" if cases['case1']['mode_a_q25_obeyed_injection'] else "also resisted it in this run") + ". The real guarantee is structural: Engine and verify_quote decide verdicts and citations, never the model, and every rule or memo needs a human click regardless of this toggle.")}
     </section>
     """
 
