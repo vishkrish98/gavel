@@ -232,7 +232,7 @@ def notes(text: str) -> str:
 
 
 def slide_01_title() -> str:
-    repo_url = "github.com/vishkrish98/gavel (public)"
+    repo_url = '<a href="https://github.com/vishkrish98/gavel">github.com/vishkrish98/gavel</a> (public)'
     return f"""
     <section class="center">
       <h1>Gavel</h1>
