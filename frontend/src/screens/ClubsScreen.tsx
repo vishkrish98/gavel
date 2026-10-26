@@ -177,8 +177,14 @@ export function ClubsScreen({ runId, onRequestsImported }: { runId: string | nul
         <div className="panel upload-card">
           <h3>Import many requests at once</h3>
           <p className="hint">
-            Paste a JSON array of requests (same shape as a single request on the Start tab), or upload a
-            .json file. Each row is imported independently, so one bad row won't block the rest.
+            Built for the once-a-year budgeting pass, where every club submits its full annual
+            budget in one weekend. Paste a JSON array of requests (same shape as a single request
+            on the Start tab), or upload a .json file. Each row is imported independently, so one
+            bad row won't block the rest. Different clubs can use different structures: flat
+            lines, or each line tagged with an optional <code>goal</code>/<code>program</code> for
+            clubs that budget by goal → program (event) → line item. For a single additional
+            request between annual cycles, like a weekly committee meeting handles, use the Start
+            tab instead.
           </p>
           <textarea
             placeholder='[{"club": "Chess Club", "event_date": "2026-12-01", "submitted_date": "2026-11-01", "justification": "...", "lines": [{"description": "Venue rental", "amount": 300}]}]'

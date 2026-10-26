@@ -487,7 +487,7 @@ def get_run_verdicts(run_id: str) -> list[dict]:
     rows = [
         dict(r)
         for r in conn.execute(
-            """SELECT v.*, l.description, l.amount, l.request_id, req.club
+            """SELECT v.*, l.description, l.amount, l.request_id, l.goal, l.program, req.club
                FROM verdicts v JOIN lines l ON l.id = v.line_id JOIN requests req ON req.id = l.request_id
                WHERE v.run_id = ? ORDER BY l.rowid""",
             (run_id,),

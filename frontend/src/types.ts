@@ -85,6 +85,8 @@ export interface Verdict {
   amount: number;
   request_id: string;
   club: string;
+  goal: string | null;
+  program: string | null;
 }
 
 export interface Citation {

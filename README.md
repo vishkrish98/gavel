@@ -107,6 +107,15 @@ run; a negative balance means the club is over budget). Two import panels there 
 The demo's 24 synthetic clubs are seeded automatically with their `last_year_allocated` figure from
 `data/club_history.json` when you load the sample.
 
+Lines can also optionally carry a `goal` and `program` (e.g. `{"description": "Venue rental",
+"amount": 250, "goal": "Grow membership", "program": "Fall Recruitment Night"}`) for clubs that
+budget by goal → program (event) → line item rather than a flat list — the Review screen groups by
+these automatically when present, and ignores them entirely when they're not. This maps onto two
+different real submission cadences: the Clubs tab's bulk import is built for the once-a-year
+weekend where every club submits its full annual budget at once; the Start tab's single-request
+flow is for one additional request between annual cycles, the way a weekly committee meeting
+handles it.
+
 ## Running the tests, benchmark, and safety test
 
 All from the repo root, with the virtualenv active:

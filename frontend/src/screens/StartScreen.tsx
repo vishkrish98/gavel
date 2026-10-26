@@ -154,8 +154,12 @@ export function StartScreen({ onDemoLoaded, onPolicyUploaded, onRequestUploaded 
         <div className="panel upload-card">
           <h3>Use your own request</h3>
           <p className="hint">
-            Paste a request as JSON below, or upload a .txt, .html, or .json file. JSON needs club,
+            For a single additional request, the way a weekly committee meeting handles one. Paste
+            a request as JSON below, or upload a .txt, .html, or .json file. JSON needs club,
             event_date, submitted_date, justification, and a lines array (description + amount each).
+            Each line can optionally add <code>goal</code> and <code>program</code> if your club
+            budgets that way — the Review screen groups by these when present. For a whole year's
+            budget across many clubs at once, use the Clubs tab's bulk import instead.
           </p>
           <textarea
             placeholder='{"club": "Chess Club", "event_date": "2026-12-01", "submitted_date": "2026-11-01", "justification": "...", "lines": [{"description": "Venue rental", "amount": 300}]}'

@@ -80,8 +80,8 @@ def _insert_request(conn, request: dict, source: str) -> int:
         conn.execute(
             """INSERT INTO lines
                (id, request_id, description, amount, docs_json, already_purchased,
-                category, headcount, qty, nights, unit_cost, quarantined)
-               VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, 0)""",
+                category, headcount, qty, nights, unit_cost, quarantined, goal, program)
+               VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, 0, ?, ?)""",
             (
                 line["line_id"],
                 request["request_id"],
@@ -89,6 +89,8 @@ def _insert_request(conn, request: dict, source: str) -> int:
                 line["amount"],
                 json.dumps(line.get("docs", [])),
                 1 if line.get("already_purchased") else 0,
+                line.get("goal"),
+                line.get("program"),
             ),
         )
         line_count += 1

@@ -38,6 +38,15 @@ CREATE TABLE requests (
     source TEXT NOT NULL
 );
 
+-- goal/program (added post-11b): optional hierarchy so Gavel can represent different clubs'
+-- real submission structures -- a flat club (every line stands alone, the synthetic data's and
+-- Yale SOM's pattern) leaves both NULL; a club that budgets by goal -> program/event -> line item
+-- (RPI's real annual process) tags each line with which program it's under and which goal that
+-- program serves. Deliberately NOT new tables: a line's verdict/citation never depends on its
+-- goal or program, only on its own description/amount/docs, so this is metadata for grouping and
+-- display, not something backend/engine.py needs to know about. NULL-safe by construction --
+-- every existing request (158 lines, the full 24-request answer key) has both columns NULL and
+-- behaves exactly as it did before this feature existed.
 CREATE TABLE lines (
     id TEXT PRIMARY KEY,
     request_id TEXT NOT NULL REFERENCES requests(id),
@@ -50,7 +59,9 @@ CREATE TABLE lines (
     qty INTEGER,
     nights INTEGER,
     unit_cost REAL,
-    quarantined INTEGER NOT NULL DEFAULT 0
+    quarantined INTEGER NOT NULL DEFAULT 0,
+    goal TEXT,
+    program TEXT
 );
 
 CREATE TABLE verdicts (

@@ -147,3 +147,109 @@ def test_club_balance_reflects_real_verdicts():
     assert robotics["lines_reviewed"] == 1
     assert robotics["spent"] == 123.45
     assert robotics["remaining_balance"] == round(6000 - 123.45, 2)
+
+
+# ---------------------------------------------------------------------------
+# Optional goal/program hierarchy: different clubs submit different structures. A flat club
+# (every line stands alone -- the synthetic data's and Yale SOM's pattern) never sets these. A
+# club that budgets by goal -> program/event -> line item (RPI's real annual process) tags each
+# line with both. Neither field is required, and neither ever affects a line's verdict/citation --
+# this is pure display/grouping metadata.
+# ---------------------------------------------------------------------------
+
+
+def test_flat_request_has_null_goal_and_program():
+    """The existing 158-line answer-key data was never written with goal/program -- confirms the
+    new columns are NULL-safe and don't disturb the already-graded pipeline's own data."""
+    request = client.get("/api/requests/Q01").json()
+    for line in request["lines"]:
+        assert line["goal"] is None
+        assert line["program"] is None
+
+
+def test_single_request_accepts_optional_goal_and_program():
+    response = client.post(
+        "/api/requests",
+        json={
+            "club": "Robotics Club",
+            "event_date": "2026-12-01",
+            "submitted_date": "2026-11-01",
+            "justification": "Goal-based annual budget",
+            "lines": [
+                {"description": "Venue rental", "amount": 250, "goal": "Grow membership", "program": "Open House"},
+                {"description": "Conference fees", "amount": 400},  # no goal/program: still valid
+            ],
+        },
+    )
+    assert response.status_code == 200
+    request_id = response.json()["request_id"]
+
+    fetched = client.get(f"/api/requests/{request_id}").json()
+    assert fetched["lines"][0]["goal"] == "Grow membership"
+    assert fetched["lines"][0]["program"] == "Open House"
+    assert fetched["lines"][1]["goal"] is None
+    assert fetched["lines"][1]["program"] is None
+
+
+def test_bulk_request_import_preserves_goal_and_program():
+    response = client.post(
+        "/api/requests/bulk",
+        json=[
+            {
+                "club": "Chess Society",
+                "event_date": "2026-12-01",
+                "submitted_date": "2026-11-01",
+                "justification": "test",
+                "lines": [
+                    {"description": "Trophies", "amount": 60, "goal": "Compete regionally", "program": "Regional Tournament"},
+                    {"description": "Registration fees", "amount": 400, "goal": "Compete regionally", "program": "Regional Tournament"},
+                ],
+            }
+        ],
+    )
+    request_id = response.json()["results"][0]["request_id"]
+    fetched = client.get(f"/api/requests/{request_id}").json()
+    assert all(line["goal"] == "Compete regionally" for line in fetched["lines"])
+    assert all(line["program"] == "Regional Tournament" for line in fetched["lines"])
+
+
+def test_goal_and_program_never_affect_the_verdict():
+    """The deterministic engine must evaluate a line purely on its own description/amount/docs --
+    tagging it with a goal/program must not change what rule fires or what's allowed."""
+    import mcp_server.server as srv
+
+    plain = client.post(
+        "/api/requests",
+        json={
+            "club": "Robotics Club", "event_date": "2026-12-01", "submitted_date": "2026-11-01",
+            "justification": "test",
+            "lines": [{"description": "Club apparel, 10 items", "amount": 400}],
+        },
+    ).json()
+    tagged = client.post(
+        "/api/requests",
+        json={
+            "club": "Robotics Club", "event_date": "2026-12-01", "submitted_date": "2026-11-01",
+            "justification": "test",
+            "lines": [{"description": "Club apparel, 10 items", "amount": 400, "goal": "Team spirit", "program": "Kickoff"}],
+        },
+    ).json()
+
+    # Label both lines identically (category/qty) as a labeled test fixture, bypassing the model,
+    # same pattern step02/03 use -- this isolates the engine layer from the Reader layer.
+    conn_mod = __import__("backend.db", fromlist=["get_connection"])
+    conn = conn_mod.get_connection()
+    for req in (plain, tagged):
+        conn.execute(
+            "UPDATE lines SET category = 'apparel', qty = 10, unit_cost = 40 WHERE id = ?",
+            (f"{req['request_id']}-L1",),
+        )
+    conn.commit()
+    conn.close()
+
+    result_plain = srv.run_engine(plain["request_id"])
+    result_tagged = srv.run_engine(tagged["request_id"])
+    plain_verdict = result_plain["lines"][f"{plain['request_id']}-L1"]
+    tagged_verdict = result_tagged["lines"][f"{tagged['request_id']}-L1"]
+    assert plain_verdict["verdict"] == tagged_verdict["verdict"]
+    assert plain_verdict["allowed_amount"] == tagged_verdict["allowed_amount"]

@@ -481,6 +481,60 @@ this report). `slides.html`'s "What is new" slide gained one table row making th
 few words. Both regenerated and re-verified: `report.html` still 12 pages (within the 10-15
 range), `slides.html` still 10 slides with no overflow on the changed slide.
 
+## Optional goal/program hierarchy (post-11b)
+
+Added at the user's explicit request ("we want to be able for Gavel to work with differing club
+structures"), prompted by a real detail about how RPI's actual annual budget process works: every
+club writes a goal, each goal has one or more programs (events) under it, and each program is
+where the line items actually live. The synthetic data and Yale SOM's flatter pattern (a request is
+just a flat list of lines, no goal/program layer) needed to keep working exactly as before.
+
+Two new nullable columns on `lines` (`goal`, `program`; `backend/db.py`) are the entire schema
+change. Deliberately not new tables, and deliberately NOT read by `backend/engine.py` anywhere: a
+line's verdict and citation depend only on its own description/amount/docs, never on which goal or
+program it's filed under, so this is display/grouping metadata, not something the deterministic
+engine needs to know exists. That's also what keeps it safe to add this late: every one of the 158
+real answer-key lines has both columns NULL and behaves identically to before, and the already-
+graded Mode A/B benchmark and `run_check.json` numbers are untouched (nothing reads these columns
+except the new display code).
+
+Flowed through the two places a line enters the system: `backend/load.py`'s `_insert_request`
+(the loader) and `backend/requests_intake.py` (already-dict-based, so the optional fields pass
+through for free, no code changes needed there) → `POST /api/requests`, `POST /api/requests/bulk`.
+Exposed back out through `mcp_server/server.py`'s `_line_dict` (an explicit field allowlist, not
+`SELECT *`, so `goal`/`program` had to be added there by name) and `backend/main.py`'s verdicts
+query (same reason).
+
+**Frontend**: the Review screen (`frontend/src/screens/ReviewScreen.tsx`) detects whether any
+currently-filtered line has a goal or program set (`hasHierarchy`), and only then shows a "Group by
+goal / program" toggle — a flat club's review looks exactly like it always has, with zero added UI.
+When grouping is on, lines are clustered into goal → program sections with a per-program subtotal,
+falling back to a "No stated goal" / "No stated program" bucket for ordinary flat lines so mixed
+data (some clubs hierarchical, some not, in the same run) still renders sensibly.
+
+**Tested**: 4 new tests in `tests/test_clubs.py` (57/57 total passing): the existing 158-line
+answer-key data has NULL goal/program (confirms the new columns don't disturb graded data); a
+single request accepts optional goal/program per line, with some lines tagged and some not in the
+same request; bulk import preserves both fields; and, the one that matters most, a real-code test
+proving the engine produces an *identical* verdict and allowed amount for the same line whether or
+not it carries a goal/program tag (calling `run_engine` directly, bypassing the model, the same
+labeled-fixture pattern step02/03 use). Verified visually in the browser against a real run:
+grouping toggled on automatically once a tagged line appeared, the flat lines correctly bucketed
+under "No stated goal," and two hierarchical lines split correctly into their own goal/program
+sections with correct dollar subtotals ($250 under one program, $460 under another) — cross-checked
+the exact grouping algorithm against the real API response in the browser console before trusting
+the rendered screenshot, since the UI's own request-selection checkboxes proved flaky to drive by
+script during manual testing (a test-automation issue, not a product bug — confirmed by querying
+the resulting run's verdicts directly).
+
+**Mapped to RPI's real two-cadence process** (per the user: the whole year's budget gets done over
+one weekend, with weekly committee meetings handling anything additional after that): the two
+existing submission paths already match this without any new schema. The Clubs tab's bulk import
+(many clubs, many hierarchical lines, one call) is the once-a-year weekend pass; the Start tab's
+single-request flow (usually flat, no goal/program needed) is the weekly additional-request
+meeting. Updated both screens' copy to say this explicitly rather than add a new "submission type"
+field purely for labeling something the two existing flows already represent structurally.
+
 ## Frontend
 
 `frontend/` — React 19 + Vite + TypeScript, plain CSS (no component library). Dark, scholarly,

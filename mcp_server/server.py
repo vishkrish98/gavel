@@ -49,6 +49,8 @@ def _line_dict(row: sqlite3.Row) -> dict[str, Any]:
         "nights": row["nights"],
         "unit_cost": row["unit_cost"],
         "quarantined": bool(row["quarantined"]),
+        "goal": row["goal"],
+        "program": row["program"],
     }
 
 

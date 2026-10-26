@@ -14,6 +14,7 @@ export function ReviewScreen({ runId }: { runId: string | null }) {
   const [selected, setSelected] = useState<Verdict | null>(null);
   const [explain, setExplain] = useState<ExplainResult | null>(null);
   const [explainLoading, setExplainLoading] = useState(false);
+  const [groupByGoal, setGroupByGoal] = useState(true);
 
   useEffect(() => {
     if (!runId) {
@@ -37,6 +38,42 @@ export function ReviewScreen({ runId }: { runId: string | null }) {
       return true;
     });
   }, [verdicts, verdictFilter, flaggedOnly, search]);
+
+  // Different clubs submit budgets with different structures: some flat (every line stands on
+  // its own, the synthetic data's and Yale SOM's pattern), some hierarchical (goal -> program ->
+  // line item, RPI's real annual process). Grouping is purely a display choice -- goal/program
+  // never affect a line's verdict or citation, only how it's clustered here.
+  const hasHierarchy = useMemo(() => filtered.some((v) => v.goal || v.program), [filtered]);
+
+  const grouped = useMemo(() => {
+    if (!hasHierarchy || !groupByGoal) return null;
+    const groups = new Map<string, Map<string, Verdict[]>>();
+    for (const v of filtered) {
+      const goalKey = v.goal ?? "No stated goal";
+      const programKey = v.program ?? "No stated program";
+      if (!groups.has(goalKey)) groups.set(goalKey, new Map());
+      const byProgram = groups.get(goalKey)!;
+      if (!byProgram.has(programKey)) byProgram.set(programKey, []);
+      byProgram.get(programKey)!.push(v);
+    }
+    return groups;
+  }, [filtered, hasHierarchy, groupByGoal]);
+
+  function renderRow(v: Verdict) {
+    return (
+      <tr key={v.line_id} className="clickable" onClick={() => openLine(v)} tabIndex={0} onKeyDown={(e) => e.key === "Enter" && openLine(v)}>
+        <td>{v.club}</td>
+        <td className="tabular">{v.line_id}</td>
+        <td>{v.description}</td>
+        <td className="tabular">${v.amount.toLocaleString()}</td>
+        <td>
+          <VerdictChip verdict={v.verdict} />
+          {v.flagged_for_review ? <span className="chip flag">Review this</span> : null}
+        </td>
+        <td className="tabular">${v.allowed_amount.toLocaleString()}</td>
+      </tr>
+    );
+  }
 
   async function openLine(v: Verdict) {
     setSelected(v);
@@ -87,36 +124,72 @@ export function ReviewScreen({ runId }: { runId: string | null }) {
             onChange={(e) => setSearch(e.target.value)}
             aria-label="Search"
           />
+          {hasHierarchy && (
+            <label className="row" style={{ fontSize: 13, gap: 6 }}>
+              <input type="checkbox" checked={groupByGoal} onChange={(e) => setGroupByGoal(e.target.checked)} />
+              Group by goal / program
+            </label>
+          )}
         </div>
-        <div className="table-wrap">
-          <table className="review-table">
-            <thead>
-              <tr>
-                <th>Club</th>
-                <th>Line</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Verdict</th>
-                <th>Allowed</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((v) => (
-                <tr key={v.line_id} className="clickable" onClick={() => openLine(v)} tabIndex={0} onKeyDown={(e) => e.key === "Enter" && openLine(v)}>
-                  <td>{v.club}</td>
-                  <td className="tabular">{v.line_id}</td>
-                  <td>{v.description}</td>
-                  <td className="tabular">${v.amount.toLocaleString()}</td>
-                  <td>
-                    <VerdictChip verdict={v.verdict} />
-                    {v.flagged_for_review ? <span className="chip flag">Review this</span> : null}
-                  </td>
-                  <td className="tabular">${v.allowed_amount.toLocaleString()}</td>
+        {hasHierarchy && (
+          <p className="hint" style={{ marginTop: 8 }}>
+            Some lines in this run were submitted with a goal and a program (event) above the line
+            item — the way RPI's real annual process works. Goal/program are display grouping only;
+            they never change a line's verdict or citation.
+          </p>
+        )}
+        {!grouped && (
+          <div className="table-wrap">
+            <table className="review-table">
+              <thead>
+                <tr>
+                  <th>Club</th>
+                  <th>Line</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Verdict</th>
+                  <th>Allowed</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>{filtered.map(renderRow)}</tbody>
+            </table>
+          </div>
+        )}
+        {grouped && (
+          <div className="stack" style={{ marginTop: 14 }}>
+            {[...grouped.entries()].map(([goal, byProgram]) => (
+              <div key={goal} className="panel" style={{ background: "transparent", border: "1px solid var(--hairline, #333)" }}>
+                <h3 style={{ marginTop: 0 }}>Goal: {goal}</h3>
+                {[...byProgram.entries()].map(([program, rows]) => {
+                  const subtotal = rows.reduce((sum, v) => sum + v.allowed_amount, 0);
+                  return (
+                    <div key={program} style={{ marginTop: 12 }}>
+                      <div className="row-between">
+                        <div className="panel-title" style={{ marginBottom: 0 }}>Program: {program}</div>
+                        <span className="hint">{rows.length} line{rows.length === 1 ? "" : "s"} · ${subtotal.toLocaleString()} allowed</span>
+                      </div>
+                      <div className="table-wrap">
+                        <table className="review-table">
+                          <thead>
+                            <tr>
+                              <th>Club</th>
+                              <th>Line</th>
+                              <th>Description</th>
+                              <th>Amount</th>
+                              <th>Verdict</th>
+                              <th>Allowed</th>
+                            </tr>
+                          </thead>
+                          <tbody>{rows.map(renderRow)}</tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {selected && (
