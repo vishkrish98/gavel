@@ -44,6 +44,7 @@ body {
 button, input, select, textarea { font-family: inherit; }
 button { cursor: pointer; }
 a { color: var(--accent); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
 
 button:focus-visible,
 input:focus-visible,
@@ -72,8 +73,8 @@ textarea:focus-visible,
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 1.75rem;
-  height: 64px;
+  padding: 10px 1.75rem;
+  min-height: 64px;
   background: linear-gradient(120deg, var(--navy) 0%, #161c29 55%, var(--navy) 100%);
   border-bottom: 2px solid var(--accent);
   flex-wrap: wrap;
@@ -129,6 +130,7 @@ p { line-height: 1.6; }
   font-weight: 600;
   padding: 9px 18px;
   border-radius: 8px;
+  text-decoration: none;
   transition: all 0.15s ease-out;
 }
 
