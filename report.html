@@ -397,14 +397,29 @@ footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; mar
     <h3>Head-to-head: Excel vs. a generic AI assistant vs. Gavel</h3>
     <table>
       <tr><th>Metric</th><th>Excel (1 expert, 5 requests)</th><th>Generic AI (Mode A, 24 requests)</th><th>Gavel (Mode B, 24 requests)</th></tr>
-      <tr><td>Verdict accuracy</td><td><span class="flag flag-missing">[[MISSING: evidence/manual_first5.csv not filled in yet -- fill it in and run `python -m score_manual`, then paste the verdict accuracy here]]</span></td><td class="num">0.860</td><td class="num">0.883</td></tr>
-      <tr><td>Dollars wrongly allowed</td><td><span class="flag flag-missing">[[MISSING: same as above -- the dollars-wrongly-allowed figure from evidence/manual_first5_scored.json]]</span></td><td class="num">$9,000.00</td><td class="num">$0.00</td></tr>
+      <tr><td>Verdict accuracy</td><td>0.882</td><td class="num">0.860</td><td class="num">0.883</td></tr>
+      <tr><td>Dollars wrongly allowed</td><td>$3,210.00</td><td class="num">$9,000.00</td><td class="num">$0.00</td></tr>
       <tr><td>Cross-club inconsistency rate</td><td class="small">not measured at this scale</td><td class="num">0.233</td><td class="num">0.233</td></tr>
-      <tr><td>Time</td><td><span class="flag flag-user">[[USER: paste your stopwatch minutes for Q01-Q05 here (evidence/manual_first5_requests.txt, timed, no answer key)]]</span></td><td class="num">33.3s for 24 requests</td><td class="num">29.8s for 24 requests</td></tr>
+      <tr><td>Time</td><td>17 min for 34 lines</td><td class="num">33.3s for 24 requests</td><td class="num">29.8s for 24 requests</td></tr>
     </table>
-    <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. "Dollars wrongly
-    allowed" is the sum of every line where the mode allowed more than the policy actually permits
-    &mdash; the costly error for a committee, since it's money that shouldn't have gone out.</p>
+    <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. Excel figures:
+    <code>evidence/manual_first5_scored.json</code>, one expert reviewer, timed, no access to the
+    answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than
+    the policy actually permits &mdash; the costly error for a committee, since it's money that
+    shouldn't have gone out.</p>
+    <p><strong>The human baseline is close to Gavel on accuracy, not on dollar discipline:</strong>
+    the manual reviewer scored 0.882 verdict accuracy on 34 lines in
+    17 minutes &mdash; essentially tied with Gavel's 0.883
+    and ahead of Mode A's 0.860, consistent with one
+    competent reviewer being a strong baseline on a 16-rule synthetic policy. The gap shows up on
+    dollar discipline instead: the manual review had $3,210.00 wrongly allowed, from 4
+    mismatched lines out of 34. Three of those four missed the same rule &mdash; 3.5 ("any single
+    purchase over $500 requires three written quotes") &mdash; allowing or reducing a line instead
+    of holding it for documentation when the attached docs didn't include three quotes; the fourth
+    cited the correct rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Both are
+    exactly the kind of one-off slip a careful human makes once while moving quickly through 34
+    lines, and exactly what a code engine checking the same two fields (<code>docs</code>,
+    <code>qty</code>) on every line, every time, doesn't miss.</p>
     <p><strong>Honestly, where Gavel was not dramatically better:</strong> overall verdict accuracy
     is close (0.883 vs. 0.860
     for Mode A), Mode A is cheaper per run ($0.00902 vs.

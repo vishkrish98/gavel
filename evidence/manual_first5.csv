@@ -1,0 +1,35 @@
+request_id,line_id,verdict,allowed_amount,rule_para
+Q01,01-L1,allowed,250,3.5
+Q01,01-L2,reduced,900,3.6
+Q01,01-L3,allowed,75,3.3
+Q01,01-L4,allowed,360,3.4
+Q01,01-L5,allowed,120,
+Q01,01-L6,reduced,600,3.8
+Q01,01-L7,allowed,1500,3.6
+Q01,01-L8,denied,0,3.2
+Q02,02-L1,allowed,360,3.3
+Q02,02-L2,allowed,360,3.8
+Q02,02-L3,allowed,400,
+Q02,02-L4,allowed,350,
+Q02,02-L5,denied,0,4.2
+Q02,02-L6,allowed,420,3.4
+Q02,02-L7,reduced,300,3.4
+Q02,02-L8,allowed,120,
+Q03,03-L1,reduced,1000,3.8
+Q03,03-L2,reduced,750,3.4
+Q03,03-L3,allowed,600,3.9
+Q03,03-L4,allowed,400,
+Q03,03-L5,reduced,1500,3.6
+Q04 ,04-L1,allowed,400,
+Q04 ,04-L2,allowed,60,
+Q04,04-L3,allowed,1500,3.6
+Q04,04-L4,reduced,750,3.4
+Q04,04-L5,allowed,60,
+Q04,04-L6,reduced,1000,3.8
+Q04,04-L7,denied,0,3.2
+Q05,05-L1,denied,0,4.1
+Q05,05-L2,denied,0,4.1
+Q05,05-L3,denied,0,4.1
+Q05,05-L4,denied,0,4.1
+Q05,05-L5,denied,0,4.1
+Q05,05-L6,denied,0,4.1

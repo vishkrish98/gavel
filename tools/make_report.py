@@ -58,6 +58,15 @@ safety = load_json("safety_results.json")
 fresh_clone_text = (EVIDENCE / "fresh_clone_log.md").read_text()
 engine_eval = load_json("engine_eval.json")
 trace = json.loads((OUTPUT / "trace_run1.json").read_text())
+manual_scored_path = EVIDENCE / "manual_first5_scored.json"
+manual_scored = json.loads(manual_scored_path.read_text()) if manual_scored_path.exists() else None
+
+# Not read from a file: evidence/numbers.md's own row for this says the manual baseline's time
+# comes from "your own notes for the minutes; the file itself has no time column" -- the CSV
+# format (backend/score_manual.py) has no time field, so this number is necessarily hand-entered,
+# same as every other number here traces to its real source (the user's own stopwatch, reported
+# directly rather than invented).
+MANUAL_BASELINE_MINUTES = 17
 
 IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
     "04_run_in_progress", "05_run_completed_injection_banner",
@@ -552,9 +561,14 @@ def section_impact() -> str:
     cv = run_check["categories_and_verdicts"]
     consistency = run_check["consistency"]
     alloc = run_check["allocation_scenario_alpha_0.5"]
-    excel_accuracy = missing("evidence/manual_first5.csv not filled in yet -- fill it in and run `python -m score_manual`, then paste the verdict accuracy here")
-    excel_dollars = missing("same as above -- the dollars-wrongly-allowed figure from evidence/manual_first5_scored.json")
-    excel_time = user("paste your stopwatch minutes for Q01-Q05 here (evidence/manual_first5_requests.txt, timed, no answer key)")
+    if manual_scored is not None:
+        excel_accuracy = f"{manual_scored['overall_verdict_accuracy']:.3f}"
+        excel_dollars = fmt_money(manual_scored["total_dollars_wrongly_allowed"])
+        excel_time = f"{MANUAL_BASELINE_MINUTES} min for {manual_scored['lines_scored']} lines"
+    else:
+        excel_accuracy = missing("evidence/manual_first5.csv not filled in yet -- fill it in and run `python -m score_manual`, then paste the verdict accuracy here")
+        excel_dollars = missing("same as above -- the dollars-wrongly-allowed figure from evidence/manual_first5_scored.json")
+        excel_time = user("paste your stopwatch minutes for Q01-Q05 here (evidence/manual_first5_requests.txt, timed, no answer key)")
 
     top3_clubs = sorted(alloc["allocation"].items(), key=lambda kv: -kv[1])[:3]
     alloc_rows = "".join(
@@ -577,9 +591,24 @@ def section_impact() -> str:
       <tr><td>Cross-club inconsistency rate</td><td class="small">not measured at this scale</td><td class="num">{cross_a['inconsistency_rate']:.3f}</td><td class="num">{cross_b['inconsistency_rate']:.3f}</td></tr>
       <tr><td>Time</td><td>{excel_time}</td><td class="num">{mode_a['seconds']['avg']:.1f}s for 24 requests</td><td class="num">{mode_b['seconds']['avg']:.1f}s for 24 requests</td></tr>
     </table>
-    <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. "Dollars wrongly
-    allowed" is the sum of every line where the mode allowed more than the policy actually permits
-    &mdash; the costly error for a committee, since it's money that shouldn't have gone out.</p>
+    <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. Excel figures:
+    <code>evidence/manual_first5_scored.json</code>, one expert reviewer, timed, no access to the
+    answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than
+    the policy actually permits &mdash; the costly error for a committee, since it's money that
+    shouldn't have gone out.</p>
+    <p><strong>The human baseline is close to Gavel on accuracy, not on dollar discipline:</strong>
+    the manual reviewer scored {excel_accuracy} verdict accuracy on 34 lines in
+    {MANUAL_BASELINE_MINUTES} minutes &mdash; essentially tied with Gavel's {mode_b['overall_verdict_accuracy']['avg']:.3f}
+    and ahead of Mode A's {mode_a['overall_verdict_accuracy']['avg']:.3f}, consistent with one
+    competent reviewer being a strong baseline on a 16-rule synthetic policy. The gap shows up on
+    dollar discipline instead: the manual review had {excel_dollars} wrongly allowed, from 4
+    mismatched lines out of 34. Three of those four missed the same rule &mdash; 3.5 ("any single
+    purchase over $500 requires three written quotes") &mdash; allowing or reducing a line instead
+    of holding it for documentation when the attached docs didn't include three quotes; the fourth
+    cited the correct rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Both are
+    exactly the kind of one-off slip a careful human makes once while moving quickly through 34
+    lines, and exactly what a code engine checking the same two fields (<code>docs</code>,
+    <code>qty</code>) on every line, every time, doesn't miss.</p>
     <p><strong>Honestly, where Gavel was not dramatically better:</strong> overall verdict accuracy
     is close ({mode_b['overall_verdict_accuracy']['avg']:.3f} vs. {mode_a['overall_verdict_accuracy']['avg']:.3f}
     for Mode A), Mode A is cheaper per run ({fmt_money(mode_a['cost_usd']['avg'], 5)} vs.

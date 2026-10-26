@@ -1,0 +1,527 @@
+{
+  "note": "Mode C (human baseline), scored against the same data/requests_truth.json used for Mode A/B in step06.",
+  "lines_scored": 34,
+  "lines_missing_from_manual_csv": [],
+  "overall_verdict_accuracy": 0.8823529411764706,
+  "sum_abs_dollar_diff": 3210.0,
+  "total_dollars_wrongly_allowed": 3210.0,
+  "lines_wrongly_allowed_that_should_be_denied_or_reduced": 2,
+  "rule_citation_accuracy": 0.8421052631578947,
+  "rule_citations_checked": 19,
+  "per_line": [
+    {
+      "line_id": "01-L1",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 250.0,
+        "rule_para": "3.5"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 250,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "01-L2",
+      "status": "verdict_mismatch",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 900.0,
+        "rule_para": "3.6"
+      },
+      "truth": {
+        "verdict": "needs_docs",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "3.5"
+        ]
+      }
+    },
+    {
+      "line_id": "01-L3",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 75.0,
+        "rule_para": "3.3"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 75,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "01-L4",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 360.0,
+        "rule_para": "3.4"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 360,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "01-L5",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 120.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 120,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "01-L6",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 600.0,
+        "rule_para": "3.8"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 600,
+        "rule_paras": [
+          "3.8"
+        ]
+      }
+    },
+    {
+      "line_id": "01-L7",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 1500.0,
+        "rule_para": "3.6"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 1500,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "01-L8",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "3.2"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "3.2"
+        ]
+      }
+    },
+    {
+      "line_id": "02-L1",
+      "status": "verdict_mismatch",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 360.0,
+        "rule_para": "3.3"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 300,
+        "rule_paras": [
+          "3.3"
+        ]
+      }
+    },
+    {
+      "line_id": "02-L2",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 360.0,
+        "rule_para": "3.8"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 360,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "02-L3",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 400.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 400,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "02-L4",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 350.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 350,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "02-L5",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.2"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.2"
+        ]
+      }
+    },
+    {
+      "line_id": "02-L6",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 420.0,
+        "rule_para": "3.4"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 420,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "02-L7",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 300.0,
+        "rule_para": "3.4"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 300,
+        "rule_paras": [
+          "3.4"
+        ]
+      }
+    },
+    {
+      "line_id": "02-L8",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 120.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 120,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "03-L1",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 1000.0,
+        "rule_para": "3.8"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 1000,
+        "rule_paras": [
+          "3.8"
+        ]
+      }
+    },
+    {
+      "line_id": "03-L2",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 750.0,
+        "rule_para": "3.4"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 750,
+        "rule_paras": [
+          "3.4"
+        ]
+      }
+    },
+    {
+      "line_id": "03-L3",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 600.0,
+        "rule_para": "3.9"
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 600,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "03-L4",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 400.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 400,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "03-L5",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 1500.0,
+        "rule_para": "3.6"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 1500,
+        "rule_paras": [
+          "3.6"
+        ]
+      }
+    },
+    {
+      "line_id": "04-L1",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 400.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 400,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "04-L2",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 60.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 60,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "04-L3",
+      "status": "verdict_mismatch",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 1500.0,
+        "rule_para": "3.6"
+      },
+      "truth": {
+        "verdict": "needs_docs",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "3.5"
+        ]
+      }
+    },
+    {
+      "line_id": "04-L4",
+      "status": "verdict_mismatch",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 750.0,
+        "rule_para": "3.4"
+      },
+      "truth": {
+        "verdict": "needs_docs",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "3.5"
+        ]
+      }
+    },
+    {
+      "line_id": "04-L5",
+      "status": "ok",
+      "manual": {
+        "verdict": "allowed",
+        "allowed_amount": 60.0,
+        "rule_para": ""
+      },
+      "truth": {
+        "verdict": "allowed",
+        "allowed_amount": 60,
+        "rule_paras": []
+      }
+    },
+    {
+      "line_id": "04-L6",
+      "status": "ok",
+      "manual": {
+        "verdict": "reduced",
+        "allowed_amount": 1000.0,
+        "rule_para": "3.8"
+      },
+      "truth": {
+        "verdict": "reduced",
+        "allowed_amount": 1000,
+        "rule_paras": [
+          "3.8"
+        ]
+      }
+    },
+    {
+      "line_id": "04-L7",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "3.2"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "3.2"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L1",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L2",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L3",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L4",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L5",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    },
+    {
+      "line_id": "05-L6",
+      "status": "ok",
+      "manual": {
+        "verdict": "denied",
+        "allowed_amount": 0.0,
+        "rule_para": "4.1"
+      },
+      "truth": {
+        "verdict": "denied",
+        "allowed_amount": 0,
+        "rule_paras": [
+          "4.1"
+        ]
+      }
+    }
+  ]
+}
