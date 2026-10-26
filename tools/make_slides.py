@@ -269,7 +269,18 @@ def slide_04_agent_team() -> str:
     <section>
       <h2>The agent team</h2>
       <p class="so-what">A fixed pipeline, not a free-roaming agent: code decides every dollar, a human approves every rule.</p>
-      <div class="svg-wrap">{AGENT_DIAGRAM_SVG}</div>
+      <div class="two-col">
+        <div class="svg-wrap" style="flex: 1.7;">{AGENT_DIAGRAM_SVG}</div>
+        <div style="flex: 1; font-size: 0.72em;">
+          <ul>
+            <li><strong>1</strong> code orchestrator, not a model (CHAIR)</li>
+            <li><strong>4</strong> model agents, each with narrow, filtered tool access</li>
+            <li><strong>2</strong> code-only steps: zero model calls for dollars</li>
+            <li><strong>1</strong> shared MCP server, no private data path</li>
+            <li><strong>2</strong> human-approval gates</li>
+          </ul>
+        </div>
+      </div>
       {notes("CHAIR is plain code, not an LLM agent, orchestrating five agents plus two deterministic, code-only steps -- Engine and Optimizer never touch a model, so a verdict or a dollar amount can't come from an agent's own words. Two human approval gates: one per rule, one per memo.")}
     </section>
     """
@@ -280,10 +291,19 @@ def slide_05_the_app() -> str:
     <section>
       <h2>The app</h2>
       <p class="so-what">One screen replaces a spreadsheet, a policy PDF, and a reviewer's memory of last year's decisions.</p>
-      <figure>
-        <img src="{IMG['07_review_table']}" alt="Review table listing every line with its verdict, amount, and citation">
-        <figcaption>Every line, its verdict, allowed amount, and the exact policy citation behind it.</figcaption>
-      </figure>
+      <div class="two-col">
+        <div style="flex: 1; font-size: 0.78em;">
+          <ul>
+            <li>One row per line, every request, one sortable table</li>
+            <li>Verdict and amount come from code, not a prompt</li>
+            <li>The citation is one click away, never a separate doc</li>
+          </ul>
+        </div>
+        <figure style="flex: 1.3;">
+          <img src="{IMG['07_review_table']}" alt="Review table listing every line with its verdict, amount, and citation">
+          <figcaption>Every line, its verdict, allowed amount, and the exact policy citation behind it.</figcaption>
+        </figure>
+      </div>
       {notes("This is the committee's actual screen: one row per line item, sortable, with the verdict and citation right there -- nothing to dig for in a separate document.")}
     </section>
     """
@@ -296,15 +316,16 @@ def slide_06_one_line_traced() -> str:
       <p class="so-what">Not a summary of the policy. The exact sentence, every time, in under a second.</p>
       <div class="two-col">
         <div>
-          <p>Line 07-L3, guest speaker honorarium, $1,500.</p>
+          <p><strong>07-L3</strong>, speaker honorarium, $1,500:</p>
           <p class="quote">&ldquo;Speaker fees are funded up to $1,500 per event and require a signed contract.&rdquo;</p>
-          <p>The Engine read this exact sentence; the Drafter asked the club for the signed contract.</p>
+          <p style="margin-top: 0.6em;"><strong>01-L6</strong>, 30 hoodies, $840 requested:</p>
+          <p class="quote">&ldquo;Club apparel is funded up to $20 per item.&rdquo; &rarr; $20 &times; 30 = <strong>$600 allowed</strong></p>
         </div>
         <figure>
           <img src="{IMG['08_review_side_panel_citation']}" alt="Review side panel showing the line's exact policy citation highlighted">
         </figure>
       </div>
-      {notes("Click into one line and the side panel shows the highlighted sentence the verdict actually rests on -- not a paraphrase, the real quote, checked by verify_quote before it's shown.")}
+      {notes("Click into one line and the side panel shows the highlighted sentence the verdict actually rests on -- not a paraphrase, the real quote, checked by verify_quote before it's shown. The second example (01-L6) shows a different rule type, a per-item cap multiplied by quantity, still resolved by the deterministic engine rather than a model doing the multiplication.")}
     </section>
     """
 
