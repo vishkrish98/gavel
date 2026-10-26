@@ -20,7 +20,7 @@ engine, agents, API routes, safety rules).
 macOS / Linux:
 
 ```bash
-git clone <this-repo-url> gavel
+git clone https://github.com/vishkrish98/gavel.git gavel
 cd gavel
 python3 -m venv .venv
 source .venv/bin/activate
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 Windows (PowerShell):
 
 ```powershell
-git clone <this-repo-url> gavel
+git clone https://github.com/vishkrish98/gavel.git gavel
 cd gavel
 python -m venv .venv
 .venv\Scripts\Activate.ps1

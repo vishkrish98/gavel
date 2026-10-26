@@ -296,8 +296,8 @@ def slide_06_one_line_traced() -> str:
       <div class="two-col">
         <div>
           <p>Line 07-L3, guest speaker honorarium, $1,500.</p>
-          <p class="quote">&ldquo;Speaker fees require a signed contract on file.&rdquo;</p>
-          <p>The Reader read this exact sentence; the Drafter asked the club for the signed contract.</p>
+          <p class="quote">&ldquo;Speaker fees are funded up to $1,500 per event and require a signed contract.&rdquo;</p>
+          <p>The Engine read this exact sentence; the Drafter asked the club for the signed contract.</p>
         </div>
         <figure>
           <img src="{IMG['08_review_side_panel_citation']}" alt="Review side panel showing the line's exact policy citation highlighted">
