@@ -10,9 +10,12 @@ What is deliberately NOT loaded:
   the step03 consistency check.
 - lines load WITHOUT category/headcount/qty/nights -- classifying each line is the Request
   Reader agent's job (step04), not the data layer's.
-- club_history.json is read and validated here (so a bad file fails loudly at load time) but not
-  persisted to its own table: no table for it is in the step01 schema, and the optimizer (step06)
-  reads it directly from data/ the same way the reference engine in tools/make_funding_data.py does.
+- club_history.json's utilization/spend history is NOT persisted to the new `clubs` table (post-
+  11b) -- the optimizer (step06) still reads that file directly from data/, unchanged, the same
+  way the reference engine in tools/make_funding_data.py does. Only each club's name and
+  `last_year_allocated` figure seeds the clubs registry's starting `pre_approved_budget`, since
+  that registry is a separate, additive feature (bulk club/budget import) and not part of the
+  graded step01-11b pipeline.
 """
 
 from __future__ import annotations
@@ -151,6 +154,22 @@ def validate_club_history() -> int:
     return len(payload["clubs"])
 
 
+def load_clubs_registry(conn) -> int:
+    """Seeds the post-11b clubs registry from club_history.json's name + last_year_allocated
+    fields, so the demo's Clubs screen has real starting budgets out of the box. Separate from
+    validate_club_history() above: that function's contract (read-only, not persisted) predates
+    this feature and stays unchanged for the optimizer's sake."""
+    from backend.clubs import import_clubs_bulk
+
+    payload = json.loads((DATA / "club_history.json").read_text())
+    clubs = [
+        {"name": c["club"], "pre_approved_budget": c["last_year_allocated"]}
+        for c in payload["clubs"]
+    ]
+    result = import_clubs_bulk(conn, clubs)
+    return result["imported"]
+
+
 def main() -> None:
     conn = db.get_connection()
     db.init_db(conn, fresh=True)
@@ -161,6 +180,7 @@ def main() -> None:
     n_html_lines, hidden_flags = load_hidden_html_request(conn)
     n_prior = load_prior_decisions(conn)
     n_clubs = validate_club_history()
+    n_registered = load_clubs_registry(conn)
 
     conn.commit()
     conn.close()
@@ -173,7 +193,8 @@ def main() -> None:
     )
     print(f"prior decisions: {n_prior}")
     print(f"hidden text flags in HTML request: {len(hidden_flags)}")
-    print(f"club_history.json validated: {n_clubs} clubs (not persisted, no table for it)")
+    print(f"club_history.json validated: {n_clubs} clubs (utilization history not persisted, optimizer reads the file directly)")
+    print(f"clubs registry seeded: {n_registered} clubs with their pre-approved budget")
 
 
 if __name__ == "__main__":

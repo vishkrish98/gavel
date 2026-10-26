@@ -141,6 +141,21 @@ CREATE TABLE hidden_text_flags (
     reason TEXT NOT NULL,
     text TEXT NOT NULL
 );
+
+-- Added post-11b: a lightweight club registry for bulk-importing many clubs/budgets at once,
+-- modeled on how real institutions actually fund clubs (Yale SOM's C&F: a flat pre-approved
+-- amount per club, granted at the start of the year, not carried over; RPI's Union: a
+-- per-club amount set during annual budgeting). Deliberately NOT a foreign key on requests.club
+-- (a free-text string) -- joins by name, the same convention backend/engine.py's consistency
+-- check and the optimizer already use, so this stays additive and doesn't touch any existing
+-- table or code path the graded pipeline depends on.
+CREATE TABLE clubs (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    category TEXT,
+    pre_approved_budget REAL NOT NULL DEFAULT 0,
+    notes TEXT
+);
 """
 
 

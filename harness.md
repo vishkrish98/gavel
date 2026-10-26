@@ -422,6 +422,55 @@ Uploaded/pasted requests get auto-generated ids (`UP-xxxxxxxx`, lines `UP-xxxxxx
 not supplied, via `backend/requests_intake.py`, which never touches the rest of the database --
 unlike `backend/load.py`'s loader, it adds one request without wiping anything.
 
+## Clubs registry and bulk import (post-11b)
+
+Added at the user's request, with an eye toward real institutions (RPI, Yale SOM) one day
+importing their own clubs and budgets rather than typing requests in one at a time. A new `clubs`
+table (`backend/db.py`) holds a lightweight registry: name, category, and a `pre_approved_budget`
+-- modeled on how real institutions actually fund clubs, not an arbitrary number. Two real,
+researched patterns informed this: Yale SOM's Clubs & Finance Committee grants a flat $1,000 per
+club at the start of the year, not carried over (`groups.som.yale.edu`'s own handbook); RPI's
+Rensselaer Union instead sets a per-club amount during annual budgeting that varies club to club
+(the real policy pulled for the portability check). `pre_approved_budget` supports either pattern
+-- flat or variable -- without hardcoding one.
+
+`clubs` is deliberately **not** a foreign key on `requests.club` (a free-text string): joining by
+name instead, the same convention `backend/engine.py`'s consistency check and the optimizer
+already use for that column, keeps this additive to the existing schema rather than a migration of
+it -- nothing already graded (the engine, the benchmark, the safety tests) had to change.
+
+**Routes** (`backend/main.py`): `GET /api/clubs[?run_id=]` (every club's pre-approved budget, real
+running balance, and lines reviewed -- `backend/clubs.py`'s `list_clubs_with_balances`, computed
+live from `verdicts`, never stored, so it can't drift from the real data); `POST /api/clubs/bulk`
+(a JSON array of clubs, name required, re-importing a name updates its budget in place rather than
+duplicating -- this doubles as rolling the registry to a new year's allocations); `POST /api/
+requests/bulk` (a JSON array of requests, same shape as the existing single-request route, each
+row inserted independently via the existing `insert_request` so one bad row doesn't block the
+rest -- the response lists exactly which rows succeeded or failed and why).
+
+**Seeding**: `backend/load.py`'s loader now also populates `clubs` from `data/club_history.json`'s
+existing `name` + `last_year_allocated` fields (not a new data file), so the demo's Clubs screen
+has real budgets out of the box. `club_history.json`'s utilization/spend history is still NOT
+persisted anywhere else -- the optimizer keeps reading that file directly, unchanged, exactly as
+it did before this feature existed.
+
+**Frontend**: a new Clubs tab (`frontend/src/screens/ClubsScreen.tsx`), reachable from the Start
+screen without needing data loaded first (same as Start itself), since importing clubs/budgets is
+a reasonable first action. Shows every club's budget/spent/remaining/lines-reviewed in a table
+(a negative remaining balance renders in the error color), plus two paste-or-upload import panels
+mirroring the Start screen's existing pattern. Bulk-importing requests from this screen also
+unlocks the rest of the app's tabs, same as the single-request flow on Start.
+
+**Tested** with 8 new tests (`tests/test_clubs.py`, real FastAPI `TestClient`, real database, no
+mocks): the demo seeds exactly 24 real-budgeted clubs; bulk import validates and reports every bad
+row rather than failing all-or-nothing; re-importing a club name updates instead of duplicating;
+bulk request import's partial-success behavior; and the balance math itself, verified against a
+directly-inserted verdict row (a labeled test fixture, same pattern step02/03 use to isolate one
+layer, since a real verdict otherwise only comes from a full `chair.py` pipeline run needing a real
+model call). 53/53 tests passing overall. Verified live in the browser against the real RPI
+policy/clubs from the portability check: a real, over-budget club (negative balance, rendered in
+red) showed up correctly on the first real-data run.
+
 ## Frontend
 
 `frontend/` — React 19 + Vite + TypeScript, plain CSS (no component library). Dark, scholarly,

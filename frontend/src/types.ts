@@ -166,3 +166,29 @@ export interface UsageByRun {
   cost_usd: number;
   calls: number;
 }
+
+export interface Club {
+  id: string;
+  name: string;
+  category: string | null;
+  pre_approved_budget: number;
+  notes: string | null;
+  spent: number;
+  remaining_balance: number;
+  lines_reviewed: number;
+}
+
+export interface BulkImportRow {
+  row: number;
+  status: "ok" | "error";
+  request_id?: string;
+  lines_loaded?: number;
+  error?: string;
+}
+
+export interface BulkImportResult {
+  total: number;
+  succeeded: number;
+  failed: number;
+  results: BulkImportRow[];
+}

@@ -31,6 +31,7 @@ from pydantic_ai.usage import UsageLimitExceeded, UsageLimits
 
 import mcp_server.server as srv
 from backend import agents, audit, chair
+from backend import clubs as clubs_module
 from backend.db import get_connection
 from backend.load import load_policy_text_into_db, main as reload_demo_data
 from backend.requests_intake import RequestValidationError, insert_request, parse_uploaded_request
@@ -153,6 +154,48 @@ def get_request_route(request_id: str) -> dict:
     return result
 
 
+@app.get("/api/clubs")
+def list_clubs(run_id: Optional[str] = None) -> list[dict]:
+    """Every registered club with its pre-approved budget and running balance (budget minus every
+    allowed dollar from the given run, or the latest run touching that club if run_id is omitted).
+    A club with no requests yet shows its full pre-approved budget."""
+    conn = get_connection()
+    try:
+        return clubs_module.list_clubs_with_balances(conn, run_id=run_id)
+    finally:
+        conn.close()
+
+
+@app.post("/api/clubs/bulk")
+async def import_clubs(request: Request) -> dict:
+    """Send either multipart/form-data with a 'file' field (.json, a JSON array of club objects)
+    or application/json directly. Each club needs a `name`; `pre_approved_budget` defaults to 0 if
+    omitted. Re-importing a club by the same name updates its budget/category in place, so this
+    doubles as how you'd roll the registry over to a new year's allocations."""
+    content_type = request.headers.get("content-type", "")
+    if content_type.startswith("multipart/form-data"):
+        form = await request.form()
+        upload = form.get("file")
+        if upload is None or not hasattr(upload, "filename"):
+            raise HTTPException(400, "No 'file' field found in the multipart upload.")
+        try:
+            payload = json.loads((await upload.read()).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise HTTPException(400, f"Could not parse {upload.filename!r} as JSON: {exc}") from exc
+    elif content_type.startswith("application/json"):
+        payload = await request.json()
+    else:
+        raise HTTPException(400, "Send multipart/form-data with a 'file' field, or application/json directly.")
+
+    conn = get_connection()
+    try:
+        return clubs_module.import_clubs_bulk(conn, payload)
+    except clubs_module.ClubValidationError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    finally:
+        conn.close()
+
+
 @app.post("/api/policy")
 async def upload_policy(file: Optional[UploadFile] = File(None), text: Optional[str] = Form(None)) -> dict:
     """Paste the policy text (`text` form field) or upload a .txt file (`file`). Replaces
@@ -273,6 +316,47 @@ async def create_request(request: Request) -> dict:
     finally:
         conn.close()
     return {"request_id": request_id, "lines_loaded": line_count}
+
+
+@app.post("/api/requests/bulk")
+async def create_requests_bulk(request: Request) -> dict:
+    """Send either multipart/form-data with a 'file' field (a single .json file containing a
+    JSON array of request objects), or application/json with a JSON array directly -- same per-
+    request shape as POST /api/requests, many at once. Each row is inserted independently (one
+    bad row doesn't block the rest); the response lists which rows succeeded and which failed."""
+    content_type = request.headers.get("content-type", "")
+    if content_type.startswith("multipart/form-data"):
+        form = await request.form()
+        upload = form.get("file")
+        if upload is None or not hasattr(upload, "filename"):
+            raise HTTPException(400, "No 'file' field found in the multipart upload.")
+        if not upload.filename.lower().endswith(".json"):
+            raise HTTPException(400, "Bulk file upload only supports .json (a JSON array of requests).")
+        try:
+            payload = json.loads((await upload.read()).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise HTTPException(400, f"Could not parse {upload.filename!r} as JSON: {exc}") from exc
+    elif content_type.startswith("application/json"):
+        payload = await request.json()
+    else:
+        raise HTTPException(400, "Send multipart/form-data with a 'file' field, or application/json directly.")
+
+    if not isinstance(payload, list) or not payload:
+        raise HTTPException(400, "Body must be a non-empty JSON array of request objects.")
+
+    conn = get_connection()
+    results = []
+    try:
+        for i, item in enumerate(payload):
+            try:
+                request_id, line_count = insert_request(conn, item, source="api:bulk")
+                results.append({"row": i + 1, "status": "ok", "request_id": request_id, "lines_loaded": line_count})
+            except RequestValidationError as exc:
+                results.append({"row": i + 1, "status": "error", "error": str(exc)})
+    finally:
+        conn.close()
+    succeeded = sum(1 for r in results if r["status"] == "ok")
+    return {"total": len(payload), "succeeded": succeeded, "failed": len(payload) - succeeded, "results": results}
 
 
 @app.post("/api/demo/load")

@@ -1,6 +1,8 @@
 import type {
   AllocateResult,
   AuditEvent,
+  BulkImportResult,
+  Club,
   ConsistencyReport,
   DemoLoadResult,
   Draft,
@@ -84,9 +86,24 @@ export const api = {
     form.append("file", file);
     return request<{ request_id: string; lines_loaded: number }>("/api/requests", { method: "POST", body: form });
   },
+  createRequestsBulkJson: (payload: Record<string, unknown>[]) => postJson<BulkImportResult>("/api/requests/bulk", payload),
+  uploadRequestsBulkFile: (file: File) => {
+    const form = new FormData();
+    form.append("file", file);
+    return request<BulkImportResult>("/api/requests/bulk", { method: "POST", body: form });
+  },
   demoLoad: () => postJson<DemoLoadResult>("/api/demo/load", {}),
   listRequests: () => request<(RequestDetail & { line_count: number })[]>("/api/requests"),
   getRequest: (id: string) => request<RequestDetail>(`/api/requests/${id}`),
+
+  // Clubs
+  listClubs: (runId?: string) => request<Club[]>(runId ? `/api/clubs?run_id=${encodeURIComponent(runId)}` : "/api/clubs"),
+  importClubsBulkJson: (payload: Record<string, unknown>[]) => postJson<{ imported: number; club_ids: string[] }>("/api/clubs/bulk", payload),
+  importClubsBulkFile: (file: File) => {
+    const form = new FormData();
+    form.append("file", file);
+    return request<{ imported: number; club_ids: string[] }>("/api/clubs/bulk", { method: "POST", body: form });
+  },
 
   // Runs
   startRun: (requestIds: string[] | null, benchmarkMode = false) =>

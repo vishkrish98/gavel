@@ -91,6 +91,22 @@ On the **Start** screen, instead of "Try the sample":
 
 Then go to **Rules** to compile and approve, and **Run** to run it.
 
+### Importing clubs, budgets, and many requests at once
+
+The **Clubs** tab (reachable right away, no data load needed first) shows every registered club's
+pre-approved budget and running balance (budget minus every allowed/reduced dollar from its latest
+run; a negative balance means the club is over budget). Two import panels there let you:
+- **Import clubs and budgets in bulk**: paste or upload (`.json`) an array of
+  `{"name": ..., "category": ..., "pre_approved_budget": ...}` objects. Only `name` is required.
+  Re-importing an existing name updates its budget in place (how you'd roll the registry to a new
+  year) instead of creating a duplicate.
+- **Import many requests at once**: paste or upload (`.json`) an array of request objects, same
+  shape as a single request on the Start screen. Each row is imported independently, so one bad
+  row's error is reported without blocking the rest.
+
+The demo's 24 synthetic clubs are seeded automatically with their `last_year_allocated` figure from
+`data/club_history.json` when you load the sample.
+
 ## Running the tests, benchmark, and safety test
 
 All from the repo root, with the virtualenv active:

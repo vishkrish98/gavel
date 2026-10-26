@@ -10,11 +10,13 @@ import { ScenariosScreen } from "./screens/ScenariosScreen";
 import { ConsistencyScreen } from "./screens/ConsistencyScreen";
 import { DraftsScreen } from "./screens/DraftsScreen";
 import { CostScreen } from "./screens/CostScreen";
+import { ClubsScreen } from "./screens/ClubsScreen";
 
-type Tab = "start" | "rules" | "run" | "review" | "scenarios" | "consistency" | "drafts" | "cost";
+type Tab = "start" | "clubs" | "rules" | "run" | "review" | "scenarios" | "consistency" | "drafts" | "cost";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "start", label: "Start" },
+  { key: "clubs", label: "Clubs" },
   { key: "rules", label: "Rules" },
   { key: "run", label: "Run" },
   { key: "review", label: "Review" },
@@ -92,7 +94,7 @@ function App() {
               id={`nav-${t.key}`}
               className={`nav-tab ${tab === t.key ? "active" : ""}`}
               onClick={() => setTab(t.key)}
-              disabled={t.key !== "start" && !hasData}
+              disabled={t.key !== "start" && t.key !== "clubs" && !hasData}
               aria-current={tab === t.key ? "page" : undefined}
             >
               {t.label}
@@ -114,6 +116,7 @@ function App() {
             onRequestUploaded={() => setHasData(true)}
           />
         )}
+        {tab === "clubs" && <ClubsScreen runId={runId} onRequestsImported={() => setHasData(true)} />}
         {tab === "rules" && <RulesScreen onReadyToRun={() => setTab("run")} />}
         {tab === "run" && <RunScreen run={run} events={events} onStart={handleStartRun} starting={starting} startError={startError} />}
         {tab === "review" && <ReviewScreen runId={runId} />}
