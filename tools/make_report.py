@@ -293,8 +293,7 @@ def build_token_bar_chart(by_agent: dict) -> str:
 
 def section_title_links() -> str:
     repo_url = (
-        '<a href="https://github.com/vishkrish98/gavel">github.com/vishkrish98/gavel</a> '
-        "(private; zlisto added as collaborator)"
+        '<a href="https://github.com/vishkrish98/gavel">github.com/vishkrish98/gavel</a> (public)'
     )
     return f"""
     <h1>Gavel</h1>

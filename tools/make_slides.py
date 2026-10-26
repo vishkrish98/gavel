@@ -215,7 +215,7 @@ def notes(text: str) -> str:
 
 
 def slide_01_title() -> str:
-    repo_url = "github.com/vishkrish98/gavel (private; zlisto added as collaborator)"
+    repo_url = "github.com/vishkrish98/gavel (public)"
     return f"""
     <section class="center">
       <h1>Gavel</h1>
