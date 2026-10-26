@@ -774,6 +774,28 @@ def section_limits_and_next() -> str:
         "#2. Honest takeaway: the pipeline and quote-verification generalize to real text; the rule "
         "taxonomy does not, yet."
     )
+    real_user = (
+        "<strong>A real user's reaction (completed):</strong> a former Rensselaer Union president "
+        "reviewed the live app and gave two concrete pieces of feedback, not general praise. First, "
+        "the default per-rule approval workflow assumes a policy that hasn't been approved yet, but "
+        "a real governing document like the RUGP is already ratified by the Executive Board through "
+        "its own separate process, so asking a committee to re-approve each compiled rule's "
+        "substance is redundant work on top of a decision already made. We acted on this directly: "
+        "<code>POST /api/policy/compile</code> now accepts an optional "
+        "<code>{\"already_ratified\": true}</code> flag that auto-approves every quote-verified "
+        "compiled rule in the same call, using the same bulk-approval logic the demo's existing "
+        "\"approve all verified\" button already uses, labeled distinctly in the audit trail "
+        "(<code>\"auto (policy marked as already ratified)\"</code>) rather than disguised as a "
+        "human click. Quote verification still gates it unconditionally. Default behavior is "
+        "unchanged. Second, the suggestion that annual budget approval and off-cycle approvals "
+        "deserve to be explicit, first-class workflows rather than two import mechanisms that "
+        "happen to map onto them. This validates a design already in the app (the Clubs "
+        "tab's bulk import for the annual weekend pass, the Start tab's single-request flow for "
+        "off-cycle meetings) and is reported here as a validated direction, not built further in "
+        "this submission. One real conversation with one real person who has actually run this "
+        "kind of committee, reported as exactly that, not a formal user study. Full write-up: "
+        "<code>evidence/PORTABILITY_AND_REAL_USE.md</code>."
+    )
     return f"""
     <h2>8. Limits and next steps</h2>
     <p><strong>Every request, line, and prior decision in this project is synthetic</strong>
@@ -795,6 +817,7 @@ def section_limits_and_next() -> str:
     tested in one browser; and the whole system has been run at a maximum of 27 requests / 179
     lines, far short of the 150-club or 1,000-institution scale the cost model projects.</p>
     <p>{portability}</p>
+    <p>{real_user}</p>
     <p>{reflection}</p>
     <h3>Next steps</h3>
     <ul>
@@ -809,8 +832,9 @@ def section_limits_and_next() -> str:
       clicked, not a typed string.</li>
       <li>Test concurrent runs and a policy re-upload mid-run; add the same kind of
       conditioned-write guards the reference chassis uses for payments.</li>
-      <li>Get the app in front of an actual club officer or committee member and record what they
-      say, rather than relying on this report's own synthetic-data testing.</li>
+      <li>A former Rensselaer Union president's review is now in; the next step is doing the same
+      with someone who currently holds the role, and with an actual committee rather than one
+      person, to see whether the same two points hold up under group use.</li>
     </ul>
     """
 
