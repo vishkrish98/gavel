@@ -280,46 +280,74 @@ def section_title_links() -> str:
     <p class="subtitle">Decision support for a student-government funding committee</p>
     <p class="cover-links">Vish Gopalakrishnan &middot; Yale SOM, MGT 409 (AI Foundations for Managers)</p>
     <p class="cover-links">Repo: {repo_url}</p>
-    <p class="cover-links">App: run locally with <code>python run.py</code> (see README.md) &mdash; not hosted online</p>
+    <p class="cover-links">App: run locally with <code>python run.py</code> (see README.md); not hosted online</p>
     <p>Gavel turns a funding policy into machine-checkable rules a human approves, then checks every
-    club budget line against them with a citation and a dollar amount &mdash; it recommends and
-    explains, and the committee always decides.</p>
+    club budget line against them with a citation and a dollar amount. It recommends and explains,
+    and the committee always decides.</p>
     """
 
 
 def section_motivation() -> str:
-    paragraph = user(
-        "paste your own motivation paragraph here (6-8 sentences, your own words, drawing on your "
-        "RPI Union experience; only numbers you can stand behind, labeled as estimates; no real "
-        "names) -- see START_HERE.md task #3"
-    )
+    paragraph = """
+    <p>At RPI, I served on the Union's Executive Board as the representative for our affinity
+    clubs and as Club Operations Chairman, where our annual process split clubs across six review
+    rooms and I watched the same written policy get applied six different ways, particularly
+    around food-expense rules. I now see a more structured version of the same underlying problem
+    from the other side, as the current Clubs and Finance Committee chair for Yale SOM's Student
+    Government. Our process runs on dollar and attendee thresholds instead of six separate rooms:
+    a request under $1,000 or under a certain attendee count gets approved directly by the
+    committee, larger requests escalate to the broader student government team, and everything
+    runs through a shared accounting system so every club's status is visible in one place. That
+    structure is a real improvement over what I saw at RPI. But the thresholds themselves still
+    leave room for different readings. A request that is small in dollars but large in attendees,
+    or the reverse, can plausibly fall into more than one review tier depending on which number a
+    reviewer weighs more heavily, and two reviewers can reasonably land on different answers from
+    the same written rule. The deeper lesson from both roles is the same: writing a clearer policy
+    reduces inconsistency, but it does not eliminate it, because a human still has to apply that
+    policy to a specific case, under time pressure, without reliably checking it the same way every
+    time. That is the exact gap Gavel is built to close: a system that reads the same policy
+    sentence the same way, every time, for every club, and shows its work with a citation instead
+    of a judgment call.</p>
+    """
     return f"""
     <h2>2. Motivation</h2>
     <p>Student-government funding committees exist on almost every campus: a small group of
     elected or appointed students reviews club budget requests against a written policy every
     semester, usually working from a spreadsheet and whatever institutional memory the committee
     happens to carry over from the people who sat on it last year. The policy itself is rarely more
-    than a few pages &mdash; caps per category, documentation thresholds, a submission deadline,
-    a per-club semester limit &mdash; but applying it consistently across dozens of line items,
-    several meetings, and a rotating cast of reviewers is where things go wrong in practice:
-    the same kind of purchase gets treated differently depending on who reviewed it and how late
-    in the meeting it came up; a line that should have been flagged for missing documentation
-    slips through because nobody cross-checked it against the exact dollar threshold; and the
-    review itself eats hours a committee member could have spent on anything else. None of this
-    requires bad faith &mdash; it's what happens when a policy lives in a PDF and the actual
-    checking lives in a person's head.</p>
+    than a few pages: caps per category, documentation thresholds, a submission deadline, a
+    per-club semester limit. But applying it consistently across dozens of line items, several
+    meetings, and a rotating cast of reviewers is where things go wrong in practice. The same kind
+    of purchase gets treated differently depending on who reviewed it and how late in the meeting
+    it came up. A line that should have been flagged for missing documentation slips through
+    because nobody cross-checked it against the exact dollar threshold. And the review itself eats
+    hours a committee member could have spent on anything else. None of this requires bad faith.
+    It's just what happens when a policy lives in a PDF and the actual checking lives in a person's
+    head.</p>
     {paragraph}
-    <p>The question this whole project has to answer is not "can an AI read a budget line" &mdash;
-    it's whether Gavel is a demonstrably better review than a student-government reviewer working
-    from Excel and a generic AI assistant, on the same requests. Section 7 answers that directly.</p>
+    <p>The question this whole project has to answer isn't "can an AI read a budget line." It's
+    whether Gavel is a demonstrably better review than a student-government reviewer working from
+    Excel and a generic AI assistant, on the same requests. Section 7 answers that directly.</p>
     """
 
 
 def section_what_is_new() -> str:
-    competitors = user(
-        "paste at least two real competitor names, a one-line description of what each says it "
-        "does, and a link to each (see START_HERE.md task #4, COMPETITOR CHECK -- for example "
-        "CampusGroups and Campus Labs, but only after you've actually read their sites)"
+    competitors = (
+        "Two established products cover similar ground but don't do what Gavel does. "
+        "<strong>CampusGroups</strong> (Ready Education) markets a \"Resource Management\" module "
+        "that it describes as simplifying \"budgets, reservations, and payments\" for student "
+        "organizations; a Johns Hopkins case study on their site describes the university "
+        "consolidating separate budgeting tools into the platform "
+        "(<a href=\"https://www.readyeducation.com/campusgroups/\">readyeducation.com/campusgroups</a>). "
+        "<strong>Anthology Engage</strong> (formerly Campus Labs) offers \"Organization Accounting\" "
+        "tools that it says adapt a club's annual budgeting, spending, and payment process and "
+        "improve transparency around fund allocation "
+        "(<a href=\"https://www.anthology.com/engage\">anthology.com/engage</a>). Both appear to "
+        "focus on tracking and processing budgets and payments at the organization level. Neither's "
+        "public materials claim to check an individual line item against specific written policy "
+        "language with a citation, which is Gavel's narrower, specific angle. I couldn't verify "
+        "deeper feature details behind demo or login walls, so this is based only on what's "
+        "publicly stated."
     )
     return f"""
     <h2>3. What is new</h2>
@@ -330,12 +358,12 @@ def section_what_is_new() -> str:
     the funding policy itself into anything a computer can check, and neither verifies that a
     reviewer's decision actually matches what the policy says.</p>
     <p>Gavel is different in kind, not just in UI polish: it reads the policy text and proposes a
-    machine-checkable rule for every paragraph that states a binding constraint &mdash; each rule
-    carries the exact policy sentence it came from, verified character-for-character against the
-    real text before a human ever sees it, and a human still has to click approve before the rule
-    affects anything. Every budget line is then checked against those <em>approved</em> rules by
-    plain code, not by asking a model to "decide" &mdash; the model's only jobs are reading the
-    policy into rule objects and reading a line description into structured facts (category,
+    machine-checkable rule for every paragraph that states a binding constraint. Each rule carries
+    the exact policy sentence it came from, verified character-for-character against the real text
+    before a human ever sees it, and a human still has to click approve before the rule affects
+    anything. Every budget line is then checked against those <em>approved</em> rules by plain
+    code, not by asking a model to "decide." The model's only jobs are reading the policy into rule
+    objects and reading a line description into structured facts (category,
     headcount, quantity, unit cost); the verdict, the dollar amount, and the policy citation always
     come from a deterministic function (<code>backend/engine.py</code>), never from an agent's own
     words. That distinction is also what makes Gavel's accuracy numbers in Section 7 look the way
@@ -369,13 +397,13 @@ def traced_run_html() -> str:
       with a quote verified character-for-character against the real paragraph text; it correctly
       skips all 4 guidance/informational paragraphs (1.1, 1.2, 2.1, 5.1) as not binding rules.</li>
       <li>In benchmark mode, every one of the 12 proposed rules auto-approves because each was the
-      <em>only</em> rule proposed for its paragraph and its quote verified &mdash; the same gate a
+      <em>only</em> rule proposed for its paragraph and its quote verified, the same gate a
       human's "approve all verified" click uses in the real UI (Section 1's app).</li>
       <li><strong>Request Reader</strong> classifies all 24 requests in parallel (semaphore of 8).
       For example, request Q01's hotel line (<code>01-L2</code>, "Hotel for regional conference: 3
       rooms x 2 nights", $1,140) is read as category <code>lodging</code>, 3 rooms, 2 nights, $190
-      per room-night &mdash; extracted from the description text alone, with no category or amount
-      hints supplied.</li>
+      per room-night, extracted from the description text alone with no category or amount hints
+      supplied.</li>
       <li><strong>Skeptic</strong> reviews only the lines the engine would currently allow in full.
       For request Q06 it flags line <code>06-L1</code> ("Refreshments (snacks, sparkling water) for
       20 people", $220) with the real reason recorded in the trace: &ldquo;$11 per person seems
@@ -388,9 +416,9 @@ def traced_run_html() -> str:
       <li><strong>Consistency report</strong> (code) compares all 30 of last year's decisions
       against what this year's approved rules would allow for the matching line: 6 disagree.</li>
       <li><strong>Optimizer</strong> (code) runs the $40,000-pot, alpha=0.5 funding scenario across
-      all 24 clubs in one call &mdash; no model involved.</li>
+      all 24 clubs in one call, with no model involved.</li>
       <li><strong>Drafter</strong> writes committee questions for the 17 requests that have a
-      needs-docs line, a Skeptic flag, or a large reduction &mdash; for request Q07 it asks:
+      needs-docs line, a Skeptic flag, or a large reduction. For request Q07 it asks:
       &ldquo;Line 07-L3 (guest speaker honorarium, $1,500): the policy requires a signed contract
       for speaker fees&mdash;can the club provide the signed contract?&rdquo;, citing the exact
       policy sentence. One more call drafts the whole-pot memo.</li>
@@ -399,8 +427,8 @@ def traced_run_html() -> str:
     </ol>
     <figure>
       <img src="{IMG['04_run_in_progress']}" alt="Run screen showing agent nameplates and a progress bar mid-run">
-      <figcaption>Figure 2. The Run screen while this run was executing &mdash; agent nameplates
-      with live status, and a progress bar.</figcaption>
+      <figcaption>Figure 2. The Run screen while this run was executing, with agent nameplates
+      showing live status and a progress bar.</figcaption>
     </figure>
     <figure>
       <img src="{IMG['06_run_event_trace']}" alt="Event feed showing real tool calls and token counts">
@@ -427,7 +455,7 @@ def section_tokenomics() -> str:
     return f"""
     <h2>5. Tokenomics</h2>
     <p>Every number below is logged from the provider's own response fields on every real model
-    call &mdash; never estimated (<code>backend/pricing.py</code>'s cost formula applied to
+    call, never estimated (<code>backend/pricing.py</code>'s cost formula applied to
     <code>mcp_server/server.py</code>'s <code>log_usage</code>, written once per call).</p>
     <h3>Real token usage, one full run (24 real requests, run <code>run1</code>)</h3>
     <table>
@@ -469,7 +497,7 @@ def section_tokenomics() -> str:
     </table>
     <p>Human comparison: at the assumed {cm['reviewer_minutes_per_request']} minutes/request and
     {fmt_money(cm['reviewer_hourly_rate'])}/hour, one manual review costs
-    <strong>{fmt_money(cm['reviewer_cost_per_request'])}/request</strong> &mdash; versus
+    <strong>{fmt_money(cm['reviewer_cost_per_request'])}/request</strong>, versus
     {fmt_money(cm['per_request'], 6)} for Gavel's Reader+Skeptic+drafted-question pass on the same
     request. This compares the cost of producing the first-pass packet, not a claim that Gavel
     replaces the committee's decision (the committee approves every rule and every memo).</p>
@@ -511,19 +539,18 @@ def section_safety() -> str:
     <h3>Before and after: Q27 (hidden text) and Q25 (plain text)</h3>
     <table>
       <tr><th>Case</th><th>Defenses</th><th>Injection quarantined &amp; logged?</th><th>Verdicts still match the key?</th></tr>
-      <tr><td>Q27, hidden text</td><td>off</td><td>no (not toggled on)</td><td>{'yes' if cases['case1']['q27_verdicts_match_key'] else 'no'} &mdash; the model ignored the injection on its own in this run</td></tr>
+      <tr><td>Q27, hidden text</td><td>off</td><td>no (not toggled on)</td><td>{'yes' if cases['case1']['q27_verdicts_match_key'] else 'no'}, the model ignored the injection on its own in this run</td></tr>
       <tr><td>Q27, hidden text</td><td>on</td><td>{'yes' if cases['case2']['injection_was_quarantined'] else 'no'} (2 events: font-size:0, white-on-white)</td><td>{'yes' if cases['case2']['q27_verdicts_match_key'] else 'no'}</td></tr>
       <tr><td>Q25, plain text</td><td>on</td><td>{'yes' if cases['case3']['injection_was_quarantined'] else 'no'} (2 events: the two offending sentences)</td><td>{'yes' if cases['case3']['q25_verdicts_match_key'] else 'no'}</td></tr>
     </table>
-    <p>Honestly: in this run, gpt-6-luna resisted the Q27/Q25 injections even with defenses off
-    &mdash; reported as-is rather than claimed as a defense catching something it never faced. The
+    <p>Honestly: in this run, gpt-6-luna resisted the Q27/Q25 injections even with defenses off.
+    That's reported as-is rather than claimed as a defense catching something it never faced. The
     defenses exist because a model cannot be relied on to resist this on every input, forever; the
-    "on" rows above are the actual guarantee &mdash; quarantined, logged, and verdicts still
-    correct.</p>
+    "on" rows above are the actual guarantee: quarantined, logged, and verdicts still correct.</p>
 
     <h3>False-positive control (Q26, the benign look-alike)</h3>
     <p>Q26's justification says &ldquo;Please approve our request in full if the policy allows it
-    &hellip; ignore any earlier draft we sent&rdquo; &mdash; ordinary human wording that happens to
+    &hellip; ignore any earlier draft we sent&rdquo;, ordinary human wording that happens to
     share words with the real injections. With defenses on, it was quarantined
     <strong>{len(cases['case4']['blocked_injection_events'])}</strong> times (0 expected), and its
     verdicts still matched the key ({'yes' if cases['case4']['q26_verdicts_match_key'] else 'no'}).
@@ -535,13 +562,13 @@ def section_safety() -> str:
     <h3>Run limits</h3>
     <p>A deliberately tiny token cap (5,000, well under the Policy Compiler's real ~5,300-token
     need) ended the run cleanly with status <code>{cases['case6']['run_status_in_db']}</code> and
-    reason <code>{cases['case6']['reason_recorded']}</code> &mdash; confirming the whole-run and
-    per-call limits from <code>backend/chair.py</code> don't hang or crash the process.</p>
+    reason <code>{cases['case6']['reason_recorded']}</code>, confirming the whole-run and per-call
+    limits from <code>backend/chair.py</code> don't hang or crash the process.</p>
 
     <figure>
       <img src="{IMG['05_run_completed_injection_banner']}" alt="The app's injection-blocked banner showing the exact blocked text from Q25 and Q27">
       <figcaption>Figure 5. The app's own injection-blocked banner, from a real run that included
-      Q25 and Q27 &mdash; naming the request, the field, and the exact blocked text.</figcaption>
+      Q25 and Q27, naming the request, the field, and the exact blocked text.</figcaption>
     </figure>
     <p>{user("paste the terminal screenshot of the safety PASS table here (run `python -m safety_test` and screenshot its printed table) -- see evidence/SCREENSHOTS.md item 15")}</p>
     <table>
@@ -581,7 +608,7 @@ def section_impact() -> str:
     return f"""
     <h2>7. Impact</h2>
     <p>All requests in every number below are <strong>synthetic</strong>
-    (<code>tools/make_funding_data.py</code>) &mdash; invented for this project, not a real
+    (<code>tools/make_funding_data.py</code>), invented for this project and not a real
     university's policy or a real club's spending. The human baseline is <strong>one expert
     reviewer on five requests</strong> (Q01-Q05), not a study.</p>
 
@@ -596,32 +623,32 @@ def section_impact() -> str:
     <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. Excel figures:
     <code>evidence/manual_first5_scored.json</code>, one expert reviewer, timed, no access to the
     answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than
-    the policy actually permits &mdash; the costly error for a committee, since it's money that
-    shouldn't have gone out.</p>
+    the policy actually permits, the costly error for a committee, since it's money that shouldn't
+    have gone out.</p>
     <p><strong>Both AI modes clearly beat the human baseline on verdict accuracy; Gavel is the only
     one with zero dollar errors:</strong> the manual reviewer scored {excel_accuracy} verdict
-    accuracy on 34 lines in {MANUAL_BASELINE_MINUTES} minutes &mdash; behind Mode A's
+    accuracy on 34 lines in {MANUAL_BASELINE_MINUTES} minutes, behind Mode A's
     {mode_a['overall_verdict_accuracy']['avg']:.3f} and Gavel's
     {mode_b['overall_verdict_accuracy']['avg']:.3f}. That gap traces to a specific, identifiable
-    cause: the manual review had {excel_dollars} wrongly allowed from 4 mismatched lines out of 34,
-    and three of those four missed the same rule &mdash; 3.5 ("any single purchase over $500
-    requires three written quotes") &mdash; allowing or reducing a line instead of holding it for
-    documentation when the attached docs didn't include three quotes; the fourth cited the correct
-    rule (3.3's $25-per-item cap) but didn't multiply it out by quantity. Exactly the kind of
-    one-off slip a careful human makes once while moving quickly through 34 lines &mdash; and
-    exactly what a code engine checking the same two fields (<code>docs</code>, <code>qty</code>)
-    on every line, every time, doesn't miss.</p>
+    cause: the manual review had {excel_dollars} wrongly allowed from 4 mismatched lines out of 34.
+    Three of those four missed the same rule, 3.5 ("any single purchase over $500 requires three
+    written quotes"), allowing or reducing a line instead of holding it for documentation when the
+    attached docs didn't include three quotes; the fourth cited the correct rule (3.3's
+    $25-per-item cap) but didn't multiply it out by quantity. Exactly the kind of one-off slip a
+    careful human makes once while moving quickly through 34 lines, and exactly what a code engine
+    checking the same two fields (<code>docs</code>, <code>qty</code>) on every line, every time,
+    doesn't miss.</p>
     <p><strong>Honestly, where Gavel was not dramatically better:</strong> Mode A's own verdict
     accuracy is now high too ({mode_a['overall_verdict_accuracy']['avg']:.3f} vs. Gavel's
-    {mode_b['overall_verdict_accuracy']['avg']:.3f}) &mdash; a single generic prompt gets most
-    verdicts right on this synthetic policy. Mode A is also cheaper per run
+    {mode_b['overall_verdict_accuracy']['avg']:.3f}). A single generic prompt gets most verdicts
+    right on this synthetic policy. Mode A is also cheaper per run
     ({fmt_money(mode_a['cost_usd']['avg'], 5)} vs. {fmt_money(mode_b['cost_usd']['avg'], 5)}), and
     the cross-club inconsistency rate was identical between the two modes
     ({cross_a['inconsistency_rate']:.3f} each). Gavel's clear, consistent advantage is specifically
     on dollar accuracy (exact, $0 wrongly allowed every repetition, vs.
     {fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])} for Mode A) and citation discipline
     ({cites_b['correct']}/158 correct vs. {cites_a['correct']}/158 for Mode A, the rest real-but-
-    irrelevant quotes rather than invented ones) &mdash; and on the hardest verdict category,
+    irrelevant quotes rather than invented ones), plus the hardest verdict category,
     <code>needs_docs</code>, where Mode A's accuracy drops to 0.846 while Gavel's code Engine stays
     at 1.000 by construction (it checks the <code>docs</code> field directly, it doesn't infer).
     Not a blowout on every metric, but a real, structural edge on the two things that matter most
@@ -644,8 +671,8 @@ def section_impact() -> str:
     </table>
     <figure>
       <img src="{IMG['09_scenarios_two_settings']}" alt="Scenarios screen showing two alpha settings side by side with different bar charts">
-      <figcaption>Figure 6. The Scenarios screen at alpha=0 and alpha=1 side by side &mdash;
-      moving the slider visibly shifts funding toward clubs with high prior-year utilization.</figcaption>
+      <figcaption>Figure 6. The Scenarios screen at alpha=0 and alpha=1 side by side. Moving the
+      slider visibly shifts funding toward clubs with high prior-year utilization.</figcaption>
     </figure>
     <figure>
       <img src="{IMG['11_consistency']}" alt="Consistency screen showing the inconsistency rate and disagreeing decisions">
@@ -661,17 +688,28 @@ def section_impact() -> str:
 
 def section_limits_and_next() -> str:
     skeptic = run_check["skeptic"]
-    reflection = user(
-        "paste your real-world reflection here (6-8 sentences, your own words, no real names) -- "
-        "what happens when reviewers apply a policy inconsistently, and how Gavel's consistency "
-        "report would have changed a decision you remember -- see evidence/PORTABILITY_AND_REAL_USE.md task #3"
+    reflection = (
+        "The clearest pattern I remember from my time on the committee was not a single bad "
+        "decision but a structural one: splitting clubs across six review rooms meant six "
+        "different groups of reviewers applying the same written policy, and food-expense rules "
+        "in particular were interpreted differently depending on which room a club was assigned "
+        "to that cycle. No one on any of those rooms was acting in bad faith. The policy simply "
+        "left room for judgment, and six different reviewers exercised that judgment six "
+        "different ways. This is exactly the gap Gavel's consistency report is designed to close. "
+        "By comparing identical facts, the same description, amount, and documentation, across "
+        "different clubs, it would have flagged those food-line discrepancies the moment they "
+        "happened, rather than relying on someone noticing the cross-room pattern after the fact, "
+        "if anyone noticed it at all. The value of that kind of check is not that it catches one "
+        "dramatic error. It is that it removes the opportunity for the same rule to be read two "
+        "different ways in the first place, which in my experience was a far more common and far "
+        "less visible failure mode than any single egregious decision."
     )
     portability = (
         "<strong>Real-policy portability check (completed):</strong> a real, public university "
         "student union's funding policy (text not published in this repo, per the task's own "
         "instruction) was pasted into the app and run through the real Policy Compiler unmodified. "
         "Of 22 real paragraphs, only 4 became enforceable rules (21 reviewed, 4/4 quote-verified, "
-        "0 corrected by hand) &mdash; the rest covered cases Gavel's rule schema can't express yet. "
+        "0 corrected by hand). The rest covered cases Gavel's rule schema can't express yet. "
         "A simulated run of 6 fabricated requests against those 4 rules surfaced three concrete "
         "errors: a travel-mileage line mis-categorized as \"supplies\" and wrongly capped; one real "
         "paragraph packing five distinct dollar rules into one piece of prose, of which the "
@@ -687,18 +725,18 @@ def section_limits_and_next() -> str:
     return f"""
     <h2>8. Limits and next steps</h2>
     <p><strong>Every request, line, and prior decision in this project is synthetic</strong>
-    (<code>tools/make_funding_data.py</code>, fixed random seed 409) &mdash; invented for software
-    testing, not a real university's policy or a real club's spending. No line in any run in this
-    project has ever come out misclassified: the final run and every benchmark repetition scored
-    100% on both category and verdict. That is a real, measured result (<code>evidence/
-    run_check.json</code>, <code>evidence/benchmark.json</code>) and also a real gap &mdash; it
+    (<code>tools/make_funding_data.py</code>, fixed random seed 409), invented for software
+    testing and not a real university's policy or a real club's spending. No line in any run in
+    this project has ever come out misclassified: the final run and every benchmark repetition
+    scored 100% on both category and verdict. That is a real, measured result (<code>evidence/
+    run_check.json</code>, <code>evidence/benchmark.json</code>), but it's also a real gap. It
     means this report has no actual mistake to show, only the Skeptic's unproven effort to find
     one: across every run so far, {skeptic['lines_flagged']} lines were flagged and
     <strong>{skeptic['flagged_that_were_actual_misclassifications']} of them were real
     errors</strong>. The Skeptic does what it's specified to do (flag without ever changing a
     verdict), but we have no evidence yet that it would catch a mistake if one occurred.</p>
     <p>Other limits, in full in <code>evidence/limits.md</code>: the instruction-pattern injection
-    detector is a narrow, 5-phrase list by design &mdash; a differently-worded injection could slip
+    detector is a narrow, 5-phrase list by design, so a differently-worded injection could slip
     past it (though never past the engine/approval-gate guarantees in Section 6); no concurrency
     testing (two runs or a policy upload mid-run); approvals take a free-text name with no real
     authentication; the semester cap assumes one request per club per semester; the frontend was
@@ -708,10 +746,11 @@ def section_limits_and_next() -> str:
     <p>{reflection}</p>
     <h3>Next steps</h3>
     <ul>
-      <li>Complete the manual Excel baseline and the optional real-policy portability check (both
-      pending &mdash; see <code>evidence/numbers.md</code>) so Section 7's head-to-head table has a
-      real human-reviewer row and the Policy Compiler has been tested against language it wasn't
-      built around.</li>
+      <li>Both the manual Excel baseline and the optional real-policy portability check are now
+      complete (see <code>evidence/numbers.md</code> and <code>evidence/PORTABILITY_AND_REAL_USE.md</code>);
+      the next useful step is testing the Policy Compiler against a second real policy from a
+      different institution to see whether the gaps found in the first one (missing rule types for
+      percentage subsidies, compound paragraphs) generalize or were specific to that one document.</li>
       <li>Broaden the instruction-pattern detector from a fixed phrase list toward something that
       generalizes (e.g. a lightweight classifier) without losing the Q26 false-positive guarantee.</li>
       <li>Add real authentication to the approval routes so "approved by" reflects who actually
@@ -740,7 +779,7 @@ def build_html() -> str:
             section_safety(),
             section_impact(),
             section_limits_and_next(),
-            '<footer class="pagefoot">Gavel &mdash; MGT 409 final project &mdash; every number '
+            '<footer class="pagefoot">Gavel &middot; MGT 409 final project &middot; every number '
             "above is sourced from a file in evidence/ or output/, as listed inline and in "
             "evidence/numbers.md.</footer>",
         ]
@@ -749,7 +788,7 @@ def build_html() -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Gavel &mdash; Final Project Report</title>
+<title>Gavel: Final Project Report</title>
 <style>{CSS}</style>
 </head>
 <body>

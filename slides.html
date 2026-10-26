@@ -57,7 +57,7 @@
     <section class="center">
       <h1>Gavel</h1>
       <p class="subtitle">Decision support for a student-government funding committee</p>
-      <p class="small">Built for MGT 409, AI Foundations for Managers &mdash; Yale SOM</p>
+      <p class="small">Built for MGT 409, AI Foundations for Managers, Yale SOM</p>
       <p class="small">Repo: <span class="flag flag-user">[[USER: paste the GitHub repo URL here (same link as in report.html). If the repo is private, say so here too so graders can clone it -- Canvas only takes files, not a URL, so this and report.html are the only place the repo link reaches the grader.]]</span></p>
       <aside class="notes">Introduce Gavel: it reads a club-funding policy and every request against it, and drafts a decision a human still has to approve.</aside>
     </section>
@@ -66,7 +66,7 @@
     <section>
       <h2>The problem</h2>
       <ul>
-        <li>Funding decisions are <strong>inconsistent</strong> &mdash; same facts, different clubs, different outcomes</li>
+        <li>Funding decisions are <strong>inconsistent</strong>: same facts, different clubs, different outcomes</li>
         <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, against a long policy</li>
         <li>Violations can be <strong>hidden</strong> in a request's own text and missed by a tired reader</li>
       </ul>
@@ -82,8 +82,8 @@
         <tr><td>Consistency across clubs</td><td>Not checked</td><td>Checked against every prior decision, every run</td></tr>
         <tr><td>Hidden-text injection</td><td>Not addressed</td><td>Stripped, quarantined, and logged</td></tr>
       </table>
-      <p><span class="flag flag-user">[[USER: name two real competitor tools (e.g. CampusGroups, Campus Labs) and one line each on what they do NOT do -- paste after reading their sites]]</span></p>
-      <aside class="notes">Position Gavel against named competitors -- this slide needs real research the user still has to paste in; it's flagged, not invented.</aside>
+      <p><strong>CampusGroups</strong> and <strong>Anthology Engage</strong> track budgets and payments. Neither checks a line item against policy text with a citation.</p>
+      <aside class="notes">CampusGroups (Ready Education) and Anthology Engage both manage budgets and payments at the organization level. Neither's public materials claim to check an individual line against specific policy language the way Gavel's engine does.</aside>
     </section>
     
 
@@ -246,13 +246,13 @@
     <section>
       <h2>Limits and next steps</h2>
       <ul>
-        <li>Policy and all 24 requests are <strong>synthetic</strong> &mdash; no real committee has used Gavel yet</li>
-        <li>The Skeptic has <strong>never caught a real error</strong> in any run (0% observed precision) &mdash; its value is unproven here</li>
-        <li>Instruction-pattern detection is a narrow, 5-phrase list &mdash; a differently-worded injection could reach the model unfiltered</li>
-        <li>No real-policy portability check, no concurrency testing, one browser tested</li>
+        <li>Policy and all 24 requests are <strong>synthetic</strong>: no real committee has used Gavel yet</li>
+        <li>The Skeptic has <strong>never caught a real error</strong> in any run (0% observed precision), so its value is unproven here</li>
+        <li>Instruction-pattern detection is a narrow, 5-phrase list, so a differently-worded injection could reach the model unfiltered</li>
+        <li>Real-policy check found 4 of 22 real rules compile; no concurrency testing, one browser tested</li>
       </ul>
-      <p class="small"><span class="flag flag-user">[[USER: 6-8 sentence real-world reflection -- evidence/PORTABILITY_AND_REAL_USE.md task #3]]</span></p>
-      <aside class="notes">Close on what we have NOT shown: real users, a real policy, or a caught error. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.</aside>
+      <p class="small">From my own committee experience: six review rooms applying one policy led to six different readings of the same food rule. Gavel's consistency check exists to catch exactly that pattern, the moment it happens.</p>
+      <aside class="notes">Close on what we have NOT shown: real users, or a caught error in Gavel's own runs. The real-policy check we did run found the rule taxonomy doesn't generalize yet. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.</aside>
     </section>
     
   </div>
