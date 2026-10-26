@@ -5,23 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gavel</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css" id="theme">
 <style>
 :root {
-  color-scheme: light;
-  --accent: #9a6b1f;
-  --accent-wash: #f7ecd9;
-  --text: #1c1c1a;
-  --muted: #5c5a52;
-  --hairline: #d8d2c2;
-  --allowed: #2f7d4f;
-  --denied: #a13d3d;
+  color-scheme: dark;
+  --bg: #11141b;
+  --surface: #171b24;
+  --elevated: #1f2430;
+  --accent: #cf9d3f;
+  --accent-strong: #e4b969;
+  --accent-wash: rgba(207, 157, 63, 0.16);
+  --text: #e9e6db;
+  --muted: #a9a695;
+  --hairline: rgba(233, 230, 219, 0.18);
+  --allowed: #4caf6b;
+  --denied: #d9534f;
+}
+html, body { background: var(--bg); }
+.reveal, .reveal .slides, .reveal .slides section {
+  --r-background-color: var(--bg);
+  --r-main-color: var(--text);
+  --r-heading-color: var(--accent-strong);
+  --r-link-color: var(--accent);
+  background-color: var(--bg);
 }
 .reveal { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--text); --r-main-font-size: 26px; }
 .reveal .slides section { text-align: left; }
 .reveal h1, .reveal h2, .reveal h3 {
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-  color: var(--text);
+  color: var(--accent-strong);
   text-transform: none;
   border-bottom: 3px solid var(--accent);
   padding-bottom: 0.15em;
@@ -29,32 +41,37 @@
 }
 .reveal section.center { text-align: center; }
 .reveal section.center h1 { border-bottom: none; font-size: 2.6em; }
+.reveal section.center h1::before { content: "\2696  "; }
 .reveal .subtitle { color: var(--muted); font-size: 0.6em; font-family: -apple-system, sans-serif; }
-.reveal p, .reveal li { font-size: 1em; line-height: 1.35; }
+.reveal p, .reveal li { font-size: 1em; line-height: 1.35; color: var(--text); }
 .reveal ul { margin-left: 0.3em; }
 .reveal li { margin-bottom: 0.3em; }
 .reveal li::marker { color: var(--accent); }
-.reveal strong { color: var(--accent); }
-.reveal table { border-collapse: collapse; width: 100%; font-size: 0.68em; margin-top: 0.3em; }
-.reveal th, .reveal td { border: 1px solid var(--hairline); padding: 0.25em 0.5em; text-align: left; }
-.reveal th { background: var(--accent-wash); }
+.reveal strong { color: var(--accent-strong); }
+.reveal a { color: var(--accent); }
+.reveal code { background: var(--elevated); color: var(--accent-strong); padding: 0.05em 0.3em; border-radius: 4px; }
+.reveal table { border-collapse: collapse; width: 100%; font-size: 0.68em; margin-top: 0.3em; background: var(--surface); }
+.reveal th, .reveal td { border: 1px solid var(--hairline); padding: 0.25em 0.5em; text-align: left; color: var(--text); }
+.reveal th { background: var(--accent-wash); color: var(--accent-strong); }
 .reveal td.num, .reveal th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.reveal figure { margin: 0.3em 0 0; text-align: center; }
+.reveal figure { margin: 0.3em 0 0; text-align: center; background: var(--surface); border-radius: 8px; padding: 0.3em; }
 .reveal figure img { max-height: 46vh; max-width: 100%; border: 1px solid var(--hairline); border-radius: 6px; }
 .reveal figcaption { font-size: 0.5em; color: var(--muted); }
-.reveal .quote { font-style: italic; background: var(--accent-wash); border-left: 4px solid var(--accent); padding: 0.3em 0.6em; font-size: 0.75em; }
-.reveal .flag-user { background: #eaf2fb; color: #2a5885; border: 1px solid #2a5885; padding: 0 0.3em; border-radius: 3px; font-size: 0.6em; font-weight: 700; }
+.reveal .quote { font-style: italic; background: var(--elevated); border-left: 4px solid var(--accent); padding: 0.3em 0.6em; font-size: 0.75em; color: var(--text); }
+.reveal .flag-user { background: rgba(91, 155, 213, 0.18); color: #8fc0e8; border: 1px solid #5b9bd5; padding: 0 0.3em; border-radius: 3px; font-size: 0.6em; font-weight: 700; }
 .reveal .two-col { display: flex; gap: 1.2em; align-items: flex-start; }
 .reveal .two-col > div { flex: 1; }
 .reveal .small { font-size: 0.6em; color: var(--muted); }
 .reveal .svg-wrap svg { width: 100%; height: auto; max-height: 48vh; object-fit: contain; }
-.reveal .svg-wrap { display: flex; justify-content: center; }
+.reveal .svg-wrap { display: flex; justify-content: center; background: var(--surface); border-radius: 8px; padding: 0.3em; }
 .reveal .footer-src { position: absolute; bottom: 0.3em; right: 0.6em; font-size: 0.35em; color: var(--muted); }
 .reveal .so-what { font-size: 0.6em; color: var(--muted); font-style: italic; margin: -0.4em 0 0.6em; }
 .reveal .stat-row { display: flex; gap: 1.2em; margin: 0.5em 0 0.7em; }
-.reveal .stat { flex: 1; text-align: center; background: var(--accent-wash); border-radius: 8px; padding: 0.35em 0.2em; }
-.reveal .stat .stat-num { font-family: Georgia, Cambria, "Times New Roman", Times, serif; font-size: 1.9em; font-weight: 700; color: var(--accent); line-height: 1.1; display: block; }
+.reveal .stat { flex: 1; text-align: center; background: var(--elevated); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.35em 0.2em; }
+.reveal .stat .stat-num { font-family: Georgia, Cambria, "Times New Roman", Times, serif; font-size: 1.9em; font-weight: 700; color: var(--accent-strong); line-height: 1.1; display: block; }
 .reveal .stat .stat-label { font-size: 0.5em; color: var(--muted); display: block; margin-top: 0.15em; }
+.reveal .controls, .reveal .progress { color: var(--accent); }
+.reveal .progress span { background: var(--accent); }
 </style>
 </head>
 <body>
@@ -107,76 +124,76 @@
       <div class="two-col">
         <div class="svg-wrap" style="flex: 1.5;">
 <svg viewBox="0 0 780 440" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="0" y="0" width="780" height="440" fill="#ffffff"/>
+  <rect x="0" y="0" width="780" height="440" fill="#11141b"/>
 
   
-    <rect x="300" y="10" width="180" height="50" rx="7" fill="#fdf8ee" stroke="#9a6b1f" stroke-width="1.5"/>
-    <text x="390.0" y="32.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">CHAIR</text>
-    <text x="390.0" y="48.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">orchestrator</text>
+    <rect x="300" y="10" width="180" height="50" rx="7" fill="#171b24" stroke="#cf9d3f" stroke-width="1.5"/>
+    <text x="390.0" y="32.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">CHAIR</text>
+    <text x="390.0" y="48.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">orchestrator</text>
     
 
-  <line x1="390" y1="60" x2="390" y2="85" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="60" y1="85" x2="720" y2="85" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="60" y1="85" x2="60" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="190" y1="85" x2="190" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="320" y1="85" x2="320" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="450" y1="85" x2="450" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="580" y1="85" x2="580" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="700" y1="85" x2="700" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="390" y1="60" x2="390" y2="85" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="720" y2="85" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="60" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="190" y1="85" x2="190" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="320" y1="85" x2="320" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="450" y1="85" x2="450" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="580" y1="85" x2="580" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="700" y1="85" x2="700" y2="105" stroke="#6b6858" stroke-width="1.5"/>
 
   
-    <rect x="0" y="105" width="120" height="56" rx="7" fill="#fdf8ee" stroke="#9a6b1f" stroke-width="1.5"/>
-    <text x="60.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Policy</text>
-    <text x="60.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">Compiler</text>
+    <rect x="0" y="105" width="120" height="56" rx="7" fill="#171b24" stroke="#cf9d3f" stroke-width="1.5"/>
+    <text x="60.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Policy</text>
+    <text x="60.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">Compiler</text>
     
   
-    <rect x="130" y="105" width="120" height="56" rx="7" fill="#fdf8ee" stroke="#9a6b1f" stroke-width="1.5"/>
-    <text x="190.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Request</text>
-    <text x="190.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">Reader (parallel)</text>
+    <rect x="130" y="105" width="120" height="56" rx="7" fill="#171b24" stroke="#cf9d3f" stroke-width="1.5"/>
+    <text x="190.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Request</text>
+    <text x="190.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">Reader (parallel)</text>
     
   
-    <rect x="260" y="105" width="120" height="56" rx="7" fill="#fdf8ee" stroke="#9a6b1f" stroke-width="1.5"/>
-    <text x="320.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Skeptic</text>
-    <text x="320.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">2nd-guesses allowed</text>
+    <rect x="260" y="105" width="120" height="56" rx="7" fill="#171b24" stroke="#cf9d3f" stroke-width="1.5"/>
+    <text x="320.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Skeptic</text>
+    <text x="320.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">2nd-guesses allowed</text>
     
   
-    <rect x="390" y="105" width="120" height="56" rx="7" fill="#ece4d2" stroke="#9a978c" stroke-width="1.5"/>
-    <text x="450.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Engine</text>
-    <text x="450.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">code only</text>
+    <rect x="390" y="105" width="120" height="56" rx="7" fill="#1f2430" stroke="#9a978c" stroke-width="1.5"/>
+    <text x="450.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Engine</text>
+    <text x="450.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">code only</text>
     
   
-    <rect x="520" y="105" width="120" height="56" rx="7" fill="#ece4d2" stroke="#9a978c" stroke-width="1.5"/>
-    <text x="580.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Optimizer</text>
-    <text x="580.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">code only</text>
+    <rect x="520" y="105" width="120" height="56" rx="7" fill="#1f2430" stroke="#9a978c" stroke-width="1.5"/>
+    <text x="580.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Optimizer</text>
+    <text x="580.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">code only</text>
     
   
-    <rect x="650" y="105" width="130" height="56" rx="7" fill="#fdf8ee" stroke="#9a6b1f" stroke-width="1.5"/>
-    <text x="715.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">Drafter</text>
-    <text x="715.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">questions + memo</text>
+    <rect x="650" y="105" width="130" height="56" rx="7" fill="#171b24" stroke="#cf9d3f" stroke-width="1.5"/>
+    <text x="715.0" y="130.0" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">Drafter</text>
+    <text x="715.0" y="146.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">questions + memo</text>
     
 
-  <line x1="60" y1="161" x2="60" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <polygon points="55,195 65,195 60,203" fill="#a13d3d"/>
-  <rect x="5" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
-  <text x="60" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
-  <text x="60" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">each rule</text>
+  <line x1="60" y1="161" x2="60" y2="195" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="55,195 65,195 60,203" fill="#d9534f"/>
+  <rect x="5" y="205" width="110" height="34" rx="6" fill="#2a1a1a" stroke="#d9534f" stroke-width="1.3"/>
+  <text x="60" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#f3b8b6">HUMAN APPROVES</text>
+  <text x="60" y="233" text-anchor="middle" font-size="8.5" fill="#f3b8b6">each rule</text>
 
-  <line x1="715" y1="161" x2="715" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <polygon points="710,195 720,195 715,203" fill="#a13d3d"/>
-  <rect x="660" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
-  <text x="715" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
-  <text x="715" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">the memo/questions</text>
+  <line x1="715" y1="161" x2="715" y2="195" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="710,195 720,195 715,203" fill="#d9534f"/>
+  <rect x="660" y="205" width="110" height="34" rx="6" fill="#2a1a1a" stroke="#d9534f" stroke-width="1.3"/>
+  <text x="715" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#f3b8b6">HUMAN APPROVES</text>
+  <text x="715" y="233" text-anchor="middle" font-size="8.5" fill="#f3b8b6">the memo/questions</text>
 
-  <line x1="390" y1="161" x2="390" y2="275" stroke="#9a978c" stroke-width="1.2" stroke-dasharray="2,3"/>
-  <rect x="20" y="280" width="740" height="70" rx="7" fill="#f4f1ea" stroke="#9a978c" stroke-width="1.3"/>
-  <text x="390" y="296" text-anchor="middle" font-size="10" font-weight="700" fill="#1c1c1a">MCP SERVER (mcp_server/server.py) -- the only way any agent touches data</text>
-  <text x="390" y="316" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">load_policy &#183; list_rules &#183; propose_rule &#183; approve_rule &#183; verify_quote &#183; get_request</text>
-  <text x="390" y="332" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">check_line &#183; run_engine &#183; explain_line &#183; consistency_report &#183; allocate &#183; log_usage</text>
+  <line x1="390" y1="161" x2="390" y2="275" stroke="#6b6858" stroke-width="1.2" stroke-dasharray="2,3"/>
+  <rect x="20" y="280" width="740" height="70" rx="7" fill="#171b24" stroke="#6b6858" stroke-width="1.3"/>
+  <text x="390" y="296" text-anchor="middle" font-size="10" font-weight="700" fill="#e9e6db">MCP SERVER (mcp_server/server.py) -- the only way any agent touches data</text>
+  <text x="390" y="316" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#a9a695">load_policy &#183; list_rules &#183; propose_rule &#183; approve_rule &#183; verify_quote &#183; get_request</text>
+  <text x="390" y="332" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#a9a695">check_line &#183; run_engine &#183; explain_line &#183; consistency_report &#183; allocate &#183; log_usage</text>
 
-  <rect x="20" y="370" width="740" height="60" rx="7" fill="#ffffff" stroke="#d8d2c2" stroke-width="1"/>
-  <text x="390" y="388" text-anchor="middle" font-size="9.5" fill="#5c5a52">Every agent's toolset is a filtered MCPToolset over this one server -- no agent has a private data path.</text>
-  <text x="390" y="404" text-anchor="middle" font-size="9.5" fill="#5c5a52">Engine and Optimizer are plain code (backend/engine.py), not model calls -- a verdict or an</text>
-  <text x="390" y="420" text-anchor="middle" font-size="9.5" fill="#5c5a52">allocation can never come from an agent's own words, only from a deterministic function.</text>
+  <rect x="20" y="370" width="740" height="60" rx="7" fill="#11141b" stroke="#6b6858" stroke-width="1"/>
+  <text x="390" y="388" text-anchor="middle" font-size="9.5" fill="#a9a695">Every agent's toolset is a filtered MCPToolset over this one server -- no agent has a private data path.</text>
+  <text x="390" y="404" text-anchor="middle" font-size="9.5" fill="#a9a695">Engine and Optimizer are plain code (backend/engine.py), not model calls -- a verdict or an</text>
+  <text x="390" y="420" text-anchor="middle" font-size="9.5" fill="#a9a695">allocation can never come from an agent's own words, only from a deterministic function.</text>
 </svg>
 </div>
         <div style="flex: 1;">

@@ -129,21 +129,25 @@ COST_MODEL = {
 
 CSS = """
 :root {
-  color-scheme: light;
-  --accent: #9a6b1f;
-  --accent-wash: #f7ecd9;
-  --text: #1c1c1a;
-  --muted: #5c5a52;
-  --hairline: #d8d2c2;
-  --allowed: #2f7d4f;
-  --denied: #a13d3d;
+  color-scheme: dark;
+  --bg: #11141b;
+  --surface: #171b24;
+  --elevated: #1f2430;
+  --accent: #cf9d3f;
+  --accent-strong: #e4b969;
+  --accent-wash: rgba(207, 157, 63, 0.16);
+  --text: #e9e6db;
+  --muted: #a9a695;
+  --hairline: rgba(233, 230, 219, 0.16);
+  --allowed: #4caf6b;
+  --denied: #d9534f;
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
   --font-sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
 }
-@page { size: letter; margin: 0.85in 0.75in; }
-* { box-sizing: border-box; }
-html, body { background: #fff; }
+@page { size: letter; margin: 0.85in 0.75in; background: var(--bg); }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
+html, body { background: var(--bg); }
 body {
   font-family: var(--font-sans);
   color: var(--text);
@@ -154,37 +158,39 @@ body {
   padding: 0.5in 0;
 }
 @media screen {
-  html { background: #e7e3d8; padding: 28px 0; min-height: 100vh; }
-  body { background: #fff; box-shadow: 0 4px 28px rgba(0, 0, 0, 0.18); padding: 0.6in 0.75in; }
+  html { padding: 28px 0; min-height: 100vh; }
+  body { box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5); padding: 0.6in 0.75in; }
 }
-h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--text); page-break-after: avoid; orphans: 3; widows: 3; }
+h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--accent-strong); page-break-after: avoid; orphans: 3; widows: 3; }
 h1 { font-size: 26pt; margin: 0 0 4px; }
+h1::before { content: "\\2696  "; }
 h2 { font-size: 15.5pt; border-bottom: 2px solid var(--accent); padding-bottom: 3px; margin-top: 16px; page-break-before: auto; }
 h3 { font-size: 12pt; color: var(--accent); margin-top: 12px; margin-bottom: 4px; }
-p, li { orphans: 2; widows: 2; }
+p, li { color: var(--text); orphans: 2; widows: 2; }
 .subtitle { font-size: 12pt; color: var(--muted); margin: 0 0 18px; }
 .cover-links { font-size: 10.5pt; color: var(--muted); margin-bottom: 4px; }
-.cover-links a { color: var(--accent); }
-a { color: var(--accent); }
-table { border-collapse: collapse; width: 100%; margin: 10px 0 6px; font-size: 9.5pt; page-break-inside: avoid; }
-th, td { border: 1px solid var(--hairline); padding: 4px 7px; text-align: left; vertical-align: top; }
-th { background: var(--accent-wash); font-weight: 700; }
+.cover-links a { color: var(--accent-strong); }
+a { color: var(--accent-strong); }
+code { background: var(--elevated); color: var(--accent-strong); padding: 1px 4px; border-radius: 3px; font-family: var(--font-mono); font-size: 0.92em; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0 6px; font-size: 9.5pt; page-break-inside: avoid; background: var(--surface); }
+th, td { border: 1px solid var(--hairline); padding: 4px 7px; text-align: left; vertical-align: top; color: var(--text); }
+th { background: var(--accent-wash); color: var(--accent-strong); font-weight: 700; }
 .num { text-align: right; font-variant-numeric: tabular-nums; }
-figure { margin: 8px 0; page-break-inside: avoid; }
+figure { margin: 8px 0; page-break-inside: avoid; background: var(--surface); border-radius: 8px; padding: 6px; }
 figure img { width: 100%; max-width: 3.6in; max-height: 2.9in; object-fit: contain; display: block; margin: 0 auto; border: 1px solid var(--hairline); border-radius: 4px; }
 figcaption { font-size: 9pt; color: var(--muted); text-align: center; margin-top: 4px; }
-.quote { font-style: italic; background: var(--accent-wash); border-left: 3px solid var(--accent); padding: 6px 10px; margin: 8px 0; font-size: 10pt; }
+.quote { font-style: italic; background: var(--elevated); border-left: 3px solid var(--accent); padding: 6px 10px; margin: 8px 0; font-size: 10pt; color: var(--text); }
 .flag { display: inline-block; font-weight: 700; padding: 1px 6px; border-radius: 4px; font-size: 9.5pt; }
-.flag-missing { background: #fdecea; color: var(--denied); border: 1px solid var(--denied); }
-.flag-user { background: #eaf2fb; color: #2a5885; border: 1px solid #2a5885; }
-.callout { background: var(--accent-wash); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-size: 10pt; }
+.flag-missing { background: rgba(217, 83, 79, 0.16); color: var(--denied); border: 1px solid var(--denied); }
+.flag-user { background: rgba(91, 155, 213, 0.16); color: #8fc0e8; border: 1px solid #5b9bd5; }
+.callout { background: var(--elevated); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-size: 10pt; }
 .small { font-size: 9pt; color: var(--muted); }
 .two-col { display: flex; gap: 18px; }
 .two-col > div { flex: 1; }
 .section-break { page-break-before: always; }
 .numbered-list { padding-left: 20px; }
 .numbered-list li { margin-bottom: 7px; }
-.svg-wrap { text-align: center; margin: 10px 0; }
+.svg-wrap { text-align: center; margin: 10px 0; background: var(--surface); border-radius: 8px; padding: 6px; }
 .svg-wrap svg { max-width: 100%; height: auto; }
 footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; margin-top: 10px; }
 """
@@ -195,29 +201,29 @@ footer.pagefoot { font-size: 8.5pt; color: var(--muted); text-align: center; mar
 # ---------------------------------------------------------------------------
 
 def agent_box(x: int, y: int, w: int, h: int, label: str, sub: str, code_only: bool = False) -> str:
-    fill = "#ece4d2" if code_only else "#fdf8ee"
-    stroke = "#9a978c" if code_only else "#9a6b1f"
+    fill = "#1f2430" if code_only else "#171b24"
+    stroke = "#9a978c" if code_only else "#cf9d3f"
     return f"""
     <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="7" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>
-    <text x="{x + w/2}" y="{y + h/2 - 3}" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#1c1c1a">{label}</text>
-    <text x="{x + w/2}" y="{y + h/2 + 13}" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5c5a52">{sub}</text>
+    <text x="{x + w/2}" y="{y + h/2 - 3}" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#e9e6db">{label}</text>
+    <text x="{x + w/2}" y="{y + h/2 + 13}" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a9a695">{sub}</text>
     """
 
 
 AGENT_DIAGRAM_SVG = f"""
 <svg viewBox="0 0 780 440" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="0" y="0" width="780" height="440" fill="#ffffff"/>
+  <rect x="0" y="0" width="780" height="440" fill="#11141b"/>
 
   {agent_box(300, 10, 180, 50, "CHAIR", "orchestrator")}
 
-  <line x1="390" y1="60" x2="390" y2="85" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="60" y1="85" x2="720" y2="85" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="60" y1="85" x2="60" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="190" y1="85" x2="190" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="320" y1="85" x2="320" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="450" y1="85" x2="450" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="580" y1="85" x2="580" y2="105" stroke="#9a978c" stroke-width="1.5"/>
-  <line x1="700" y1="85" x2="700" y2="105" stroke="#9a978c" stroke-width="1.5"/>
+  <line x1="390" y1="60" x2="390" y2="85" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="720" y2="85" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="60" y1="85" x2="60" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="190" y1="85" x2="190" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="320" y1="85" x2="320" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="450" y1="85" x2="450" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="580" y1="85" x2="580" y2="105" stroke="#6b6858" stroke-width="1.5"/>
+  <line x1="700" y1="85" x2="700" y2="105" stroke="#6b6858" stroke-width="1.5"/>
 
   {agent_box(0, 105, 120, 56, "Policy", "Compiler")}
   {agent_box(130, 105, 120, 56, "Request", "Reader (parallel)")}
@@ -227,29 +233,29 @@ AGENT_DIAGRAM_SVG = f"""
   {agent_box(650, 105, 130, 56, "Drafter", "questions + memo")}
 
   <!-- human approval gates -->
-  <line x1="60" y1="161" x2="60" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <polygon points="55,195 65,195 60,203" fill="#a13d3d"/>
-  <rect x="5" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
-  <text x="60" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
-  <text x="60" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">each rule</text>
+  <line x1="60" y1="161" x2="60" y2="195" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="55,195 65,195 60,203" fill="#d9534f"/>
+  <rect x="5" y="205" width="110" height="34" rx="6" fill="#2a1a1a" stroke="#d9534f" stroke-width="1.3"/>
+  <text x="60" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#f3b8b6">HUMAN APPROVES</text>
+  <text x="60" y="233" text-anchor="middle" font-size="8.5" fill="#f3b8b6">each rule</text>
 
-  <line x1="715" y1="161" x2="715" y2="195" stroke="#a13d3d" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <polygon points="710,195 720,195 715,203" fill="#a13d3d"/>
-  <rect x="660" y="205" width="110" height="34" rx="6" fill="#fdecea" stroke="#a13d3d" stroke-width="1.3"/>
-  <text x="715" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#a13d3d">HUMAN APPROVES</text>
-  <text x="715" y="233" text-anchor="middle" font-size="8.5" fill="#a13d3d">the memo/questions</text>
+  <line x1="715" y1="161" x2="715" y2="195" stroke="#d9534f" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="710,195 720,195 715,203" fill="#d9534f"/>
+  <rect x="660" y="205" width="110" height="34" rx="6" fill="#2a1a1a" stroke="#d9534f" stroke-width="1.3"/>
+  <text x="715" y="222" text-anchor="middle" font-size="9.5" font-weight="700" fill="#f3b8b6">HUMAN APPROVES</text>
+  <text x="715" y="233" text-anchor="middle" font-size="8.5" fill="#f3b8b6">the memo/questions</text>
 
   <!-- MCP tools row -->
-  <line x1="390" y1="161" x2="390" y2="275" stroke="#9a978c" stroke-width="1.2" stroke-dasharray="2,3"/>
-  <rect x="20" y="280" width="740" height="70" rx="7" fill="#f4f1ea" stroke="#9a978c" stroke-width="1.3"/>
-  <text x="390" y="296" text-anchor="middle" font-size="10" font-weight="700" fill="#1c1c1a">MCP SERVER (mcp_server/server.py) -- the only way any agent touches data</text>
-  <text x="390" y="316" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">load_policy &#183; list_rules &#183; propose_rule &#183; approve_rule &#183; verify_quote &#183; get_request</text>
-  <text x="390" y="332" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#5c5a52">check_line &#183; run_engine &#183; explain_line &#183; consistency_report &#183; allocate &#183; log_usage</text>
+  <line x1="390" y1="161" x2="390" y2="275" stroke="#6b6858" stroke-width="1.2" stroke-dasharray="2,3"/>
+  <rect x="20" y="280" width="740" height="70" rx="7" fill="#171b24" stroke="#6b6858" stroke-width="1.3"/>
+  <text x="390" y="296" text-anchor="middle" font-size="10" font-weight="700" fill="#e9e6db">MCP SERVER (mcp_server/server.py) -- the only way any agent touches data</text>
+  <text x="390" y="316" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#a9a695">load_policy &#183; list_rules &#183; propose_rule &#183; approve_rule &#183; verify_quote &#183; get_request</text>
+  <text x="390" y="332" text-anchor="middle" font-family="monospace" font-size="8.7" fill="#a9a695">check_line &#183; run_engine &#183; explain_line &#183; consistency_report &#183; allocate &#183; log_usage</text>
 
-  <rect x="20" y="370" width="740" height="60" rx="7" fill="#ffffff" stroke="#d8d2c2" stroke-width="1"/>
-  <text x="390" y="388" text-anchor="middle" font-size="9.5" fill="#5c5a52">Every agent's toolset is a filtered MCPToolset over this one server -- no agent has a private data path.</text>
-  <text x="390" y="404" text-anchor="middle" font-size="9.5" fill="#5c5a52">Engine and Optimizer are plain code (backend/engine.py), not model calls -- a verdict or an</text>
-  <text x="390" y="420" text-anchor="middle" font-size="9.5" fill="#5c5a52">allocation can never come from an agent's own words, only from a deterministic function.</text>
+  <rect x="20" y="370" width="740" height="60" rx="7" fill="#11141b" stroke="#6b6858" stroke-width="1"/>
+  <text x="390" y="388" text-anchor="middle" font-size="9.5" fill="#a9a695">Every agent's toolset is a filtered MCPToolset over this one server -- no agent has a private data path.</text>
+  <text x="390" y="404" text-anchor="middle" font-size="9.5" fill="#a9a695">Engine and Optimizer are plain code (backend/engine.py), not model calls -- a verdict or an</text>
+  <text x="390" y="420" text-anchor="middle" font-size="9.5" fill="#a9a695">allocation can never come from an agent's own words, only from a deterministic function.</text>
 </svg>
 """
 
@@ -275,9 +281,9 @@ def build_token_bar_chart(by_agent: dict) -> str:
         y = top + i * (bar_h + gap)
         w = (v / max_val) * (chart_w - 330)
         bars.append(f"""
-        <text x="0" y="{y + bar_h/2 + 4}" font-size="11" fill="#1c1c1a">{labels[name]}</text>
-        <rect x="190" y="{y}" width="{w:.1f}" height="{bar_h}" rx="4" fill="#9a6b1f"/>
-        <text x="{190 + w + 8:.1f}" y="{y + bar_h/2 + 4}" font-size="10.5" fill="#1c1c1a">{v:,} tokens ({calls} call{'s' if calls != 1 else ''})</text>
+        <text x="0" y="{y + bar_h/2 + 4}" font-size="11" fill="#e9e6db">{labels[name]}</text>
+        <rect x="190" y="{y}" width="{w:.1f}" height="{bar_h}" rx="4" fill="#cf9d3f"/>
+        <text x="{190 + w + 8:.1f}" y="{y + bar_h/2 + 4}" font-size="10.5" fill="#e9e6db">{v:,} tokens ({calls} call{'s' if calls != 1 else ''})</text>
         """)
     svg_h = top + len(order) * (bar_h + gap) + 10
     return f"""
