@@ -773,10 +773,11 @@ def section_limits_and_next() -> str:
         "taxonomy does not, yet."
     )
     real_user = (
-        "<strong>A real user's reaction (completed):</strong> a former Rensselaer Union president "
-        "reviewed the live app and gave two concrete pieces of feedback, not general praise. First, "
+        "<strong>A real user's reaction (completed):</strong> a former officer of the same real "
+        "student union whose policy was used for the portability check above reviewed the live app "
+        "and gave two concrete pieces of feedback, not general praise. First, "
         "the default per-rule approval workflow assumes a policy that hasn't been approved yet, but "
-        "a real governing document like the RUGP is already ratified by the Executive Board through "
+        "a real governing document like this one is already ratified by the Executive Board through "
         "its own separate process, so asking a committee to re-approve each compiled rule's "
         "substance is redundant work on top of a decision already made. We acted on this directly: "
         "<code>POST /api/policy/compile</code> now accepts an optional "
@@ -830,7 +831,7 @@ def section_limits_and_next() -> str:
       clicked, not a typed string.</li>
       <li>Test concurrent runs and a policy re-upload mid-run; add the same kind of
       conditioned-write guards the reference chassis uses for payments.</li>
-      <li>A former Rensselaer Union president's review is now in; the next step is doing the same
+      <li>A former officer's review is now in; the next step is doing the same
       with someone who currently holds the role, and with an actual committee rather than one
       person, to see whether the same two points hold up under group use.</li>
     </ul>

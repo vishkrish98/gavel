@@ -52,13 +52,15 @@ a polished success story, and is reported as such in `report.html` Section 8.
 
 ## Task 3-adjacent: a real user's reaction (2026-10-26)
 
-The user showed Gavel to a former Rensselaer Union president (no real name used here, per task 3's
-own instruction), who gave two pieces of concrete, substantive feedback rather than general praise:
+The user showed Gavel to a former officer of the same real student union whose policy was used for
+the portability check above (no real name used here, per task 3's own instruction), who gave two
+pieces of concrete, substantive feedback rather than general praise:
 
 1. **The per-rule approval workflow assumes a policy that hasn't been approved yet.** Gavel's
    default flow treats every compiled rule as "proposed," requiring a fresh human click before it
-   affects anything. That makes sense for a draft or ambiguous policy, but the real RUGP (and most
-   real governing documents) is already a ratified, standing document, approved by the Executive
+   affects anything. That makes sense for a draft or ambiguous policy, but their real governing
+   document (and most real governing documents) is already a ratified, standing document, approved
+   by the Executive
    Board through its own separate governance process well before anyone runs it through Gavel.
    Asking a committee to re-approve each compiled rule's *substance* is redundant work on top of a
    decision that's already been made; what the compiler should be doing for an already-ratified

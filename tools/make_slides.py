@@ -414,13 +414,13 @@ def slide_10_limits() -> str:
     <section>
       <h2>Limits and next steps</h2>
       <ul>
-        <li>Policy and all 24 requests are <strong>synthetic</strong>; a former Union president reviewed the live app, but no current committee has used Gavel on real decisions yet</li>
+        <li>Policy and all 24 requests are <strong>synthetic</strong>; a former officer of a real student union reviewed the live app, but no current committee has used Gavel on real decisions yet</li>
         <li>The Skeptic has <strong>never caught a real error</strong> in any run (0% observed precision), so its value is unproven here</li>
         <li>Instruction-pattern detection is a narrow, 5-phrase list, so a differently-worded injection could reach the model unfiltered</li>
         <li>Real-policy check found 4 of 22 real rules compile; no concurrency testing, one browser tested</li>
       </ul>
       <p class="small">{reflection}</p>
-      {notes("We do have one real data point now: a former Rensselaer Union president reviewed the live app and flagged that per-rule approval is redundant for an already-ratified document like the RUGP, which we acted on directly (the pre-ratified-policy flag on the Compile route). What we still haven't shown is a current committee using Gavel on real decisions, or a caught error in Gavel's own runs. The real-policy check we did run found the rule taxonomy doesn't generalize yet. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.")}
+      {notes("We do have one real data point now: a former officer of the same real student union whose policy we used for the portability check reviewed the live app and flagged that per-rule approval is redundant for an already-ratified document like theirs, which we acted on directly (the pre-ratified-policy flag on the Compile route). What we still haven't shown is a current committee using Gavel on real decisions, or a caught error in Gavel's own runs. The real-policy check we did run found the rule taxonomy doesn't generalize yet. The structural safety guarantee (code decides verdicts, human approves) holds regardless, but the model layer's judgment is still unproven against a harder, real-world policy.")}
     </section>
     """
 
