@@ -155,7 +155,7 @@ h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--text); page-break-
 h1 { font-size: 26pt; margin: 0 0 4px; }
 h2 { font-size: 15.5pt; border-bottom: 2px solid var(--accent); padding-bottom: 3px; margin-top: 16px; page-break-before: auto; }
 h3 { font-size: 12pt; color: var(--accent); margin-top: 12px; margin-bottom: 4px; }
-p, li { orphans: 3; widows: 3; }
+p, li { orphans: 2; widows: 2; }
 .subtitle { font-size: 12pt; color: var(--muted); margin: 0 0 18px; }
 .cover-links { font-size: 10.5pt; color: var(--muted); margin-bottom: 4px; }
 .cover-links a { color: var(--accent); }
@@ -397,6 +397,20 @@ def section_what_is_new() -> str:
     Many clubs' full line-itemized budgets, or many budgets at once, import in a single call
     (<code>POST /api/requests/bulk</code>), with per-row success/failure reporting rather than an
     all-or-nothing upload.</p>
+    <p>Different clubs also budget in different shapes, and Gavel now follows both without asking
+    either one to change. RPI's annual process has every club write a goal for the year, break each
+    goal into one or more programs (events), and file line items under those programs; Yale SOM's
+    is flatter, a request is just a list of lines. Two nullable columns on a line (<code>goal</code>,
+    <code>program</code>) carry this when it's present, and the Review screen only shows a "group by
+    goal/program" toggle once at least one visible line actually has the data; a flat club's
+    screen looks exactly as it always did, with zero added UI. The engine never reads either column:
+    a line's verdict and allowed amount depend only on its own description, amount, and
+    documentation, so adding this schema change touched none of the already-graded Mode A/B
+    accuracy numbers (every one of the 158 real answer-key lines has both columns NULL). This also
+    maps onto a real two-cadence process rather than inventing a new concept: the Clubs tab's bulk
+    import is built for the once-a-year weekend where every club submits its full annual budget at
+    once, and the Start tab's single-request flow is for one additional request between cycles, the
+    way a weekly committee meeting actually handles it.</p>
     <figure>
       <img src="{IMG['16_clubs_registry']}" alt="Clubs screen showing each club's pre-approved budget, amount spent, and remaining balance">
       <figcaption>Figure 1b. The Clubs screen: every club's budget, spent, and remaining balance,
@@ -502,6 +516,16 @@ def section_tokenomics() -> str:
     </table>
     <p class="small">Source: <code>evidence/usage_final.json</code>; the full per-call log is
     <code>output/trace_run1.json</code>.</p>
+    <p>Request Reader accounts for just over half of this run's total tokens ({ba['request_reader']['total_tokens']:,}
+    of {t['total_tokens']:,}) simply because it's called once per request ({ba['request_reader']['calls']} calls
+    here), while the Policy Compiler and the memo drafter are each called exactly once per run
+    regardless of how many requests come through. Cache-write tokens ({t['cache_write_tokens']:,} total)
+    appear on Request Reader and Skeptic, the two agents called repeatedly against the same system
+    prompt in one run, and never on the single-call agents, consistent with Portkey writing a fresh
+    cache entry the first time a prompt prefix is seen in a session. Reasoning tokens concentrate in
+    the Skeptic ({ba['skeptic']['reasoning_tokens']:,} of the run's {t['reasoning_tokens']:,}), the one agent
+    whose job is explicitly to second-guess a number rather than just extract one, which is the kind
+    of judgment call a reasoning model's extra thinking tokens should go toward.</p>
     <div class="svg-wrap">{build_token_bar_chart(ba)}</div>
     <p class="small" style="text-align:center;">Figure 4. Tokens by agent, this run.</p>
 
@@ -601,6 +625,15 @@ def section_safety() -> str:
     need) ended the run cleanly with status <code>{cases['case6']['run_status_in_db']}</code> and
     reason <code>{cases['case6']['reason_recorded']}</code>, confirming the whole-run and per-call
     limits from <code>backend/chair.py</code> don't hang or crash the process.</p>
+
+    <h3>Detection latency</h3>
+    <p>Stripping hidden text and matching the instruction-pattern list both happen at ingestion,
+    before any request reaches a model: roughly 0.001 to 0.002 seconds per request, pure regex work
+    against the raw request text. The affected request's own Reader call still has to run afterward
+    like every other request's does, so the time from detection to that request's Reader call
+    finishing is roughly 0.5 to 1.9 seconds, the same range as an ordinary unaffected request takes,
+    not a slow path triggered by finding something suspicious. The defenses add essentially zero
+    latency because they never involve a model call at all.</p>
 
     <figure>
       <img src="{IMG['05_run_completed_injection_banner']}" alt="The app's injection-blocked banner showing the exact blocked text from Q25 and Q27">

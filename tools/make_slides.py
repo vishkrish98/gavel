@@ -232,11 +232,11 @@ def slide_02_problem() -> str:
       <h2>The problem</h2>
       <p class="so-what">Committees don't lack rules. They lack the time to apply the same rule the same way, every time.</p>
       <ul>
-        <li>Funding decisions are <strong>inconsistent</strong>: same facts, different clubs, different outcomes</li>
-        <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, against a long policy, often compressed into one weekend a year</li>
+        <li>Funding decisions are <strong>inconsistent</strong>: same facts, different clubs, different outcomes, including <strong>6 of 30</strong> (20%) of this project's own prior decisions</li>
+        <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, often compressed into one weekend a year, at a real timed pace of 17 minutes for just 34 lines</li>
         <li>Violations can be <strong>hidden</strong> in a request's own text and missed by a tired reader</li>
       </ul>
-      {notes("Three concrete pains: committees disagree with themselves across clubs, review is slow and manual (our own motivation example: a weekend of annual budgeting plus hours a week after), and a request can bury text meant to mislead the reviewer.")}
+      {notes("Three concrete pains, each backed by a real number from this project: committees disagree with themselves across clubs (our real 20% consistency-check rate on 30 prior decisions), review is slow and manual (our own timed 17-minute/34-line baseline, which still wasn't perfectly accurate at 0.882), and a request can bury text meant to mislead the reviewer -- hidden via font-size:0/white-on-white, or as a plain-text instruction addressed to an AI reviewer instead of a human one. None of this requires bad faith; it's what happens when a policy lives in a document and the actual checking lives in a person's head, under time pressure, dozens of times a cycle.")}
     </section>
     """
 
@@ -336,12 +336,14 @@ def slide_07_cost() -> str:
         </div>
       </div>
       <table>
-        <tr><th>Scale</th><th>Semester cost</th><th>Assumption</th></tr>
+        <tr><th>Scale</th><th>Semester cost (Gavel)</th><th>Assumption</th></tr>
         <tr><td>24 clubs (measured)</td><td class="num">{fmt_money(cm['semester_24_clubs'], 4)}</td><td class="small">this dataset</td></tr>
         <tr><td>150 clubs</td><td class="num">{fmt_money(cm['semester_150_clubs'], 4)}</td><td class="small">same request/line pattern as the 24-club sample</td></tr>
         <tr><td>1,000 institutions</td><td class="num">{fmt_money(cm['semester_1000_institutions'], 2)}</td><td class="small">each compiles its own policy, averages 24 clubs</td></tr>
+        <tr><td>24 clubs, human reviewer instead</td><td class="num">{fmt_money(cm['reviewer_cost_per_request'] * 24, 2)}</td><td class="small">{fmt_money(cm['reviewer_cost_per_request'])}/request &times; 24 requests, same assumption as the stat above</td></tr>
       </table>
-      {notes("The speedup is a projection: our one timed human reviewer's real 17-minute, 34-line pace, scaled linearly to the full 158-line semester dataset, stated as an assumption the same way the 150-club and 1,000-institution cost rows are. 53.8 seconds and every token/cost figure here are real, provider-reported numbers from one full run, never estimated.")}
+      <p class="small">The gap at 24 clubs is five orders of magnitude, and it only grows with scale: a human reviewer's cost scales per request, Gavel's scales per <em>token</em>, and most of a request's policy context is already paid for once, in the one-time policy compile.</p>
+      {notes("The speedup is a projection: our one timed human reviewer's real 17-minute, 34-line pace, scaled linearly to the full 158-line semester dataset, stated as an assumption the same way the 150-club and 1,000-institution cost rows are. 53.8 seconds and every token/cost figure here are real, provider-reported numbers from one full run, never estimated. The added human-cost row makes the comparison concrete rather than asking the audience to do the multiplication themselves.")}
     </section>
     """
 
