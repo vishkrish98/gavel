@@ -38,8 +38,9 @@ def user(what: str) -> str:
 
 
 def b64_image(path: Path) -> str:
+    mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
     data = base64.b64encode(path.read_bytes()).decode("ascii")
-    return f"data:image/jpeg;base64,{data}"
+    return f"data:{mime};base64,{data}"
 
 
 def load_json(name: str) -> dict:
@@ -88,6 +89,7 @@ IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
     "06_run_event_trace", "08_review_side_panel_citation", "09_scenarios_two_settings",
     "11_consistency", "16_clubs_registry",
 ]}
+IMG["15_safety_pass_table"] = b64_image(ASSETS / "15_safety_pass_table.png")
 
 
 def fmt_money(x: float, decimals: int = 2) -> str:
@@ -607,7 +609,11 @@ def section_safety() -> str:
       <figcaption>Figure 5. The app's own injection-blocked banner, from a real run that included
       Q25 and Q27, naming the request, the field, and the exact blocked text.</figcaption>
     </figure>
-    <p>{user("paste the terminal screenshot of the safety PASS table here (run `python -m safety_test` and screenshot its printed table) -- see evidence/SCREENSHOTS.md item 15")}</p>
+    <figure>
+      <img src="{IMG['15_safety_pass_table']}" alt="Terminal output of python -m safety_test showing all 13 checks PASS and Overall: ALL PASS">
+      <figcaption>Figure 9. The real terminal output of <code>python -m safety_test</code>, run
+      2026-10-26: all 13 checks PASS.</figcaption>
+    </figure>
     <table>
       <tr><th>Case</th><th>Check</th><th>Result</th></tr>
       {pass_rows}
