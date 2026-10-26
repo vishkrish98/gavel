@@ -260,7 +260,12 @@ def build_token_bar_chart(by_agent: dict) -> str:
 # ---------------------------------------------------------------------------
 
 def section_title_links() -> str:
-    repo_url = user("paste the GitHub repo URL here (create the repo and push, per START_HERE.md step 3, then paste the link)")
+    repo_url = user(
+        "paste the GitHub repo URL here (create the repo and push, per START_HERE.md step 3, then "
+        "paste the link). If the repo is private, say so here too (e.g. 'private -- zlisto added "
+        "as collaborator') so graders can clone it -- Canvas submissions only take files, not a "
+        "URL, so this report and slides.html are the only place the repo link reaches the grader."
+    )
     return f"""
     <h1>Gavel</h1>
     <p class="subtitle">Decision support for a student-government funding committee</p>

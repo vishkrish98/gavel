@@ -190,11 +190,17 @@ def notes(text: str) -> str:
 
 
 def slide_01_title() -> str:
+    repo_url = user(
+        "paste the GitHub repo URL here (same link as in report.html). If the repo is private, "
+        "say so here too so graders can clone it -- Canvas only takes files, not a URL, so this "
+        "and report.html are the only place the repo link reaches the grader."
+    )
     return f"""
     <section class="center">
       <h1>Gavel</h1>
       <p class="subtitle">Decision support for a student-government funding committee</p>
       <p class="small">Built for MGT 409, AI Foundations for Managers &mdash; Yale SOM</p>
+      <p class="small">Repo: {repo_url}</p>
       {notes("Introduce Gavel: it reads a club-funding policy and every request against it, and drafts a decision a human still has to approve.")}
     </section>
     """
