@@ -68,6 +68,21 @@ manual_scored = json.loads(manual_scored_path.read_text()) if manual_scored_path
 # directly rather than invented).
 MANUAL_BASELINE_MINUTES = 17
 
+# Time-savings projection: the real 17-minute, 34-line timed review above, scaled linearly to the
+# full 158-line semester dataset -- a stated assumption (the same reviewing pace holds at scale),
+# not a second timed measurement, same honesty standard as the 150-club/1,000-institution cost
+# projections elsewhere in this report. Compared against evidence/usage_final.json's total.seconds
+# (53.8s, sum of real per-call durations for the same 158 lines, one full real run).
+if manual_scored is not None:
+    _manual_seconds_per_line = (MANUAL_BASELINE_MINUTES * 60) / manual_scored["lines_scored"]
+    TIME_MODEL = {
+        "manual_projected_158_lines_seconds": _manual_seconds_per_line * 158,
+        "gavel_158_lines_seconds": 53.8,
+    }
+    TIME_MODEL["speedup_factor"] = TIME_MODEL["manual_projected_158_lines_seconds"] / TIME_MODEL["gavel_158_lines_seconds"]
+else:
+    TIME_MODEL = None
+
 IMG = {name: b64_image(ASSETS / f"{name}.jpg") for name in [
     "04_run_in_progress", "05_run_completed_injection_banner",
     "06_run_event_trace", "08_review_side_panel_citation", "09_scenarios_two_settings",
@@ -290,9 +305,12 @@ def section_title_links() -> str:
 def section_motivation() -> str:
     paragraph = """
     <p>At RPI, I served on the Union's Executive Board as the representative for our affinity
-    clubs and as Club Operations Chairman, where our annual process split clubs across six review
-    rooms and I watched the same written policy get applied six different ways, particularly
-    around food-expense rules. I now see a more structured version of the same underlying problem
+    clubs and as Club Operations Chairman. Every club wrote its goals and programs for the year
+    and brought them to one annual weekend where the whole board reviewed every club's full budget
+    at once, with anything additional after that handled in our weekly meetings. That annual
+    weekend split clubs across six review rooms, and I watched the same written policy get applied
+    six different ways, particularly around food-expense rules. I now see a more structured version
+    of the same underlying problem
     from the other side, as the current Clubs and Finance Committee chair for Yale SOM's Student
     Government. Our process runs on dollar and attendee thresholds instead of six separate rooms:
     a request under $1,000 or under a certain attendee count gets approved directly by the
@@ -635,6 +653,15 @@ def section_impact() -> str:
       <tr><td>Cross-club inconsistency rate</td><td class="small">not measured at this scale</td><td class="num">{cross_a['inconsistency_rate']:.3f}</td><td class="num">{cross_b['inconsistency_rate']:.3f}</td></tr>
       <tr><td>Time</td><td>{excel_time}</td><td class="num">{mode_a['seconds']['avg']:.1f}s for 24 requests</td><td class="num">{mode_b['seconds']['avg']:.1f}s for 24 requests</td></tr>
     </table>
+    {f'''<div class="callout"><strong>The real headline here is time, not accuracy.</strong> At our
+    one timed reviewer's real pace (17 minutes for 34 lines), a full semester's 158 lines would
+    take roughly {TIME_MODEL['manual_projected_158_lines_seconds']/60:.0f} minutes, projected
+    linearly from that measured rate, the same kind of stated assumption as the 150-club and
+    1,000-institution cost rows in Section 5. Gavel's real, measured run processed those same 158
+    lines, with full citations and drafted committee questions, in {TIME_MODEL['gavel_158_lines_seconds']:.1f}
+    seconds, about {TIME_MODEL['speedup_factor']:.0f} times faster. A committee that currently
+    spends a full annual weekend reviewing every club's budget at once, plus weekly meetings for
+    anything additional (Section 2), is not looking at a small efficiency gain.</div>''' if TIME_MODEL else ''}
     <p class="small">Mode A/B figures: <code>evidence/benchmark.json</code>. Excel figures:
     <code>evidence/manual_first5_scored.json</code>, one expert reviewer, timed, no access to the
     answer key. "Dollars wrongly allowed" is the sum of every line where the mode allowed more than

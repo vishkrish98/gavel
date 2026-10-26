@@ -535,6 +535,47 @@ single-request flow (usually flat, no goal/program needed) is the weekly additio
 meeting. Updated both screens' copy to say this explicitly rather than add a new "submission type"
 field purely for labeling something the two existing flows already represent structurally.
 
+## Consulting-level slide and report polish, time-savings framing (post-11b)
+
+Added at the user's request ("these are not consulting level" / "our focus... should be how much
+time we are saving"). Added a `TIME_MODEL` to both `tools/make_slides.py` and
+`tools/make_report.py` (same computation in both, not shared code, since the two generators have
+always been independent scripts): `evidence/manual_first5_scored.json`'s real 17-minute, 34-line
+timed review, scaled linearly to the full 158-line semester dataset, a **stated assumption** (same
+reviewing pace holds at scale), not a second timed measurement, same honesty standard as the
+150-club/1,000-institution cost projections elsewhere in both documents. Compared against
+`evidence/usage_final.json`'s real `total.seconds` (53.8s, sum of real per-call durations for the
+same 158 lines). Result: roughly 79 minutes projected vs. 53.8 seconds measured, about 88x.
+
+`slides.html`: this became the headline stat on the cost slide (a new big-number `.stat-row` CSS
+treatment, `~88x faster`), a new Time row on the impact slide, and a one-line "so what" under most
+slide headlines (tying each slide's content back to a concrete consequence rather than just
+describing a feature). `report.html`: a prominent callout box (reusing the existing `.callout`
+style) in Section 7 making the same point in full sentences, immediately after the head-to-head
+table.
+
+**Two real things found and fixed while doing this, not before:**
+1. A real CSS bug in `slides.html`'s agent-team diagram: adding a "so what" line above the SVG
+   reduced its available vertical space enough to expose a latent aspect-ratio bug
+   (`width: 100%; height: auto; max-height: 48vh` doesn't reliably preserve an SVG's intrinsic
+   aspect ratio when the height constraint binds), which rendered every label in the diagram
+   invisible (present in the DOM, zero-width in practice). Fixed with `object-fit: contain` plus a
+   centered flex wrapper; re-verified all 10 slides visually afterward, not just the one slide that
+   broke.
+2. A real factual inconsistency of my own: the Section 7 callout referenced "(Section 2)" for the
+   weekend-budgeting detail, but that detail had been dropped from the motivation paragraph in an
+   earlier revision (when the Yale SOM comparison was added) without being carried forward. Caught
+   by checking the actual rendered Section 2 text against the new claim rather than assuming it was
+   still there; fixed by restoring the real detail (the annual weekend review, weekly meetings for
+   anything additional) to the motivation paragraph itself, making the cross-reference accurate
+   again, rather than just softening the callout's wording to dodge the gap.
+
+`report.html`: 13 pages (still in the 10-15 range). `slides.html`: still 10 slides, no overflow on
+any slide, re-verified visually one at a time, not just the ones that changed. Em-dash scan run
+again on both files after every edit in this pass; the one legitimate exception (the verbatim
+quoted Drafter-agent trace output) is still the only one present. 57/57 tests passing throughout
+(none of this touches backend code).
+
 ## Frontend
 
 `frontend/` — React 19 + Vite + TypeScript, plain CSS (no component library). Dark, scholarly,
