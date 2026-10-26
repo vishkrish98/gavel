@@ -129,6 +129,7 @@ COST_MODEL = {
 
 CSS = """
 :root {
+  color-scheme: light;
   --accent: #9a6b1f;
   --accent-wash: #f7ecd9;
   --text: #1c1c1a;
@@ -142,6 +143,7 @@ CSS = """
 }
 @page { size: letter; margin: 0.85in 0.75in; }
 * { box-sizing: border-box; }
+html, body { background: #fff; }
 body {
   font-family: var(--font-sans);
   color: var(--text);
@@ -150,6 +152,10 @@ body {
   max-width: 7.5in;
   margin: 0 auto;
   padding: 0.5in 0;
+}
+@media screen {
+  html { background: #e7e3d8; padding: 28px 0; min-height: 100vh; }
+  body { background: #fff; box-shadow: 0 4px 28px rgba(0, 0, 0, 0.18); padding: 0.6in 0.75in; }
 }
 h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--text); page-break-after: avoid; orphans: 3; widows: 3; }
 h1 { font-size: 26pt; margin: 0 0 4px; }

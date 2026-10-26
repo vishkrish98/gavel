@@ -94,6 +94,7 @@ else:
 
 CSS = """
 :root {
+  color-scheme: light;
   --accent: #9a6b1f;
   --accent-wash: #f7ecd9;
   --text: #1c1c1a;
