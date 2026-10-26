@@ -72,6 +72,21 @@ COST_MODEL = {
     "per_request": 0.000632,
 }
 
+# Time-savings projection: evidence/manual_first5_scored.json's real 17-minute, 34-line timed
+# review, scaled linearly to the full 158-line semester dataset -- a stated assumption (same pace
+# holds at scale), not a second timed measurement, same honesty standard as the 150-club/
+# 1,000-institution cost rows above. Compared against evidence/usage_final.json's total.seconds
+# (53.8s, sum of real per-call durations for the same 158 lines, one full real run).
+if manual_scored is not None:
+    _manual_seconds_per_line = (MANUAL_BASELINE_MINUTES * 60) / manual_scored["lines_scored"]
+    TIME_MODEL = {
+        "manual_projected_158_lines_seconds": _manual_seconds_per_line * 158,
+        "gavel_158_lines_seconds": 53.8,
+    }
+    TIME_MODEL["speedup_factor"] = TIME_MODEL["manual_projected_158_lines_seconds"] / TIME_MODEL["gavel_158_lines_seconds"]
+else:
+    TIME_MODEL = None
+
 
 # ---------------------------------------------------------------------------
 # CSS: same palette and type as report.html, scaled up for a slide deck
@@ -117,8 +132,14 @@ CSS = """
 .reveal .two-col { display: flex; gap: 1.2em; align-items: flex-start; }
 .reveal .two-col > div { flex: 1; }
 .reveal .small { font-size: 0.6em; color: var(--muted); }
-.reveal .svg-wrap svg { width: 100%; height: auto; max-height: 48vh; }
+.reveal .svg-wrap svg { width: 100%; height: auto; max-height: 48vh; object-fit: contain; }
+.reveal .svg-wrap { display: flex; justify-content: center; }
 .reveal .footer-src { position: absolute; bottom: 0.3em; right: 0.6em; font-size: 0.35em; color: var(--muted); }
+.reveal .so-what { font-size: 0.6em; color: var(--muted); font-style: italic; margin: -0.4em 0 0.6em; }
+.reveal .stat-row { display: flex; gap: 1.2em; margin: 0.5em 0 0.7em; }
+.reveal .stat { flex: 1; text-align: center; background: var(--accent-wash); border-radius: 8px; padding: 0.35em 0.2em; }
+.reveal .stat .stat-num { font-family: Georgia, Cambria, "Times New Roman", Times, serif; font-size: 1.9em; font-weight: 700; color: var(--accent); line-height: 1.1; display: block; }
+.reveal .stat .stat-label { font-size: 0.5em; color: var(--muted); display: block; margin-top: 0.15em; }
 """
 
 
@@ -213,12 +234,13 @@ def slide_02_problem() -> str:
     return f"""
     <section>
       <h2>The problem</h2>
+      <p class="so-what">Committees don't lack rules. They lack the time to apply the same rule the same way, every time.</p>
       <ul>
         <li>Funding decisions are <strong>inconsistent</strong>: same facts, different clubs, different outcomes</li>
-        <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, against a long policy</li>
+        <li>Manual review is <strong>slow</strong>: one reviewer, one request at a time, against a long policy, often compressed into one weekend a year</li>
         <li>Violations can be <strong>hidden</strong> in a request's own text and missed by a tired reader</li>
       </ul>
-      {notes("Three concrete pains: committees disagree with themselves across clubs, review is slow and manual, and a request can bury text meant to mislead the reviewer.")}
+      {notes("Three concrete pains: committees disagree with themselves across clubs, review is slow and manual (our own motivation example: a weekend of annual budgeting plus hours a week after), and a request can bury text meant to mislead the reviewer.")}
     </section>
     """
 
@@ -231,6 +253,7 @@ def slide_03_whats_new() -> str:
     return f"""
     <section>
       <h2>What is new</h2>
+      <p class="so-what">Existing tools automate the paperwork. Gavel automates the judgment call, and shows its work.</p>
       <table>
         <tr><th></th><th>Existing tools</th><th>Gavel</th></tr>
         <tr><td>Verdicts</td><td>Manual judgment call</td><td>Deterministic engine, cites the exact policy sentence</td></tr>
@@ -248,6 +271,7 @@ def slide_04_agent_team() -> str:
     return f"""
     <section>
       <h2>The agent team</h2>
+      <p class="so-what">A fixed pipeline, not a free-roaming agent: code decides every dollar, a human approves every rule.</p>
       <div class="svg-wrap">{AGENT_DIAGRAM_SVG}</div>
       {notes("CHAIR is plain code, not an LLM agent, orchestrating five agents plus two deterministic, code-only steps -- Engine and Optimizer never touch a model, so a verdict or a dollar amount can't come from an agent's own words. Two human approval gates: one per rule, one per memo.")}
     </section>
@@ -258,6 +282,7 @@ def slide_05_the_app() -> str:
     return f"""
     <section>
       <h2>The app</h2>
+      <p class="so-what">One screen replaces a spreadsheet, a policy PDF, and a reviewer's memory of last year's decisions.</p>
       <figure>
         <img src="{IMG['07_review_table']}" alt="Review table listing every line with its verdict, amount, and citation">
         <figcaption>Every line, its verdict, allowed amount, and the exact policy citation behind it.</figcaption>
@@ -271,6 +296,7 @@ def slide_06_one_line_traced() -> str:
     return f"""
     <section>
       <h2>One real line, traced</h2>
+      <p class="so-what">Not a summary of the policy. The exact sentence, every time, in under a second.</p>
       <div class="two-col">
         <div>
           <p>Line 07-L3, guest speaker honorarium, $1,500.</p>
@@ -289,18 +315,37 @@ def slide_06_one_line_traced() -> str:
 def slide_07_cost() -> str:
     t = usage_final["total"]
     cm = COST_MODEL
+    if TIME_MODEL is not None:
+        time_stat = f"""
+        <div class="stat">
+          <span class="stat-num">~{TIME_MODEL['speedup_factor']:.0f}x</span>
+          <span class="stat-label">faster than manual review (projected)</span>
+        </div>
+        """
+    else:
+        time_stat = ""
     return f"""
     <section>
-      <h2>What it costs</h2>
-      <p>One full run, 24 real requests: <strong>{t['total_tokens']:,} tokens</strong>, <strong>{fmt_money(t['cost_usd'], 5)}</strong>.</p>
+      <h2>What it costs, and saves</h2>
+      <p class="so-what">The real finding isn't the dollar figure. It's what a committee gets back: time.</p>
+      <div class="stat-row">
+        {time_stat}
+        <div class="stat">
+          <span class="stat-num">{fmt_money(t['cost_usd'], 4)}</span>
+          <span class="stat-label">per 24-request run, {t['total_tokens']:,} real tokens</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">{fmt_money(cm['per_request'], 4)}</span>
+          <span class="stat-label">per request, vs. {fmt_money(cm['reviewer_cost_per_request'])} manually</span>
+        </div>
+      </div>
       <table>
         <tr><th>Scale</th><th>Semester cost</th><th>Assumption</th></tr>
         <tr><td>24 clubs (measured)</td><td class="num">{fmt_money(cm['semester_24_clubs'], 4)}</td><td class="small">this dataset</td></tr>
         <tr><td>150 clubs</td><td class="num">{fmt_money(cm['semester_150_clubs'], 4)}</td><td class="small">same request/line pattern as the 24-club sample</td></tr>
         <tr><td>1,000 institutions</td><td class="num">{fmt_money(cm['semester_1000_institutions'], 2)}</td><td class="small">each compiles its own policy, averages 24 clubs</td></tr>
       </table>
-      <p class="small">Human comparison: {fmt_money(cm['reviewer_cost_per_request'])}/request manually (20 min at $20/hr) vs. {fmt_money(cm['per_request'], 6)} for Gavel's pass on the same request.</p>
-      {notes("Every token here is a real provider-reported number, not an estimate. The 150-club and 1,000-institution rows are explicit assumptions, stated on the slide, not measured.")}
+      {notes("The speedup is a projection: our one timed human reviewer's real 17-minute, 34-line pace, scaled linearly to the full 158-line semester dataset, stated as an assumption the same way the 150-club and 1,000-institution cost rows are. 53.8 seconds and every token/cost figure here are real, provider-reported numbers from one full run, never estimated.")}
     </section>
     """
 
@@ -312,6 +357,7 @@ def slide_08_safety() -> str:
     return f"""
     <section>
       <h2>Safety</h2>
+      <p class="so-what">Speed only matters if it's trustworthy. The engine decides, never the model, on or off.</p>
       <div class="two-col">
         <div>
           <table>
@@ -341,19 +387,23 @@ def slide_09_impact() -> str:
     else:
         excel_accuracy = user("verdict accuracy from evidence/manual_first5_scored.json, after filling in the Excel baseline")
         excel_dollars = '<td class="small">not measured at this scale</td>'
+    excel_time = f"~{TIME_MODEL['manual_projected_158_lines_seconds']/60:.0f} min (projected)" if TIME_MODEL else user("stopwatch minutes")
+    gavel_time = f"{TIME_MODEL['gavel_158_lines_seconds']:.0f} sec" if TIME_MODEL else "53.8 sec"
     return f"""
     <section>
       <h2>Impact</h2>
+      <p class="so-what">Gavel's edge isn't that it's a little more accurate. It's that it's never wrong on dollars, and it's fast enough to review a semester between two other meetings.</p>
       <table>
         <tr><th>Metric</th><th>Excel (1 reviewer, 5 req.)</th><th>Generic AI (Mode A)</th><th>Gavel (Mode B)</th></tr>
         <tr><td>Verdict accuracy</td><td>{excel_accuracy}</td><td class="num">{mode_a['overall_verdict_accuracy']['avg']:.3f}</td><td class="num">{mode_b['overall_verdict_accuracy']['avg']:.3f}</td></tr>
         <tr><td>Dollars wrongly allowed</td>{excel_dollars}<td class="num">{fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])}</td><td class="num">{fmt_money(mode_b['total_dollars_wrongly_allowed']['avg'])}</td></tr>
+        <tr><td>Time, 158 lines</td><td class="num">{excel_time}</td><td class="small">not measured at this scale</td><td class="num">{gavel_time}</td></tr>
       </table>
       <figure>
         <img src="{IMG['09_scenarios_two_settings']}" alt="Scenario sliders showing two alpha settings with different allocation bar charts">
         <figcaption>Moving the scenario slider visibly shifts funding across clubs.</figcaption>
       </figure>
-      {notes("Both AI modes beat the human baseline on verdict accuracy. Gavel's distinct edge is zero dollar errors, ever, plus perfect citation discipline -- Mode A is cheaper per run and close on verdict accuracy, but it still released real money it shouldn't have.")}
+      {notes("Both AI modes beat the human baseline on verdict accuracy. Gavel's distinct edge is zero dollar errors, ever, plus perfect citation discipline, plus doing a semester's worth of lines in under a minute instead of over an hour. Mode A is cheaper per run and close on verdict accuracy, but it still released real money it shouldn't have, and nobody's timed it at this scale.")}
     </section>
     """
 
