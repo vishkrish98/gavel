@@ -689,7 +689,7 @@ def section_impact() -> str:
     ({cross_a['inconsistency_rate']:.3f} each). Gavel's clear, consistent advantage is specifically
     on dollar accuracy (exact, $0 wrongly allowed every repetition, vs.
     {fmt_money(mode_a['total_dollars_wrongly_allowed']['avg'])} for Mode A) and citation discipline
-    ({cites_b['correct']}/158 correct vs. {cites_a['correct']}/158 for Mode A, the rest real-but-
+    ({cites_b['correct']}/158 correct vs. {cites_a['correct']}/158 for Mode A, the rest real but
     irrelevant quotes rather than invented ones), plus the hardest verdict category,
     <code>needs_docs</code>, where Mode A's accuracy drops to 0.846 while Gavel's code Engine stays
     at 1.000 by construction (it checks the <code>docs</code> field directly, it doesn't infer).
@@ -797,8 +797,8 @@ def section_limits_and_next() -> str:
       generalizes (e.g. a lightweight classifier) without losing the Q26 false-positive guarantee.</li>
       <li>Add real authentication to the approval routes so "approved by" reflects who actually
       clicked, not a typed string.</li>
-      <li>Test concurrent runs and a policy re-upload mid-run; add the same kind of conditioned-
-      write guards the reference chassis uses for payments.</li>
+      <li>Test concurrent runs and a policy re-upload mid-run; add the same kind of
+      conditioned-write guards the reference chassis uses for payments.</li>
       <li>Get the app in front of an actual club officer or committee member and record what they
       say, rather than relying on this report's own synthetic-data testing.</li>
     </ul>
